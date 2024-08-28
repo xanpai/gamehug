@@ -38,8 +38,8 @@ class PostFilter extends Component
             $this->search = $request->search;
         }
 
-        if($request->route()->getName() == 'movies' AND !$request->filled('type')) {
-            $this->type = 'movie';
+        if($request->route()->getName() == 'games' AND !$request->filled('type')) {
+            $this->type = 'game';
         } elseif($request->route()->getName() == 'tvshows' AND !$request->filled('type')) {
             $this->type = 'tv';
         } elseif($request->filled('type')) {

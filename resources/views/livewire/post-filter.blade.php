@@ -78,7 +78,7 @@
                                                             <span>{{$genre->title}}</span>
                                                         @endforeach
                                                         <span
-                                                            class="text-xxs bg-gray-800 rounded py-0.5 px-1.5 text-gray-300">{{$recommend->type == 'movie' ? __('Movie') : __('TV Show')}}</span>
+                                                            class="text-xxs bg-gray-800 rounded py-0.5 px-1.5 text-gray-300">{{$recommend->type == 'game' ? __('Game') : __('TV Show')}}</span>
                                                     </div>
                                                 </div>
 

@@ -26,9 +26,9 @@ class DemoSeeder extends Seeder
             'import_episode' => 'active',
 
 
-            'landing_title' => 'We let you watch movies online without',
-            'landing_description' => 'We let you watch movies online without having to register or paying, with over 10000 Movies and TV Shows.',
-            'landing_body' => 'We let you watch movies online without having to register or paying, with over 10000 Movies and TV Shows.',
+            'landing_title' => 'We let you watch games online without',
+            'landing_description' => 'We let you watch games online without having to register or paying, with over 10000 games and TV Shows.',
+            'landing_body' => 'We let you watch games online without having to register or paying, with over 10000 games and TV Shows.',
 
             'facebook' => 'https://facebook.com/codelug',
             'twitter' => 'https://twitter.com/codelug',

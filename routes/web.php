@@ -30,7 +30,7 @@ if (config('settings.landing') == 'active') {
 Route::get(__('browse'), [App\Http\Controllers\BrowseController::class, 'index'])->name('browse');
 Route::post(__('browse'), [App\Http\Controllers\BrowseController::class, 'index'])->name('browse');
 Route::get(__('top-imdb'), [App\Http\Controllers\BrowseController::class, 'index'])->name('topimdb');
-Route::get(__('movies'), [App\Http\Controllers\BrowseController::class, 'index'])->name('movies');
+Route::get(__('games'), [App\Http\Controllers\BrowseController::class, 'index'])->name('games');
 Route::get(__('anime'), [App\Http\Controllers\BrowseController::class, 'index'])->name('anime');
 Route::get(__('tv-shows'), [App\Http\Controllers\BrowseController::class, 'index'])->name('tvshows');
 Route::get(__('live-broadcasts'), [App\Http\Controllers\BrowseController::class, 'broadcasts'])->name('broadcasts');
@@ -44,7 +44,7 @@ Route::get(__('peoples'), [App\Http\Controllers\BrowseController::class, 'commun
 Route::get(__('request'), [App\Http\Controllers\BrowseController::class, 'request'])->name('request');
 Route::post(__('request'), [App\Http\Controllers\BrowseController::class, 'requestPost'])->name('requestPost');
 
-Route::get(__('movie') . '/{slug}', [App\Http\Controllers\WatchController::class, 'movie'])->name('movie');
+Route::get(__('game') . '/{slug}', [App\Http\Controllers\WatchController::class, 'game'])->name('game');
 Route::get(__('tv-show') . '/{slug}', [App\Http\Controllers\WatchController::class, 'tv'])->name('tv');
 Route::get(__('episode') . '/{slug}/{season}-{episode}', [App\Http\Controllers\WatchController::class, 'episode'])->name('episode');
 Route::get(__('live-broadcast') . '/{slug}', [App\Http\Controllers\WatchController::class, 'broadcast'])->name('broadcast');

@@ -40,21 +40,21 @@
 
     <div class="lg:col-span-6">
         <div class="mb-5">
-            <x-form.label for="movies_title" :value="__('Movies title')"/>
-            <x-form.input id="movies_title" name="movies_title" type="text" class="mt-1 block w-full"
-                          value="{{ old('movies_title', config('settings.movies_title')) }}"
-                          placeholder="{{__('Movies title')}}"/>
-            <x-form.error class="mt-2" :messages="$errors->get('movies_title')"/>
+            <x-form.label for="games_title" :value="__('games title')"/>
+            <x-form.input id="games_title" name="games_title" type="text" class="mt-1 block w-full"
+                          value="{{ old('games_title', config('settings.games_title')) }}"
+                          placeholder="{{__('games title')}}"/>
+            <x-form.error class="mt-2" :messages="$errors->get('games_title')"/>
             <div class="mt-3 text-xs text-gray-400 dark:text-gray-300 flex items-center space-x-1"><span>{{__('Available variable')}}</span><span class="font-semibold text-primary-500">[sortable]</span></div>
         </div>
     </div>
     <div class="lg:col-span-6">
         <div class="mb-5">
-            <x-form.label for="movies_description" :value="__('Movies description')"/>
-            <x-form.input id="movies_description" name="movies_description" type="text" class="mt-1 block w-full"
-                          value="{{ old('movies_description', config('settings.movies_description')) }}"
-                          placeholder="{{__('Movies description')}}"/>
-            <x-form.error class="mt-2" :messages="$errors->get('movies_description')"/>
+            <x-form.label for="games_description" :value="__('games description')"/>
+            <x-form.input id="games_description" name="games_description" type="text" class="mt-1 block w-full"
+                          value="{{ old('games_description', config('settings.games_description')) }}"
+                          placeholder="{{__('games description')}}"/>
+            <x-form.error class="mt-2" :messages="$errors->get('games_description')"/>
             <div class="mt-3 text-xs text-gray-400 dark:text-gray-300 flex items-center space-x-1"><span>{{__('Available variable')}}</span><span class="font-semibold text-primary-500">[sortable]</span></div>
         </div>
     </div>
@@ -122,21 +122,21 @@
     </div>
     <div class="lg:col-span-6">
         <div class="mb-5">
-            <x-form.label for="movie_title" :value="__('Movie title')"/>
-            <x-form.input id="movie_title" name="movie_title" type="text" class="mt-1 block w-full"
-                          value="{{ old('movie_title', config('settings.movie_title')) }}"
-                          placeholder="{{__('Movie title')}}"/>
-            <x-form.error class="mt-2" :messages="$errors->get('movie_title')"/>
+            <x-form.label for="game_title" :value="__('game title')"/>
+            <x-form.input id="game_title" name="game_title" type="text" class="mt-1 block w-full"
+                          value="{{ old('game_title', config('settings.game_title')) }}"
+                          placeholder="{{__('game title')}}"/>
+            <x-form.error class="mt-2" :messages="$errors->get('game_title')"/>
             <div class="mt-3 text-xs text-gray-400 dark:text-gray-300 flex items-center space-x-1"><span>{{__('Available variable')}}</span><span class="font-semibold text-primary-500">[title] [description] [release] [country] [genre]</span></div>
         </div>
     </div>
     <div class="lg:col-span-6">
         <div class="mb-5">
-            <x-form.label for="movie_description" :value="__('Movie description')"/>
-            <x-form.input id="movie_description" name="movie_description" type="text" class="mt-1 block w-full"
-                          value="{{ old('movie_description', config('settings.movie_description')) }}"
-                          placeholder="{{__('Movie description')}}"/>
-            <x-form.error class="mt-2" :messages="$errors->get('movie_description')"/>
+            <x-form.label for="game_description" :value="__('game description')"/>
+            <x-form.input id="game_description" name="game_description" type="text" class="mt-1 block w-full"
+                          value="{{ old('game_description', config('settings.game_description')) }}"
+                          placeholder="{{__('game description')}}"/>
+            <x-form.error class="mt-2" :messages="$errors->get('game_description')"/>
             <div class="mt-3 text-xs text-gray-400 dark:text-gray-300 flex items-center space-x-1"><span>{{__('Available variable')}}</span><span class="font-semibold text-primary-500">[title] [description] [release] [country] [genre]</span></div>
         </div>
     </div>

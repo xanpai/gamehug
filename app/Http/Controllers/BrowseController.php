@@ -118,16 +118,16 @@ class BrowseController extends Controller
                         )
                 ]);
 
-        } elseif ($request->route()->getName() == 'movies') {
-            $param['type'] = 'movie';
-            $param['heading'] = __('Movies');
+        } elseif ($request->route()->getName() == 'games') {
+            $param['type'] = 'game';
+            $param['heading'] = __('games');
             $new = array(
                 $request->sort ? __(config('attr.sortable')[$request->sort]['title']) : null
             );
             $old = array('[sortable]');
-            $config['title'] = trim(str_replace($old, $new, trim(config('settings.movies_title'))));
-            $config['description'] = trim(str_replace($old, $new, trim(config('settings.movies_description'))));
-            $config['route'] = route('movies');
+            $config['title'] = trim(str_replace($old, $new, trim(config('settings.games_title'))));
+            $config['description'] = trim(str_replace($old, $new, trim(config('settings.games_description'))));
+            $config['route'] = route('games');
 
             $config['breadcrumb'] = Schema::breadcrumbList()
                 ->itemListElement([
@@ -142,8 +142,8 @@ class BrowseController extends Controller
                         ->position(2)
                         ->item(
                             Schema::thing()
-                                ->name(__('Movies'))
-                                ->id(route('movies'))
+                                ->name(__('games'))
+                                ->id(route('games'))
                         )
                 ]);
 
@@ -405,9 +405,9 @@ class BrowseController extends Controller
         $listing = Community::where('slug', $slug)->firstOrFail() ?? abort(404);
 
         $config = [
-            'title' => __('Movie'),
-            'route' => 'movie',
-            'nav' => 'movie',
+            'title' => __('game'),
+            'route' => 'game',
+            'nav' => 'game',
         ];
         $newests = Community::withCount('comment')->limit(6)->get();
 
@@ -431,7 +431,7 @@ class BrowseController extends Controller
             'q' => 'required|string|min:3',
         ]);
 
-        $result = Http::get('https://api.themoviedb.org/3/search/'.$request->type.'?query='.$request->q.'&api_key='.config('settings.tmdb_api').'&language='.config('settings.tmdb_language'));
+        $result = Http::get('https://api.thegamedb.org/3/search/'.$request->type.'?query='.$request->q.'&api_key='.config('settings.tmdb_api').'&language='.config('settings.tmdb_language'));
         $result = json_decode($result->getBody(), true);
         $listings = [];
         if (isset($result['results'])) {

@@ -10,9 +10,9 @@
                     <x-ui.icon name="chart-doth" class="w-10 h-10 opacity-50 mr-6" stroke="currentColor"/>
                     <div>
                         <div class="flex items-center">
-                            <div class="text-2xl font-medium text-gray-800 dark:text-white mr-3">{{$count['movie']}}</div>
+                            <div class="text-2xl font-medium text-gray-800 dark:text-white mr-3">{{$count['game']}}</div>
                         </div>
-                        <div class="text-sm text-gray-400 mt-1">{{__('Movie')}}</div>
+                        <div class="text-sm text-gray-400 mt-1">{{__('game')}}</div>
                     </div>
                 </div>
             </div>

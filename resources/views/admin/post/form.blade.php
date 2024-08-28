@@ -8,7 +8,7 @@
                     <ul class="flex gap-x-4 whitespace-nowrap overflow-x-auto sm:overflow-x-visible sm:p-2 lg:p-0">
                         @if(count($tabs) > 0 )
                             @foreach($tabs as $key => $value)
-                                <li class="@if(($config['nav'] == 'movie' AND $key == 'subtitle') OR ($config['nav'] == 'tv' AND $key == 'advanced')){{'ml-0 lg:ml-auto'}}@endif">
+                                <li class="@if(($config['nav'] == 'game' AND $key == 'subtitle') OR ($config['nav'] == 'tv' AND $key == 'advanced')){{'ml-0 lg:ml-auto'}}@endif">
                                     <a href="#"
                                        class="w-full py-3 px-6 inline-flex justify-center items-center gap-4 text-sm font-medium text-center text-gray-500 rounded-lg hover:bg-gray-50 relative after:absolute after:-bottom-3 after:rounded-full after:left-0 after:right-0 after:h-1 dark:text-gray-400 dark:hover:text-gray-300 dark:hover:bg-gray-800"
                                        :class="{ 'after:bg-primary-500 text-primary-500 hover:bg-transparent dark:text-primary-400 dark:!text-white dark:hover:bg-transparent': nav === '{{$key}}'}"
@@ -110,7 +110,7 @@
 
                 <x-form.secondary type="button"
                                   class="w-full mt-3"
-                                  @click="importerModal = true;if (importerModal) $nextTick(()=>{$refs.tmdbInput.focus()});">{{__('Themoviedb importer')}}</x-form.secondary>
+                                  @click="importerModal = true;if (importerModal) $nextTick(()=>{$refs.tmdbInput.focus()});">{{__('Thegamedb importer')}}</x-form.secondary>
             </div>
         </form>
         <div
@@ -175,13 +175,13 @@
                 <form method="post" action="{{route('admin.tmdb.fetchsingle')}}" @submit.prevent="submitForm()"
                       id="importerForm">
                     @csrf
-                    <input type="hidden" name="type" value="{{$config['nav'] == 'tv' ? 'tv' : 'movie'}}">
+                    <input type="hidden" name="type" value="{{$config['nav'] == 'tv' ? 'tv' : 'game'}}">
                     <div class="mb-5">
-                        <x-form.label for="tmdb_id" :value="__('Themoviedb ID')"/>
+                        <x-form.label for="tmdb_id" :value="__('Thegamedb ID')"/>
                         <div class="relative">
                             <x-form.input id="tmdb_id" class="block mt-1 w-full" type="text" name="tmdb_id"
                                           value="{{ old('tmdb_id', isset($listing) ? $listing->tmdb_id : Request::get('tmdb_id')) }}"
-                                          required placeholder="{{__('Themoviedb id')}}" x-ref="tmdbInput"/>
+                                          required placeholder="{{__('Thegamedb id')}}" x-ref="tmdbInput"/>
                         </div>
                     </div>
                     <div class="mb-5">
@@ -312,7 +312,7 @@
                             season_number: ''
                         });
                     },
-                    @if($config['nav'] == 'movie')
+                    @if($config['nav'] == 'game')
                     removeVideoField(index,videoId = null) {
                         this.videos.splice(index, 1);
                         if (videoId) {

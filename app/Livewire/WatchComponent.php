@@ -14,7 +14,7 @@ class WatchComponent extends Component
     public function mount($listing)
     {
         $theme_color = empty(config('settings.color')) ? '8871FD' : str_replace('#','',config('settings.color'));
-        if ($listing->type == 'movie') {
+        if ($listing->type == 'game') {
             $this->cover = $listing->coverurl;
         } elseif (isset($listing->post->type) AND $listing->post->type == 'tv') {
             $this->cover = $listing->post->coverurl;
@@ -28,7 +28,7 @@ class WatchComponent extends Component
                 'link' => route('embed',$video->id),
             ];
         }
-        if ($listing->type == 'movie') {
+        if ($listing->type == 'game') {
             if (config('settings.vidsrc') and $listing->tmdb_id) {
                 $this->videos[] = [
                     'label' => 'Vidsrc',

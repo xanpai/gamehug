@@ -9,7 +9,7 @@ return new class extends Migration {
     {
         Schema::create('request_posts', function (Blueprint $table) {
             $table->id();
-            $table->enum('type', ['movie', 'tv','anime'])->default('movie');
+            $table->enum('type', ['game', 'tv','anime'])->default('game');
             $table->string('tmdb_id',25)->nullable();
             $table->string('title');
             $table->string('image')->nullable();

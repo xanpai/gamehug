@@ -10,7 +10,7 @@
                     <div
                         class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
                         @foreach($result['log'] as $item)
-                            @if(isset($item->postable->type) AND $item->postable->type == 'movie' OR $item->postable->type == 'tv')
+                            @if(isset($item->postable->type) AND $item->postable->type == 'game' OR $item->postable->type == 'tv')
                                 <a class="text-sm flex items-center gap-x-8 text-gray-600 decoration-2 group dark:text-gray-500 mb-5"
                                    href="{{route($item->postable->type,$item->postable->slug)}}">
                                     <div class="w-24 aspect-square overflow-hidden relative rounded-md">
@@ -22,7 +22,7 @@
                                         <div class="text-xs text-white/50 space-x-3 mt-3 flex items-center">
 
                                             <div
-                                                class="text-xxs bg-gray-800 rounded py-0.5 px-1.5 text-gray-300">{{$item->postable->type == 'movie' ? __('Movie') : __('TV Show')}}</div>
+                                                class="text-xxs bg-gray-800 rounded py-0.5 px-1.5 text-gray-300">{{$item->postable->type == 'game' ? __('game') : __('TV Show')}}</div>
 
                                         </div>
                                     </div>

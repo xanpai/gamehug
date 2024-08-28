@@ -45,17 +45,17 @@ Route::prefix('admin')->name('admin.')->middleware(['auth','auth.admin'])->group
     });
 
 
-    // Movie
-    Route::controller(\App\Http\Controllers\Admin\MovieController::class)->name('movie.')->group(function () {
-        Route::get('movies', 'index')->name('index');
-        Route::get('movie', 'create')->name('create');
-        Route::get('movie/{id}', 'edit')->name('edit');
-        Route::post('movies/{id}/destroy', 'destroy')->name('destroy')->middleware('demo');
-        Route::post('movie', 'store')->name('store')->middleware('demo');
-        Route::post('movie-tmdb', 'tmdb')->name('tmdb')->middleware('demo');
-        Route::post('movie/{id}', 'update')->name('update')->middleware('demo');
-        Route::delete('movie/video-destroy', 'videoDestroy')->name('video.destroy')->middleware('demo');
-        Route::delete('movie/subtitle-destroy', 'subtitleDestroy')->name('subtitle.destroy')->middleware('demo');
+    // game
+    Route::controller(\App\Http\Controllers\Admin\gameController::class)->name('game.')->group(function () {
+        Route::get('games', 'index')->name('index');
+        Route::get('game', 'create')->name('create');
+        Route::get('game/{id}', 'edit')->name('edit');
+        Route::post('games/{id}/destroy', 'destroy')->name('destroy')->middleware('demo');
+        Route::post('game', 'store')->name('store')->middleware('demo');
+        Route::post('game-tmdb', 'tmdb')->name('tmdb')->middleware('demo');
+        Route::post('game/{id}', 'update')->name('update')->middleware('demo');
+        Route::delete('game/video-destroy', 'videoDestroy')->name('video.destroy')->middleware('demo');
+        Route::delete('game/subtitle-destroy', 'subtitleDestroy')->name('subtitle.destroy')->middleware('demo');
     });
 
     // TV Show

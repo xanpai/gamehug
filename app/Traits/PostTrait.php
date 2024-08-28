@@ -54,7 +54,7 @@ trait PostTrait
     {
         $this->post = [
             'id' => $post->id,
-            'type' => $post->type == 'movie' ? __('Movie') : __('TV Show'),
+            'type' => $post->type == 'game' ? __('game') : __('TV Show'),
             'title' => $post->title,
             'image' => $post->imageurl
         ];
@@ -121,15 +121,15 @@ trait PostTrait
         return $this->seasons;
     }
 
-    protected function tmdbFetchTrait($post, $type = 'movie')
+    protected function tmdbFetchTrait($post, $type = 'game')
     {
         $this->fetch = [
             'id' => $post['id'],
             'type' => $type,
-            'title' => $type == 'movie' ? $post['title'] : $post['name'],
-            'title_sub' => $type == 'movie' ? $post['original_title'] : $post['original_name'],
+            'title' => $type == 'game' ? $post['title'] : $post['name'],
+            'title_sub' => $type == 'game' ? $post['original_title'] : $post['original_name'],
             'overview' => $post['overview'],
-            'release_date' => $type == 'movie' ? $post['release_date'] : $post['first_air_date'],
+            'release_date' => $type == 'game' ? $post['release_date'] : $post['first_air_date'],
             'vote_average' => number_format($post['vote_average'], 1),
             'image' => $post['poster_path'] ? 'https://image.tmdb.org/t/p/w300'.$post['poster_path'] : null
         ];
@@ -137,11 +137,11 @@ trait PostTrait
         return $this->fetch;
     }
 
-    protected function tmdbApiTrait($type = 'movie', $tmdb_id = null)
+    protected function tmdbApiTrait($type = 'game', $tmdb_id = null)
     {
         if (isset($tmdb_id)) {
 
-            $response = Http::get('https://api.themoviedb.org/3/'.$type.'/'.$tmdb_id.'?language='.config('settings.tmdb_language').'&append_to_response=videos,keywords,credits&api_key='.config('settings.tmdb_api'));
+            $response = Http::get('https://api.thegamedb.org/3/'.$type.'/'.$tmdb_id.'?language='.config('settings.tmdb_language').'&append_to_response=videos,keywords,credits&api_key='.config('settings.tmdb_api'));
             $result = json_decode($response->getBody(), true);
 
             // Video
@@ -155,8 +155,8 @@ trait PostTrait
 
             // Keyword
             $tags = array();
-            if ((isset($result['keywords']['keywords']) and $type == 'movie') || ($type == 'tv' and isset($result['keywords']['results']))) {
-                foreach ($type == 'movie' ? $result['keywords']['keywords'] : $result['keywords']['results'] as $keyword) {
+            if ((isset($result['keywords']['keywords']) and $type == 'game') || ($type == 'tv' and isset($result['keywords']['results']))) {
+                foreach ($type == 'game' ? $result['keywords']['keywords'] : $result['keywords']['results'] as $keyword) {
                     if (!empty($keyword['name'])) {
                         $tags[] = trim($keyword['name']);
                     }
@@ -170,16 +170,16 @@ trait PostTrait
                 'type' => $type,
                 'tmdb_id' => $tmdb_id,
                 'imdb_id' => isset($result['imdb_id']) ? $result['imdb_id'] : null,
-                'title' => $type == 'movie' ? $result['title'] : $result['name'],
-                'title_sub' => $type == 'movie' ? $result['original_title'] : $result['original_name'],
+                'title' => $type == 'game' ? $result['title'] : $result['name'],
+                'title_sub' => $type == 'game' ? $result['original_title'] : $result['original_name'],
                 'overview' => $result['overview'],
                 'image' => isset($result['poster_path']) ? 'https://image.tmdb.org/t/p/w500'.$result['poster_path'] : null,
                 'cover' => isset($result['poster_path']) ? 'https://image.tmdb.org/t/p/w1280'.$result['poster_path'] : null,
                 'slide' => isset($result['poster_path']) ? 'https://image.tmdb.org/t/p/w1920_and_h800_multi_faces'.$result['poster_path'] : null,
                 'story' => isset($result['poster_path']) ? 'https://image.tmdb.org/t/p/w235_and_h235_face/'.$result['poster_path'] : null,
                 'tmdb_image' => $result['poster_path'],
-                'runtime' => $type == 'movie' ? $result['runtime'] : null,
-                'release_date' => $type == 'movie' ? $result['release_date'] : $result['first_air_date'],
+                'runtime' => $type == 'game' ? $result['runtime'] : null,
+                'release_date' => $type == 'game' ? $result['release_date'] : $result['first_air_date'],
                 'tagline' => $result['tagline'],
                 'country_id' => !empty($country) ? $country->id : null,
                 'trailer' => isset($trailer) ? $trailer : null,
@@ -218,7 +218,7 @@ trait PostTrait
                     if ($season['season_number'] > 0) {
                         $episodeArray = array();
                         if (config('settings.import_episode') == 'active') {
-                            $getEpisodes = Http::get('https://api.themoviedb.org/3/'.$type.'/'.$tmdb_id.'/season/'.$season['season_number'].'?language='.config('settings.tmdb_language').'&api_key='.config('settings.tmdb_api'));
+                            $getEpisodes = Http::get('https://api.thegamedb.org/3/'.$type.'/'.$tmdb_id.'/season/'.$season['season_number'].'?language='.config('settings.tmdb_language').'&api_key='.config('settings.tmdb_api'));
                             $getEpisodes = json_decode($getEpisodes->getBody(), true);
                             foreach ($getEpisodes['episodes'] as $episode) {
                                 $episodeArray[] = [
@@ -248,7 +248,7 @@ trait PostTrait
 
     protected function tmdbEpisodeApiTrait($request)
     {
-        $result = Http::get('https://api.themoviedb.org/3/tv/'.$request->tmdb_id.'/season/'.$request->season_number.'/episode/'.$request->episode_number.'?language='.config('settings.tmdb_language').'&api_key='.config('settings.tmdb_api'));
+        $result = Http::get('https://api.thegamedb.org/3/tv/'.$request->tmdb_id.'/season/'.$request->season_number.'/episode/'.$request->episode_number.'?language='.config('settings.tmdb_language').'&api_key='.config('settings.tmdb_api'));
         $result = json_decode($result->getBody(), true);
 
         $postArray = [

@@ -15,13 +15,15 @@ use Spatie\SchemaOrg\TVEpisode;
 class WatchController extends Controller
 {
 
-    public function movie(Request $request, $slug)
+    public function game(Request $request, $slug)
     {
-        $listing = Post::where('slug', $slug)->where('status', 'publish')->where('type',
-            'movie')->firstOrFail() ?? abort(404);
+        $listing = Post::where('slug', $slug)->where('status', 'publish')->where(
+            'type',
+            'game'
+        )->firstOrFail() ?? abort(404);
 
         $genres = $listing->genres->modelKeys();
-        $recommends = Post::where('type', 'movie')->whereHas('genres', function ($q) use ($genres) {
+        $recommends = Post::where('type', 'game')->whereHas('genres', function ($q) use ($genres) {
             $q->whereIn('genres.id', $genres);
         })->where('id', '!=', $listing->id)->where('status', 'publish')->take(8)->get();
 
@@ -40,11 +42,11 @@ class WatchController extends Controller
                     ->position(2)
                     ->item(
                         Schema::thing()
-                            ->name(__('Movies'))
-                            ->id(route('movies'))
+                            ->name(__('Games'))
+                            ->id(route('games'))
                     )
             ]);
-        $schema = Schema::movie()
+        $schema = Schema::game()
             ->name($listing->title)
             ->description($listing->overview)
             ->image($listing->imageurl)
@@ -88,7 +90,6 @@ class WatchController extends Controller
             $peopleSchema[] = Schema::person()
                 ->name($people->name)
                 ->url(route('people', $people->slug));
-
         }
         if (isset($peopleSchema)) {
             $schema->actor($peopleSchema);
@@ -108,8 +109,8 @@ class WatchController extends Controller
             );
             $old = array('[title]', '[description]', '[release]', '[country]', '[genre]');
 
-            $config['title'] = trim(str_replace($old, $new, trim(config('settings.movie_title'))));
-            $config['description'] = trim(str_replace($old, $new, trim(config('settings.movie_description'))));
+            $config['title'] = trim(str_replace($old, $new, trim(config('settings.game_title'))));
+            $config['description'] = trim(str_replace($old, $new, trim(config('settings.game_description'))));
             $config['image'] = $listing->coverurl;
         }
         ## SEO ##
@@ -122,15 +123,16 @@ class WatchController extends Controller
 
             $listing->view = (int) $listing->view + 1;
             $listing->save();
-
         }
-        return view('watch.movie', compact('config', 'listing', 'recommends'));
+        return view('watch.game', compact('config', 'listing', 'recommends'));
     }
 
     public function tv(Request $request, $slug)
     {
-        $listing = Post::withCount(['seasons'])->where('slug', $slug)->where('status', 'publish')->where('type',
-            'tv')->firstOrFail() ?? abort(404);
+        $listing = Post::withCount(['seasons'])->where('slug', $slug)->where('status', 'publish')->where(
+            'type',
+            'tv'
+        )->firstOrFail() ?? abort(404);
 
         $genres = $listing->genres->modelKeys();
         $recommends = Post::where('type', 'tv')->whereHas('genres', function ($q) use ($genres) {
@@ -201,7 +203,6 @@ class WatchController extends Controller
             $peopleSchema[] = Schema::person()
                 ->name($people->name)
                 ->url(route('people', $people->slug));
-
         }
         if (isset($peopleSchema)) {
             $schema->actor($peopleSchema);
@@ -216,7 +217,8 @@ class WatchController extends Controller
                     'name' => $episode->name,
                     'datePublished' => $episode->created_at->format('Y-m-d'),
                     'url' => route('episode', [
-                        'slug' => $listing->slug, 'season' => $episode->season->season_number,
+                        'slug' => $listing->slug,
+                        'season' => $episode->season->season_number,
                         'episode' => $episode->episode_number
                     ])
                 ];
@@ -248,10 +250,14 @@ class WatchController extends Controller
 
     public function episode(Request $request, $slug, $season, $episode)
     {
-        $listing = Post::where('slug', $slug)->where('type', 'tv')->where('status',
-            'publish')->firstOrFail() ?? abort(404);
-        $episode = PostEpisode::where('post_id', $listing->id)->where('status', 'publish')->where('season_number',
-            $season)->where('episode_number', $episode)->firstOrFail() ?? abort(404);
+        $listing = Post::where('slug', $slug)->where('type', 'tv')->where(
+            'status',
+            'publish'
+        )->firstOrFail() ?? abort(404);
+        $episode = PostEpisode::where('post_id', $listing->id)->where('status', 'publish')->where(
+            'season_number',
+            $season
+        )->where('episode_number', $episode)->firstOrFail() ?? abort(404);
 
         $genres = $listing->genres->modelKeys();
         $recommends = Post::where('type', 'tv')->whereHas('genres', function ($q) use ($genres) {
@@ -277,9 +283,13 @@ class WatchController extends Controller
                     )
             ]);
         $schema = Schema::tVEpisode()
-            ->name($listing->title.' '.__(':number Season',
-                    ['number' => $episode->season_number]).', '.__(':number Episode',
-                    ['number' => $episode->episode_number]))
+            ->name($listing->title . ' ' . __(
+                ':number Season',
+                ['number' => $episode->season_number]
+            ) . ', ' . __(
+                ':number Episode',
+                ['number' => $episode->episode_number]
+            ))
             ->description($listing->overview)
             ->image($listing->imageurl)
             ->datePublished($episode->created_at->format('Y-m-d'))
@@ -291,7 +301,8 @@ class WatchController extends Controller
                         ->thumbnailUrl($listing->imageurl)
                         ->uploadDate($episode->created_at->format('Y-m-d'))
                         ->contentUrl(route('episode', [
-                            'slug' => $listing->slug, 'season' => $episode->season->season_number,
+                            'slug' => $listing->slug,
+                            'season' => $episode->season->season_number,
                             'episode' => $episode->episode_number
                         ]))
                 );
@@ -299,7 +310,8 @@ class WatchController extends Controller
             ->potentialAction(
                 Schema::WatchAction()
                     ->target(route('episode', [
-                        'slug' => $listing->slug, 'season' => $episode->season->season_number,
+                        'slug' => $listing->slug,
+                        'season' => $episode->season->season_number,
                         'episode' => $episode->episode_number
                     ]))
             )
@@ -344,7 +356,6 @@ class WatchController extends Controller
             $listing->save();
             $episode->view = (int) $episode->view + 1;
             $episode->save();
-
         }
         return view('watch.episode', compact('config', 'listing', 'episode', 'recommends'));
     }
@@ -383,7 +394,7 @@ class WatchController extends Controller
 
         $listing = PostVideo::where('id', $slug)->firstOrFail() ?? abort(404);
 
-        $Key = $listing->postable->id.'-'.$listing->postable->slug;
+        $Key = $listing->postable->id . '-' . $listing->postable->slug;
 
         if (!\Session::has($Key)) {
             \Session::put($Key, 1);

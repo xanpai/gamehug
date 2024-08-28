@@ -1,5 +1,5 @@
 <div class="mb-6" x-data="{stream:'0'}">
-    @if((($listing->type == 'movie' AND $listing->member == 'active') OR (isset($listing->post->type) AND $listing->post->type == 'tv' AND $listing->post->member == 'active')) AND (auth()->check() && (empty(auth()->user()->plan_recurring_at) OR auth()->user()->plan_recurring_at < now()) OR !auth()->check()))
+    @if((($listing->type == 'game' AND $listing->member == 'active') OR (isset($listing->post->type) AND $listing->post->type == 'tv' AND $listing->post->member == 'active')) AND (auth()->check() && (empty(auth()->user()->plan_recurring_at) OR auth()->user()->plan_recurring_at < now()) OR !auth()->check()))
         <div
             class="aspect-video relative before:absolute transition before:inset-0 before:bg-gradient-to-b before:from-gray-950 before:to-transparent before:z-10 after:absolute after:inset-0 after:bg-gradient-to-t after:from-gray-950 after:to-transparent after:via-gray-950/60 after:z-10"
             x-cloak="">

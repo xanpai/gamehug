@@ -15,7 +15,7 @@
                 @endforeach
             </div>
             <h3 class="text-gray-700 group-hover:underline dark:text-gray-200 font-medium">{{$collection->title}}</h3>
-            <div class="text-xs mt-1 text-gray-500 dark:text-gray-400">{{__(':total movie & tv show',['total' => $collection->posts_count])}}</div>
+            <div class="text-xs mt-1 text-gray-500 dark:text-gray-400">{{__(':total game & tv show',['total' => $collection->posts_count])}}</div>
         </a>
         @endforeach
     </div>

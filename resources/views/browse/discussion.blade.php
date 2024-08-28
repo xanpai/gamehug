@@ -49,7 +49,7 @@
                                             <span>{{$listing->post->runtime.' '.__('min')}}</span>
                                         @endif
                                         <div
-                                            class="text-xxs bg-gray-800 inline-flex rounded py-0.5 px-1.5 text-gray-300">{{$listing->type == 'movie' ? __('Movie') : __('TV Show')}}</div>
+                                            class="text-xxs bg-gray-800 inline-flex rounded py-0.5 px-1.5 text-gray-300">{{$listing->type == 'game' ? __('game') : __('TV Show')}}</div>
                                         @if($listing->post->release_date)
                                             <div class="font-medium text-gray-800 dark:text-gray-400">
                                                 {{$listing->post->release_date->translatedFormat('Y')}}

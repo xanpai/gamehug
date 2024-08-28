@@ -9,7 +9,7 @@ return new class extends Migration {
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
-            $table->enum('type', ['movie', 'tv','anime'])->default('movie');
+            $table->enum('type', ['game', 'tv','anime'])->default('game');
             $table->string('title');
             $table->string('slug')->unique();
             $table->string('title_sub');

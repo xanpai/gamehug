@@ -31,9 +31,9 @@ class IndexController extends Controller
                 $listings['slider'] = Cache::rememberForever('home-slider', function () use ($limit) {
                     return Post::where('slider', 'active')->where('status','publish')->orderBy('id', 'desc')->limit($limit)->get();
                 });
-            } elseif($module->slug == 'movie') {
-                $listings['movie'] = Cache::rememberForever('home-movie', function () use ($limit) {
-                    return Post::where('type', 'movie')->where('status', 'publish')->orderBy('id', 'desc')->limit($limit ?? 16)->get();
+            } elseif($module->slug == 'game') {
+                $listings['game'] = Cache::rememberForever('home-game', function () use ($limit) {
+                    return Post::where('type', 'game')->where('status', 'publish')->orderBy('id', 'desc')->limit($limit ?? 16)->get();
                 });
             } elseif($module->slug == 'tv') {
                 $listings['tv'] = Cache::rememberForever('home-tv', function () use ($limit) {

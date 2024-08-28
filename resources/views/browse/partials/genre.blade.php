@@ -6,7 +6,7 @@
                    class="rounded-lg flex px-5 overflow-hidden items-center text-white relative bg-gray-800/70 hover:bg-primary-500 hover:text-white text-xs space-x-4 transition group" style="background-color: {{$genre->color}} !important;">
                     <div class="flex-1 py-3">
                         <div class="text-sm font-medium">{{$genre->title}}</div>
-                        <div class="text-xs opacity-60">{{__(':total movie & tv show',['total' => $genre->posts_count])}}</div>
+                        <div class="text-xs opacity-60">{{__(':total game & tv show',['total' => $genre->posts_count])}}</div>
                     </div>
                     <div class="relative -bottom-3 ml-auto mt-3">
                         <div class="image aspect-square w-20 rounded-lg bg-black/20 absolute -left-8 top-2 rotate-[-8deg]"></div>

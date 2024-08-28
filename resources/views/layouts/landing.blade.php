@@ -50,10 +50,11 @@
             'footer' => 'true',
             'vertical' => 'true',
         ],
-        'movies' => [
-            'icon' => 'movie',
-            'nav' => 'movie',
-            'title' => 'Movies',
+        'games' => [
+            'icon' => 'game',
+            'nav' => 'game',
+            'title' => 'games',
+            'title' => 'games',
             'footer' => 'true',
             'vertical' => 'true',
         ],

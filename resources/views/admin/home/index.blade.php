@@ -8,15 +8,15 @@
                 <div class="px-6 py-5 flex gap-x-6">
                     <div
                         class="flex-shrink-0 flex justify-center items-center text-gray-500 rounded-full dark:text-gray-500">
-                        <x-ui.icon name="movie" class="w-9 h-9" stroke="currentColor"/>
+                        <x-ui.icon name="game" class="w-9 h-9" stroke="currentColor"/>
                     </div>
                     <div>
                         <p class="text-sm text-gray-500">
-                            {{__('Movies')}}
+                            {{__('games')}}
                         </p>
                         <div class="flex items-center gap-x-2">
                             <h3 class="mt-1 text-xl lg:text-2xl font-medium text-gray-800 dark:text-gray-200">
-                                {{$data['movie']}}
+                                {{$data['game']}}
                             </h3>
                         </div>
                     </div>

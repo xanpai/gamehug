@@ -119,7 +119,7 @@ class IndexController extends Controller
         $data['comment'] = Comment::count();
         $data['genre'] = Genre::count();
         $data['report'] = Report::count();
-        $data['movie'] = Post::where('type','movie')->count();
+        $data['game'] = Post::where('type','game')->count();
         $data['tv'] = Post::where('type','tv')->count();
         $data['episode'] = PostEpisode::count();
         $data['people'] = People::count();

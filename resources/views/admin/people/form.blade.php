@@ -61,10 +61,10 @@
                 <hr class="my-6 border-gray-100 dark:border-gray-800">
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-x-8">
                     <div class="mb-5">
-                        <x-form.label for="tmdb_id" :value="__('Themoviedb ID')"/>
+                        <x-form.label for="tmdb_id" :value="__('Thegamedb ID')"/>
                         <x-form.input id="tmdb_id" class="block mt-1 w-full" type="text" name="tmdb_id"
                                       value="{{ old('tmdb_id', isset($listing) ? $listing->tmdb_id : '') }}"
-                                      placeholder="{{__('Themoviedb ID')}}"/>
+                                      placeholder="{{__('Thegamedb ID')}}"/>
                         <x-form.error :messages="$errors->get('tmdb_id')" class="mt-2"/>
                     </div>
                     <div class="mb-5">

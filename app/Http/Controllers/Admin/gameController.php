@@ -20,17 +20,17 @@ use App\Traits\PostTrait;
 use App\Traits\PeopleTrait;
 use OneSignal;
 
-class MovieController extends Controller
+class gameController extends Controller
 {
     use PeopleTrait, PostTrait;
 
     public function index(Request $request)
     {
         $config = [
-            'title' => __('Movies'),
-            'nav' => 'movie',
+            'title' => __('Games'),
+            'nav' => 'game',
             'filter' => true,
-            'route' => 'movie',
+            'route' => 'game',
             'create' => true,
         ];
 
@@ -46,7 +46,7 @@ class MovieController extends Controller
         $perPage = config('attr.page_limit');
 
         // Query
-        $listings = Post::where('type','movie')->when($search, function ($query) use ($search) {
+        $listings = Post::where('type', 'game')->when($search, function ($query) use ($search) {
             return $query->searchUrl($search);
         })->when($status, function ($query) use ($status) {
             return $query->where('status', $status);
@@ -64,15 +64,15 @@ class MovieController extends Controller
 
 
 
-        return view('admin.post.index', compact('config', 'listings','request'));
+        return view('admin.post.index', compact('config', 'listings', 'request'));
     }
 
     public function create()
     {
         $config = [
-            'title' => __('Movie'),
-            'route' => 'movie',
-            'nav' => 'movie',
+            'title' => __('Game'),
+            'route' => 'game',
+            'nav' => 'game',
         ];
 
         $tabs = [
@@ -83,7 +83,7 @@ class MovieController extends Controller
             'advanced' => __('Advanced')
         ];
         $genres = Genre::get();
-        $countries = Country::where('subtitle','active')->get();
+        $countries = Country::where('subtitle', 'active')->get();
         return view('admin.post.form', compact('config', 'tabs', 'genres', 'countries'));
     }
 
@@ -102,35 +102,35 @@ class MovieController extends Controller
         if ($request->hasFile('image') || $request->filled('image_url')) {
             $imagename = Str::random(10);
             $imageFile = $request->image ?? $request->input('image_url');
-            $uploaded_image = fileUpload($imageFile, config('attr.poster.path').$folderDate.'/', config('attr.poster.size_x'), config('attr.poster.size_y'), $imagename);
-            fileUpload($imageFile, config('attr.poster.path').$folderDate.'/', config('attr.poster.size_x'), config('attr.poster.size_y'), $imagename,'webp');
+            $uploaded_image = fileUpload($imageFile, config('attr.poster.path') . $folderDate . '/', config('attr.poster.size_x'), config('attr.poster.size_y'), $imagename);
+            fileUpload($imageFile, config('attr.poster.path') . $folderDate . '/', config('attr.poster.size_x'), config('attr.poster.size_y'), $imagename, 'webp');
             $model->image = $uploaded_image;
         }
 
         if ($request->hasFile('cover') || $request->filled('cover_url')) {
             $imagename = Str::random(10);
             $coverFile = $request->image ?? $request->input('cover_url');
-            $uploaded_cover = fileUpload($coverFile, config('attr.poster.path').$folderDate.'/', config('attr.poster.cover_size_x'), config('attr.poster.cover_size_y'), 'cover-'.$imagename);
-            fileUpload($coverFile, config('attr.poster.path').$folderDate.'/', config('attr.poster.cover_size_x'), config('attr.poster.cover_size_y'), 'cover-'.$imagename,'webp');
+            $uploaded_cover = fileUpload($coverFile, config('attr.poster.path') . $folderDate . '/', config('attr.poster.cover_size_x'), config('attr.poster.cover_size_y'), 'cover-' . $imagename);
+            fileUpload($coverFile, config('attr.poster.path') . $folderDate . '/', config('attr.poster.cover_size_x'), config('attr.poster.cover_size_y'), 'cover-' . $imagename, 'webp');
             $model->cover = $uploaded_cover;
         }
 
         if ($request->hasFile('slide') || $request->filled('slide_url')) {
             $imagename = Str::random(10);
             $slideFile = $request->slide ?? $request->input('slide_url');
-            $uploaded_slide = fileUpload($slideFile, config('attr.poster.path').$folderDate.'/', config('attr.poster.slide_x'), config('attr.poster.slide_y'), 'slide-'.$imagename);
-            fileUpload($slideFile, config('attr.poster.path').$folderDate.'/', config('attr.poster.slide_x'), config('attr.poster.slide_y'), 'slide-'.$imagename,'webp');
+            $uploaded_slide = fileUpload($slideFile, config('attr.poster.path') . $folderDate . '/', config('attr.poster.slide_x'), config('attr.poster.slide_y'), 'slide-' . $imagename);
+            fileUpload($slideFile, config('attr.poster.path') . $folderDate . '/', config('attr.poster.slide_x'), config('attr.poster.slide_y'), 'slide-' . $imagename, 'webp');
             $model->slide = $uploaded_slide;
         }
         if ($request->hasFile('story') || $request->filled('story_url')) {
             $imagename = Str::random(10);
             $storyFile = $request->story ?? $request->input('story_url');
-            $uploaded_story = fileUpload($storyFile, config('attr.poster.path').$folderDate.'/', config('attr.poster.story_x'), config('attr.poster.story_y'), 'story-'.$imagename);
-            fileUpload($storyFile, config('attr.poster.path').$folderDate.'/', config('attr.poster.story_x'), config('attr.poster.story_y'), 'story-'.$imagename,'webp');
+            $uploaded_story = fileUpload($storyFile, config('attr.poster.path') . $folderDate . '/', config('attr.poster.story_x'), config('attr.poster.story_y'), 'story-' . $imagename);
+            fileUpload($storyFile, config('attr.poster.path') . $folderDate . '/', config('attr.poster.story_x'), config('attr.poster.story_y'), 'story-' . $imagename, 'webp');
             $model->story = $uploaded_story;
         }
 
-        $model->type = 'movie';
+        $model->type = 'game';
         $model->title = $request->input('title');
         $model->title_sub = $request->input('title_sub');
         $model->slug = SlugService::createSlug(Post::class, 'slug', $request->input('title'));
@@ -188,7 +188,7 @@ class MovieController extends Controller
                 if (!empty($key['link'])) {
                     $file = $key['link'];
                     $fileName = time() . '_' . $file->getClientOriginalName();
-                    $file->move(public_path(config('attr.poster.subtitle_path').$folderDate.'/'), $fileName);
+                    $file->move(public_path(config('attr.poster.subtitle_path') . $folderDate . '/'), $fileName);
                     $subtitle = new PostSubtitle();
                     $subtitle->country_id = $key['country_id'];
                     $subtitle->link = $fileName;
@@ -208,15 +208,15 @@ class MovieController extends Controller
         }
 
 
-        return redirect()->route('admin.movie.index')->with('success', __(':title created', ['title' => $request->input('title')]));
+        return redirect()->route('admin.game.index')->with('success', __(':title created', ['title' => $request->input('title')]));
     }
 
     public function edit($id)
     {
         $config = [
-            'title' => __('Movie'),
-            'route' => 'movie',
-            'nav' => 'movie',
+            'title' => __('Game'),
+            'route' => 'game',
+            'nav' => 'game',
         ];
 
 
@@ -231,7 +231,7 @@ class MovieController extends Controller
         ];
 
         $genres = Genre::get();
-        $countries = Country::where('subtitle','active')->get();
+        $countries = Country::where('subtitle', 'active')->get();
 
         $fetch = array();
 
@@ -266,35 +266,35 @@ class MovieController extends Controller
         if ($request->hasFile('image') || $request->filled('image_url')) {
             $imagename = Str::random(10);
             $imageFile = $request->image ?? $request->input('image_url');
-            $uploaded_image = fileUpload($imageFile, config('attr.poster.path').$folderDate.'/', config('attr.poster.size_x'), config('attr.poster.size_y'), $imagename);
-            fileUpload($imageFile, config('attr.poster.path').$folderDate.'/', config('attr.poster.size_x'), config('attr.poster.size_y'), $imagename,'webp');
+            $uploaded_image = fileUpload($imageFile, config('attr.poster.path') . $folderDate . '/', config('attr.poster.size_x'), config('attr.poster.size_y'), $imagename);
+            fileUpload($imageFile, config('attr.poster.path') . $folderDate . '/', config('attr.poster.size_x'), config('attr.poster.size_y'), $imagename, 'webp');
             $model->image = $uploaded_image;
         }
 
         if ($request->hasFile('cover') || $request->filled('cover_url')) {
             $imagename = Str::random(10);
             $coverFile = $request->cover ?? $request->input('cover_url');
-            $uploaded_cover = fileUpload($coverFile, config('attr.poster.path').$folderDate.'/', config('attr.poster.cover_size_x'), config('attr.poster.cover_size_y'), 'cover-'.$imagename);
-            fileUpload($coverFile, config('attr.poster.path').$folderDate.'/', config('attr.poster.cover_size_x'), config('attr.poster.cover_size_y'), 'cover-'.$imagename,'webp');
+            $uploaded_cover = fileUpload($coverFile, config('attr.poster.path') . $folderDate . '/', config('attr.poster.cover_size_x'), config('attr.poster.cover_size_y'), 'cover-' . $imagename);
+            fileUpload($coverFile, config('attr.poster.path') . $folderDate . '/', config('attr.poster.cover_size_x'), config('attr.poster.cover_size_y'), 'cover-' . $imagename, 'webp');
             $model->cover = $uploaded_cover;
         }
 
         if ($request->hasFile('slide') || $request->filled('slide_url')) {
             $imagename = Str::random(10);
             $slideFile = $request->slide ?? $request->input('slide_url');
-            $uploaded_slide = fileUpload($slideFile, config('attr.poster.path').$folderDate.'/', config('attr.poster.slide_x'), config('attr.poster.slide_y'), 'slide-'.$imagename);
-            fileUpload($slideFile, config('attr.poster.path').$folderDate.'/', config('attr.poster.slide_x'), config('attr.poster.slide_y'), 'slide-'.$imagename,'webp');
+            $uploaded_slide = fileUpload($slideFile, config('attr.poster.path') . $folderDate . '/', config('attr.poster.slide_x'), config('attr.poster.slide_y'), 'slide-' . $imagename);
+            fileUpload($slideFile, config('attr.poster.path') . $folderDate . '/', config('attr.poster.slide_x'), config('attr.poster.slide_y'), 'slide-' . $imagename, 'webp');
             $model->slide = $uploaded_slide;
         }
         if ($request->hasFile('story') || $request->filled('story_url')) {
             $imagename = Str::random(10);
             $storyFile = $request->story ?? $request->input('story_url');
-            $uploaded_story = fileUpload($storyFile, config('attr.poster.path').$folderDate.'/', config('attr.poster.story_x'), config('attr.poster.story_y'), 'story-'.$imagename);
-            fileUpload($storyFile, config('attr.poster.path').$folderDate.'/', config('attr.poster.story_x'), config('attr.poster.story_y'), 'story-'.$imagename,'webp');
+            $uploaded_story = fileUpload($storyFile, config('attr.poster.path') . $folderDate . '/', config('attr.poster.story_x'), config('attr.poster.story_y'), 'story-' . $imagename);
+            fileUpload($storyFile, config('attr.poster.path') . $folderDate . '/', config('attr.poster.story_x'), config('attr.poster.story_y'), 'story-' . $imagename, 'webp');
             $model->story = $uploaded_story;
         }
 
-        $model->type = 'movie';
+        $model->type = 'game';
         $model->title = $request->input('title');
         $model->title_sub = $request->input('title_sub');
         if ($model->slug != $request->input('slug')) {
@@ -322,7 +322,7 @@ class MovieController extends Controller
         $model->status = $request->input('status', 'publish');
         $model->update();
 
-        PostJob::dispatch($model,$request->send_notification)->afterResponse();
+        PostJob::dispatch($model, $request->send_notification)->afterResponse();
 
         // Category
         $model->genres()->sync($request->genre);
@@ -347,7 +347,7 @@ class MovieController extends Controller
                     $getVideo->link = $key['link'];
                     $getVideo->save();
                 } elseif ($key['link']) {
-                    $model->videos()->create(array('type' => $key['type'], 'link' => $key['link'],'label' => $key['label']));
+                    $model->videos()->create(array('type' => $key['type'], 'link' => $key['link'], 'label' => $key['label']));
                 }
             }
         }
@@ -359,7 +359,7 @@ class MovieController extends Controller
 
                     $file = $key['link'];
                     $fileName = time() . '_' . $file->getClientOriginalName();
-                    $file->move(public_path(config('attr.poster.subtitle_path').$folderDate.'/'), $fileName);
+                    $file->move(public_path(config('attr.poster.subtitle_path') . $folderDate . '/'), $fileName);
 
                     $getSubtitle = PostSubtitle::findOrFail($key['id']);
                     $getSubtitle->country_id = $key['country_id'];
@@ -369,7 +369,7 @@ class MovieController extends Controller
 
                     $file = $key['link'];
                     $fileName = time() . '_' . $file->getClientOriginalName();
-                    $file->move(public_path(config('attr.poster.subtitle_path').$folderDate.'/'), $fileName);
+                    $file->move(public_path(config('attr.poster.subtitle_path') . $folderDate . '/'), $fileName);
 
                     $model->subtitles()->create(array('country_id' => $key['country_id'], 'link' => $fileName));
                 }
@@ -387,7 +387,7 @@ class MovieController extends Controller
         }
 
         Cache::flush();
-        return redirect()->route('admin.movie.edit', $model->id)->with('success', __(':title updated', ['title' => $request->input('title')]));
+        return redirect()->route('admin.game.edit', $model->id)->with('success', __(':title updated', ['title' => $request->input('title')]));
     }
 
     public function destroy($id)
@@ -414,6 +414,5 @@ class MovieController extends Controller
     public function subtitleDestroy(Request $request)
     {
         PostSubtitle::find($request->id)->delete();
-
     }
 }

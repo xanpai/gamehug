@@ -9,7 +9,7 @@
             </div>
             <div class="py-5">
                 <h3 class="text-xs lg:text-sm text-gray-700 dark:text-gray-200 font-medium line-clamp-1">{{$featured->title}}</h3>
-                <div class="text-xs text-gray-500 dark:text-gray-500 font-medium line-clamp-1 capitalize">{{$featured->type == 'movie' ? __('Movie') : __('TV Show')}}</div>
+                <div class="text-xs text-gray-500 dark:text-gray-500 font-medium line-clamp-1 capitalize">{{$featured->type == 'game' ? __('Game') : __('TV Show')}}</div>
             </div>
         </a>
         @endforeach

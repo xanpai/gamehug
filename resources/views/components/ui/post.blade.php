@@ -66,7 +66,7 @@
                 <span>{{$genre->title}}</span>
             @endforeach
             <span
-                class="text-xxs bg-gray-800 rounded py-0.5 px-1.5 text-gray-300 !ml-auto">{{$listing->type == 'movie' ? __('Movie') : __('TV Show')}}</span>
+                class="text-xxs bg-gray-800 rounded py-0.5 px-1.5 text-gray-300 !ml-auto">{{$listing->type == 'game' ? __('Game') : __('TV Show')}}</span>
         </div>
     </div>
     @endif

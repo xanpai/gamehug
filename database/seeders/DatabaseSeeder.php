@@ -55,42 +55,42 @@ class DatabaseSeeder extends Seeder
 
         $save_data = [
             'site_name' => 'watchug',
-            'site_about' => 'We let you watch movies online without having to register or paying, with over 10000 Movies and TV Shows.',
+            'site_about' => 'We let you watch games online without having to register or paying, with over 10000 games and TV Shows.',
             'language' => 'en',
 
 
-            'title' => 'Watch the Best Movies & TV Shows — Watchug',
-            'description' => 'Watchug offers a wide collection of movies, including drama, comedy, action, sci-fi, and more.',
+            'title' => 'Watch the Best games & TV Shows — Watchug',
+            'description' => 'Watchug offers a wide collection of games, including drama, comedy, action, sci-fi, and more.',
 
-            'browse_title' => 'Explore Best Movies & TV Shows — Watchug',
-            'browse_description' => 'Unleash your cinematic curiosity with watchug extensive movie collection. Browse through a variety of genres, directors, and actors to discover new favorites.',
+            'browse_title' => 'Explore Best games & TV Shows — Watchug',
+            'browse_description' => 'Unleash your cinematic curiosity with watchug extensive game collection. Browse through a variety of genres, directors, and actors to discover new favorites.',
 
-            'movies_title' => 'Explore Best Movies — Watchug',
-            'movies_description' => 'Watchug offers a wide collection of movies, including drama, comedy, action, sci-fi, and more.',
+            'games_title' => 'Explore Best games — Watchug',
+            'games_description' => 'Watchug offers a wide collection of games, including drama, comedy, action, sci-fi, and more.',
 
             'tvshows_title' => 'Explore Best TV Shows — Watchug',
             'tvshows_description' => 'Watchug offers a wide collection of TV Shows, including drama, comedy, action, sci-fi, and more.',
 
-            'genre_title' => '[genre] [sortable] Best Movies & TV Shows — Watchug',
-            'genre_description' => '[genre] Best Movies & TV Shows — Watchug',
+            'genre_title' => '[genre] [sortable] Best games & TV Shows — Watchug',
+            'genre_description' => '[genre] Best games & TV Shows — Watchug',
 
-            'country_title' => '[country] [sortable] Best Movies & TV Shows — Watchug',
+            'country_title' => '[country] [sortable] Best games & TV Shows — Watchug',
             'country_description' => '[country] [sortable]',
 
-            'movie_title' => '[title] Free Watch Movie — Watchug',
-            'movie_description' => '[description]',
+            'game_title' => '[title] Free Watch game — Watchug',
+            'game_description' => '[description]',
 
-            'tvshow_title' => '[title] Watch Movie',
+            'tvshow_title' => '[title] Watch game',
             'tvshow_description' => '[description]',
 
-            'episode_title' => '[title] Watch Movie',
+            'episode_title' => '[title] Watch game',
             'episode_description' => '[description]',
 
-            'tag_title' => '[tag] Movies & TV Shows — Watchug',
-            'tag_description' => '[tag] Movies & TV Shows — Watchug',
+            'tag_title' => '[tag] games & TV Shows — Watchug',
+            'tag_description' => '[tag] games & TV Shows — Watchug',
 
-            'search_title' => '[search] Movies & TV Shows — Watchug',
-            'search_description' => '[search] Movies & TV Shows — Watchug',
+            'search_title' => '[search] games & TV Shows — Watchug',
+            'search_description' => '[search] games & TV Shows — Watchug',
 
             'trending_title' => 'Explore Trending Best TV Shows — Watchug',
             'trending_description' => 'Watchug offers a wide collection of TV Shows, including drama, comedy, action, sci-fi, and more.',
@@ -104,10 +104,10 @@ class DatabaseSeeder extends Seeder
             'broadcast_title' => '[title] Watch Live Broadcast',
             'broadcast_description' => '[description]',
 
-            'peoples_title' => '[title] Watch Movie',
+            'peoples_title' => '[title] Watch game',
             'peoples_description' => '[description]',
 
-            'people_title' => '[title] Watch Movie',
+            'people_title' => '[title] Watch game',
             'people_description' => '[description]',
 
             'collections_title' => 'Collections — Watchug',
@@ -151,8 +151,8 @@ class DatabaseSeeder extends Seeder
             ]
         ];
         $data[] = [
-            'title' => 'Latest Movies',
-            'slug' => 'movie',
+            'title' => 'Latest games',
+            'slug' => 'game',
             'arguments' => [
                 'limit' => '16',
                 'listing' => 'classic'
@@ -234,11 +234,11 @@ class DatabaseSeeder extends Seeder
             'icon' => 'top'
         ];
         $menudata[] = [
-            'title' => 'Movies',
+            'title' => 'games',
             'layout' => 'all',
-            'route' => 'movies',
+            'route' => 'games',
             'sortable' => '3',
-            'icon' => 'movie'
+            'icon' => 'game'
         ];
         $menudata[] = [
             'title' => 'TV Shows',

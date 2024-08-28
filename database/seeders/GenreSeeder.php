@@ -27,7 +27,7 @@ class GenreSeeder extends Seeder
             'Mystery',
             'Romance',
             'Science Fiction',
-            'TV Movie',
+            'TV Game',
             'Thriller',
             'War',
             'Western'

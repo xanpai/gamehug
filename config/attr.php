@@ -93,7 +93,7 @@ return [
         'youtube' => 'Youtube',
     ],
     'types' => [
-        'movie' => 'Movie',
+        'game' => 'game',
         'tv' => 'TV Show',
     ],
     'quality' => [
@@ -119,7 +119,7 @@ return [
             'vote_average.desc' => 'Top rated'
         ],
         'type' => [
-            'movie' => 'Movie',
+            'game' => 'game',
             'tv' => 'TV Show',
         ]
     ],
@@ -158,7 +158,7 @@ return [
     'modules' => [
         'home' => [
             'slider' => 'Slider',
-            'movies' => 'Movies',
+            'games' => 'games',
         ],
     ],
     'payments' => [
@@ -190,10 +190,10 @@ return [
             'title' => 'Management',
             'class' => 'mt-3',
         ],
-        'admin.movie.index' => [
-            'icon' => 'movie',
-            'nav' => 'movie',
-            'title' => 'Movie'
+        'admin.game.index' => [
+            'icon' => 'game',
+            'nav' => 'game',
+            'title' => 'game'
         ],
         'admin.tv.index' => [
             'icon' => 'tv',

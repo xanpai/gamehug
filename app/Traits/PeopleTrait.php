@@ -15,7 +15,7 @@ trait PeopleTrait
         if ($people['api'] == 'active') {
             $getPeople = People::where('tmdb_id', $people['id'])->first();
             if (empty($getPeople->id)) {
-                $api = Http::get('https://api.themoviedb.org/3/person/' . $people['id'] . '?api_key='.config('settings.tmdb_api').'&language='.config('settings.tmdb_language'));
+                $api = Http::get('https://api.thegamedb.org/3/person/' . $people['id'] . '?api_key='.config('settings.tmdb_api').'&language='.config('settings.tmdb_language'));
                 $api = json_decode($api->getBody(), true);
 
                 $model = new People;

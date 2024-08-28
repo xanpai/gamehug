@@ -7,7 +7,7 @@
             <div
                 class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4">
                 @foreach($result as $item)
-                    @if($item->reactable->type == 'movie' OR $item->reactable->type == 'tv')
+                    @if($item->reactable->type == 'game' OR $item->reactable->type == 'tv')
                         <a class="text-sm flex items-center gap-x-8 text-gray-600 decoration-2 group dark:text-gray-500 mb-5"
                            href="{{route($item->reactable->type,$item->reactable->slug)}}">
                             <div class="w-24 aspect-square overflow-hidden relative rounded-md">

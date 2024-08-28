@@ -4,10 +4,10 @@
         class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-24 before:absolute before:-top-14 before:start-1/2 before:bg-[url('../img/hero.svg')] before:opacity-40 before:bg-no-repeat before:bg-top before:w-full before:h-full before:-z-[1] before:transform before:-translate-x-1/2 relative">
         <div class="text-center">
             <h1 class="text-4xl font-semibold text-gray-800 dark:text-gray-200">
-                {{__('Movie & TV Show Request')}}
+                {{__('game & TV Show Request')}}
             </h1>
             <p class="mt-3 text-gray-600 dark:text-gray-400">
-                {{__('Request the movies and series you want to see or watch here, and we\'ll add them quickly')}}
+                {{__('Request the games and series you want to see or watch here, and we\'ll add them quickly')}}
             </p>
             <div class="mt-7 sm:mt-12 mx-auto max-w-4xl relative">
                 <form method="post" action="{{route('requestPost')}}" class="flex text-gray-400 relative"
@@ -23,11 +23,11 @@
                     <div
                         class="font-sans text-xs font-medium flex items-center gap-x-5 absolute right-8 top-1/2 -translate-y-1/2">
                         <div>
-                            <input type="radio" id="movie" name="type" value="movie" class="hidden peer"
+                            <input type="radio" id="game" name="type" value="game" class="hidden peer"
                                    checked>
-                            <label for="movie"
+                            <label for="game"
                                    class="text-gray-500 cursor-pointer dark:hover:text-gray-200 dark:peer-checked:text-gray-200 hover:text-white dark:text-gray-400">
-                                <div class="block">{{__('Movie')}}</div>
+                                <div class="block">{{__('game')}}</div>
                             </label>
                         </div>
                         <div>
