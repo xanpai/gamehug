@@ -94,23 +94,23 @@
                     </div>
                 </div>
                 <div class="mb-5">
-                    <x-form.label class="text-xs dark:text-gray-400" :value="__('Quality')"/>
+                    <x-form.label class="text-xs dark:text-gray-400" :value="__('Platform')"/>
                     <div class="gap-2 flex flex-wrap">
                         <div>
-                            <input type="radio" id="qualityall" name="quality"
-                                   value="all" class="hidden peer" @if(empty($quality)){{'checked'}}@endif>
-                            <label for="qualityall"
+                            <input type="radio" id="platformall" name="platform"
+                                   value="all" class="hidden peer" @if(empty($platform)){{'checked'}}@endif>
+                            <label for="platformall"
                                    class="inline-flex items-center justify-between w-full py-2.5 px-4 text-gray-500 bg-white rounded-full text-xs cursor-pointer dark:hover:text-gray-200 peer-checked:!bg-primary-500 peer-checked:!text-white hover:text-gray-600 dark:peer-checked:text-gray-300 peer-checked:text-gray-600 hover:bg-gray-50 dark:text-gray-300 dark:bg-gray-800 dark:hover:bg-gray-700">
                                 {{__('All')}}
                             </label>
                         </div>
-                        @foreach(config('attr.quality') as $quality)
+                        @foreach(config('attr.platform') as $platform)
                             <div>
-                                <input type="radio" id="quality{{$quality}}" name="quality" wire:model="quality"
-                                       value="{{$quality}}" class="hidden peer">
-                                <label for="quality{{$quality}}"
+                                <input type="radio" id="platform{{$platform}}" name="platform" wire:model="platform"
+                                       value="{{$platform}}" class="hidden peer">
+                                <label for="platform{{$platform}}"
                                        class="inline-flex items-center justify-between w-full py-2.5 px-4 text-gray-500 bg-white rounded-full text-xs cursor-pointer dark:hover:text-gray-200 peer-checked:!bg-primary-500 peer-checked:!text-white hover:text-gray-600 dark:peer-checked:text-gray-300 peer-checked:text-gray-600 hover:bg-gray-50 dark:text-gray-300 dark:bg-gray-800 dark:hover:bg-gray-700">
-                                    {{$quality}}
+                                    {{$platform}}
                                 </label>
                             </div>
                         @endforeach

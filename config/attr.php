@@ -96,11 +96,17 @@ return [
         'game' => 'Game',
         'tv' => 'TV Show',
     ],
-    'quality' => [
+    'platform' => [
+        'PC',
+        'MAC',
+        'EMU',
+        'APP',
+    ],
+	'quality' => [
         '4K',
+        'Cam',
         'HD',
-        'SD',
-        'CAM',
+        'Full HD',
     ],
     'reports' => [
         '1' => 'Wrong video',

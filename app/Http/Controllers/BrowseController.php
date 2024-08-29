@@ -47,8 +47,8 @@ class BrowseController extends Controller
             if ($request->vote_average) {
                 $queries['vote_average'] = $request->vote_average;
             }
-            if ($request->quality) {
-                $queries['quality'] = $request->quality;
+            if ($request->platform) {
+                $queries['platform'] = $request->platform;
             }
             if ($request->sort) {
                 $queries['sort'] = $request->sort;
@@ -62,7 +62,7 @@ class BrowseController extends Controller
         );
         $old = array('[sortable]', '[category]');
 
-        $allowedParameters = ['type', 'genre', 'country', 'release', 'vote_average', 'quality', 'page', 'sort'];
+        $allowedParameters = ['type', 'genre', 'country', 'release', 'vote_average', 'platform', 'page', 'sort'];
         $parameters = $request->query();
 
         foreach ($parameters as $key => $value) {
@@ -77,7 +77,7 @@ class BrowseController extends Controller
                 'country' => 'max:40',
                 'release' => 'max:2050|numeric',
                 'vote_average' => 'max:10',
-                'quality' => 'max:10',
+                'platform' => 'max:10',
             ]);
 
         } catch (ValidationException $exception) {

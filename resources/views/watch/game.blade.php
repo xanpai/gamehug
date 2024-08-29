@@ -17,9 +17,9 @@
                 <h3 class="text-xl tracking-tighter font-semibold text-gray-100 line-clamp-1">{{$listing->title}}</h3>
 
                 <div class="flex items-center text-gray-400 dark:text-gray-400 text-xs mt-3 space-x-4">
-                    @if($listing->quality)
+                    @if($listing->platform)
                     <span
-                        class="bg-gray-500/50 backdrop-blur-lg text-gray-200 text-xxs font-semibold tracking-wide py-0.5 px-1.5 rounded">{{$listing->quality}}</span>
+                        class="bg-gray-500/50 backdrop-blur-lg text-gray-200 text-xxs font-semibold tracking-wide py-0.5 px-1.5 rounded">{{$listing->platform}}</span>
                     @endif
                     @if($listing->runtime)
                     <span>{{__(':time min',['time' => $listing->runtime])}}</span>
@@ -63,9 +63,9 @@
                 <h1 class="text-3xl tracking-tighter font-semibold text-gray-100 line-clamp-1 hidden lg:block">{{$listing->title}}</h1>
 
                 <div class="hidden lg:flex items-center text-gray-400 dark:text-gray-400 text-xs mt-3 space-x-4">
-                    @if($listing->quality)
+                    @if($listing->platform)
                     <span
-                        class="bg-gray-500/50 backdrop-blur-lg text-gray-200 text-xxs font-semibold tracking-wide py-0.5 px-1.5 rounded">{{$listing->quality}}</span>
+                        class="bg-gray-500/50 backdrop-blur-lg text-gray-200 text-xxs font-semibold tracking-wide py-0.5 px-1.5 rounded">{{$listing->platform}}</span>
                     @endif
                     @if($listing->runtime)
                     <span>{{__(':time min',['time' => $listing->runtime])}}</span>

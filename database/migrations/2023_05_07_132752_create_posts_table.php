@@ -26,7 +26,7 @@ return new class extends Migration {
             $table->string('vote_average',25)->nullable();
             $table->integer('country_id')->nullable()->index();
             $table->string('trailer')->nullable();
-            $table->string('quality',25)->nullable();
+            $table->string('platform',25)->nullable();
             $table->json('arguments')->nullable();
             $table->string('meta_title')->nullable();
             $table->text('meta_description')->nullable();

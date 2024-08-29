@@ -141,7 +141,7 @@ class gameController extends Controller
         $model->vote_average = $request->input('vote_average');
         $model->country_id = $request->input('country_id');
         $model->trailer = $request->input('trailer');
-        $model->quality = $request->input('quality');
+        $model->platform = $request->input('platform');
         $model->view = $request->input('view', '0');
         $model->imdb_id = $request->input('imdb_id');
         $model->tmdb_id = $request->input('tmdb_id');
@@ -307,7 +307,7 @@ class gameController extends Controller
         $model->vote_average = $request->input('vote_average');
         $model->country_id = $request->input('country_id');
         $model->trailer = $request->input('trailer');
-        $model->quality = $request->input('quality');
+        $model->platform = $request->input('platform');
         $model->view = $request->input('view', '0');
         $model->imdb_id = $request->input('imdb_id');
         $model->tmdb_id = $request->input('tmdb_id');

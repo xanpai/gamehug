@@ -80,15 +80,15 @@
         <x-form.error :messages="$errors->get('runtime')" class="mt-2"/>
     </div>
     <div class="mb-5 col-span-4">
-        <x-form.label for="quality" :value="__('Video Quality')"/>
-        <x-form.select name="quality" id="quality">
+        <x-form.label for="platform" :value="__('Game Platform')"/>
+        <x-form.select name="platform" id="platform">
             <option value="">{{__('Choose')}}</option>
-            @foreach(config('attr.quality') as $quality)
-                <option value="{{$quality}}"
-                        @if(isset($listing->quality) AND $listing->quality == $quality) selected @endif>{{$quality}}</option>
+            @foreach(config('attr.platform') as $platform)
+                <option value="{{$platform}}"
+                        @if(isset($listing->platform) AND $listing->platform == $platform) selected @endif>{{$platform}}</option>
             @endforeach
         </x-form.select>
-        <x-form.error :messages="$errors->get('quality')" class="mt-2"/>
+        <x-form.error :messages="$errors->get('platform')" class="mt-2"/>
     </div>
     <div class="mb-5 col-span-4">
         <x-form.label for="view" :value="__('View')"/>

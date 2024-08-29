@@ -21,7 +21,7 @@ class PostFilter extends Component
     public $country = [];
     public $release;
     public $vote_average;
-    public $quality;
+    public $platform;
     public $type;
     public $search;
     public $sort;
@@ -55,8 +55,8 @@ class PostFilter extends Component
             $countrySelect = Country::where('slug',$request->country)->first();
             $this->country[] = $countrySelect->id;
         }
-        if($request->filled('quality')) {
-            $this->quality = $request->quality;
+        if($request->filled('platform')) {
+            $this->platform = $request->platform;
         }
         if($request->filled('release')) {
             $this->release = $request->release;
@@ -106,8 +106,8 @@ class PostFilter extends Component
         if ($this->vote_average) {
             $listings = $listings->where('vote_average','>=',$this->vote_average);
         }
-        if ($this->quality) {
-            $listings = $listings->where('quality',$this->quality);
+        if ($this->platform) {
+            $listings = $listings->where('platform',$this->platform);
         }
         if($this->sort) {
             $sort = config('attr.sortable')[$this->sort];
@@ -165,8 +165,8 @@ class PostFilter extends Component
         if ($this->vote_average) {
             $queries['vote_average'] = $this->vote_average;
         }
-        if ($this->quality) {
-            $queries['quality'] = $this->quality;
+        if ($this->platform) {
+            $queries['platform'] = $this->platform;
         }
         if ($this->sort) {
             $queries['sort'] = $this->sort;

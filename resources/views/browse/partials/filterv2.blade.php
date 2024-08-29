@@ -251,9 +251,9 @@
                 <button type="button"
                         class="w-full py-2.5 px-3 inline-flex justify-center items-center gap-3 text-sm font-medium text-center text-gray-500 rounded-lg dark:text-gray-400 dark:hover:text-gray-300"
                         @click.prevent="open = !open" :aria-expanded="open" :class="open ? 'dark:!text-gray-300' : ''">
-                    <span class="@if(isset($quality)) {{'dark:!text-gray-300'}}@endif">{{__('Quality')}}</span>
+                    <span class="@if(isset($platform)) {{'dark:!text-gray-300'}}@endif">{{__('Platform')}}</span>
                     <span
-                        class="rounded bg-gray-200 dark:bg-gray-800 dark:text-gray-300 px-1.5  text-xxs font-semibold tabular-nums capitalize hidden @if(isset($quality)) {{'!block'}}@endif text-gray-700">{{$quality}}</span>
+                        class="rounded bg-gray-200 dark:bg-gray-800 dark:text-gray-300 px-1.5  text-xxs font-semibold tabular-nums capitalize hidden @if(isset($platform)) {{'!block'}}@endif text-gray-700">{{$platform}}</span>
                     <x-ui.icon name="sort-2" class="w-4 h-4 ml-auto" stroke="currentColor"/>
                 </button>
                 <div
@@ -267,13 +267,13 @@
                     x-transition:leave-end="opacity-0" style="display: none;">
 
                     <div class="gap-2 flex flex-wrap">
-                        @foreach(config('attr.quality') as $quality)
+                        @foreach(config('attr.platform') as $platform)
                             <div>
-                                <input type="radio" id="quality{{$quality}}" name="quality"
-                                       value="{{$quality}}" class="sr-only peer" wire:model="quality">
-                                <label for="quality{{$quality}}"
+                                <input type="radio" id="platform{{$platform}}" name="platform"
+                                       value="{{$platform}}" class="sr-only peer" wire:model="platform">
+                                <label for="platform{{$platform}}"
                                        class="inline-flex items-center justify-between w-full py-2 px-3.5 text-gray-500 bg-white rounded-full text-xs cursor-pointer dark:hover:text-gray-200 peer-checked:!bg-primary-500 peer-checked:!text-white hover:text-gray-600 dark:peer-checked:text-gray-300 peer-checked:text-gray-600 hover:bg-gray-50 dark:text-gray-300 dark:bg-gray-800 dark:hover:bg-gray-700">
-                                    {{$quality}}
+                                    {{$platform}}
                                 </label>
                             </div>
                         @endforeach
