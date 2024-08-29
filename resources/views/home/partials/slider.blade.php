@@ -2,7 +2,7 @@
     <div class="swiper swiper-hero">
         <div class="swiper-wrapper">
             @foreach($listings['slider'] as $slide)
-                <a  href="{{route($slide->type,$slide->slug)}}"  class="swiper-slide bg-gray-950">
+                <a href="{{route($slide->type,$slide->slug)}}" class="swiper-slide bg-gray-950">
                     <div
                         class="lg:aspect-slide aspect-square relative before:absolute before:inset-0 before:bg-gradient-to-b before:from-gray-950 before:to-transparent before:z-10 after:absolute after:inset-0 after:bg-gradient-to-t after:from-gray-950 after:to-transparent after:via-gray-950/60 after:z-10 rounded-lg">
                         <div
@@ -18,11 +18,15 @@
 
                                 <div
                                     class="flex relative w-10 h-10 items-center justify-center text-white ">
-                                    <span class="text-xs">{{$slide->vote_average}}</span>
+                                    @php
+                                        $voteAverage = is_numeric($slide->vote_average) ? floatval($slide->vote_average) : 0;
+                                        $strokeDasharray = round($voteAverage * 10) . ' 100';
+                                    @endphp
+                                    <span class="text-xs">{{ number_format($voteAverage, 1) }}</span>
                                     <svg x="0px" y="0px" viewBox="0 0 36 36"
                                          class="absolute -inset-0 text-amber-400 bg-amber-400/20 w-10 h-10 rounded-full">
                                         <circle fill="none" stroke="currentColor" stroke-width="3" cx="18" cy="18" r="16"
-                                                stroke-dasharray="{{round($slide->vote_average / 10 * 100)}} 100"
+                                                stroke-dasharray="{{ $strokeDasharray }}"
                                                 stroke-linecap="round" stroke-dashoffset="0"
                                                 transform="rotate(-90 18 18)"></circle>
                                     </svg>
@@ -65,7 +69,6 @@
     </div>
 </div>
 @push('javascript')
-
     <script>
         var swiper = new Swiper('.swiper-hero', {
             pagination: {
@@ -81,10 +84,9 @@
                 disableOnInteraction: false
             },
             loop: true,
-            autoHeight:true,
+            autoHeight: true,
             effect: 'fade',
             watchSlidesProgress: true
         });
-
     </script>
 @endpush

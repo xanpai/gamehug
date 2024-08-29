@@ -84,7 +84,7 @@
                         <svg x="0px" y="0px" viewBox="0 0 36 36"
                             class="absolute -inset-0 text-amber-400 bg-amber-400/20 w-10 h-10 rounded-full">
                             <circle fill="none" stroke="currentColor" stroke-width="3" cx="18" cy="18" r="16"
-                                stroke-dasharray="{{round($listing->vote_average / 10 * 100)}} 100"
+                                stroke-dasharray="{{is_numeric($listing->vote_average) ? round($listing->vote_average * 10) : 0}} 100"
                                 stroke-linecap="round" stroke-dashoffset="0"
                                 transform="rotate(-90 18 18)"></circle>
                         </svg>
