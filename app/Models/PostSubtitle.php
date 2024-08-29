@@ -12,7 +12,7 @@ class PostSubtitle extends Model
     public $timestamps = false;
     protected $table = 'post_subtitles';
     protected $fillable = [
-        'country_id',
+        'scene_id',
         'link'
     ];
 
@@ -28,8 +28,8 @@ class PostSubtitle extends Model
             ? asset(config('attr.poster.subtitle_path') . $this->postable->created_at->translatedFormat('m-Y').'/'.$this->link)
             : '';
     }
-    public function country()
+    public function scene()
     {
-        return $this->belongsTo(Country::class);
+        return $this->belongsTo(Scene::class);
     }
 }

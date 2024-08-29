@@ -36,7 +36,7 @@ Route::get(__('tv-shows'), [App\Http\Controllers\BrowseController::class, 'index
 Route::get(__('live-broadcasts'), [App\Http\Controllers\BrowseController::class, 'broadcasts'])->name('broadcasts');
 Route::get(__('trending'), [App\Http\Controllers\BrowseController::class, 'index'])->name('trending');
 Route::get(__('genre') . '/{genre}', [App\Http\Controllers\BrowseController::class, 'index'])->name('genre');
-Route::get(__('country') . '/{country}', [App\Http\Controllers\BrowseController::class, 'index'])->name('country');
+Route::get(__('scene') . '/{scene}', [App\Http\Controllers\BrowseController::class, 'index'])->name('scene');
 Route::get(__('search') . '/' . '{search}', [App\Http\Controllers\BrowseController::class, 'index'])->name('search');
 Route::get(__('tag') . '/{tag}', [App\Http\Controllers\BrowseController::class, 'tag'])->name('tag');
 Route::get(__('find-it-now'), [App\Http\Controllers\BrowseController::class, 'find'])->name('browse.find');

@@ -130,10 +130,10 @@ class Post extends Model
     {
         return $this->belongsToMany(People::class, 'post_peoples', 'post_id', 'people_id');
     }
-    public function country()
+    public function scene()
     {
         // If the current plan is default, or the plan is not active
-        return $this->belongsTo('App\Models\Country');
+        return $this->belongsTo('App\Models\Scene');
     }
     public function watchlist()
     {

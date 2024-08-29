@@ -24,7 +24,7 @@ return new class extends Migration {
             $table->date('release_date')->nullable();
             $table->string('runtime',25)->nullable();
             $table->string('vote_average',25)->nullable();
-            $table->integer('country_id')->nullable()->index();
+            $table->integer('scene_id')->nullable()->index();
             $table->string('trailer')->nullable();
             $table->string('platform',25)->nullable();
             $table->json('arguments')->nullable();

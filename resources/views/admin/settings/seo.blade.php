@@ -102,22 +102,22 @@
     </div>
     <div class="lg:col-span-6">
         <div class="mb-5">
-            <x-form.label for="country_title" :value="__('Country title')"/>
+            <x-form.label for="country_title" :value="__('Scene title')"/>
             <x-form.input id="country_title" name="country_title" type="text" class="mt-1 block w-full"
                           value="{{ old('country_title', config('settings.country_title')) }}"
-                          placeholder="{{__('Country title')}}"/>
+                          placeholder="{{__('Scene title')}}"/>
             <x-form.error class="mt-2" :messages="$errors->get('country_title')"/>
-            <div class="mt-3 text-xs text-gray-400 dark:text-gray-300 flex items-center space-x-1"><span>{{__('Available variable')}}</span><span class="font-semibold text-primary-500">[sortable] [country]</span></div>
+            <div class="mt-3 text-xs text-gray-400 dark:text-gray-300 flex items-center space-x-1"><span>{{__('Available variable')}}</span><span class="font-semibold text-primary-500">[sortable] [scene]</span></div>
         </div>
     </div>
     <div class="lg:col-span-6">
         <div class="mb-5">
-            <x-form.label for="country_description" :value="__('Country description')"/>
+            <x-form.label for="country_description" :value="__('Scene description')"/>
             <x-form.input id="country_description" name="country_description" type="text" class="mt-1 block w-full"
                           value="{{ old('country_description', config('settings.country_description')) }}"
-                          placeholder="{{__('Country description')}}"/>
+                          placeholder="{{__('Scene description')}}"/>
             <x-form.error class="mt-2" :messages="$errors->get('country_description')"/>
-            <div class="mt-3 text-xs text-gray-400 dark:text-gray-300 flex items-center space-x-1"><span>{{__('Available variable')}}</span><span class="font-semibold text-primary-500">[sortable] [country]</span></div>
+            <div class="mt-3 text-xs text-gray-400 dark:text-gray-300 flex items-center space-x-1"><span>{{__('Available variable')}}</span><span class="font-semibold text-primary-500">[sortable] [scene]</span></div>
         </div>
     </div>
     <div class="lg:col-span-6">
@@ -127,7 +127,7 @@
                           value="{{ old('game_title', config('settings.game_title')) }}"
                           placeholder="{{__('game title')}}"/>
             <x-form.error class="mt-2" :messages="$errors->get('game_title')"/>
-            <div class="mt-3 text-xs text-gray-400 dark:text-gray-300 flex items-center space-x-1"><span>{{__('Available variable')}}</span><span class="font-semibold text-primary-500">[title] [description] [release] [country] [genre]</span></div>
+            <div class="mt-3 text-xs text-gray-400 dark:text-gray-300 flex items-center space-x-1"><span>{{__('Available variable')}}</span><span class="font-semibold text-primary-500">[title] [description] [release] [scene] [genre]</span></div>
         </div>
     </div>
     <div class="lg:col-span-6">
@@ -137,7 +137,7 @@
                           value="{{ old('game_description', config('settings.game_description')) }}"
                           placeholder="{{__('game description')}}"/>
             <x-form.error class="mt-2" :messages="$errors->get('game_description')"/>
-            <div class="mt-3 text-xs text-gray-400 dark:text-gray-300 flex items-center space-x-1"><span>{{__('Available variable')}}</span><span class="font-semibold text-primary-500">[title] [description] [release] [country] [genre]</span></div>
+            <div class="mt-3 text-xs text-gray-400 dark:text-gray-300 flex items-center space-x-1"><span>{{__('Available variable')}}</span><span class="font-semibold text-primary-500">[title] [description] [release] [scene] [genre]</span></div>
         </div>
     </div>
     <div class="lg:col-span-6">
@@ -147,7 +147,7 @@
                           value="{{ old('tvshow_title', config('settings.tvshow_title')) }}"
                           placeholder="{{__('TV Show title')}}"/>
             <x-form.error class="mt-2" :messages="$errors->get('tvshow_title')"/>
-            <div class="mt-3 text-xs text-gray-400 dark:text-gray-300 flex items-center space-x-1"><span>{{__('Available variable')}}</span><span class="font-semibold text-primary-500">[title] [description] [release] [country] [genre]</span></div>
+            <div class="mt-3 text-xs text-gray-400 dark:text-gray-300 flex items-center space-x-1"><span>{{__('Available variable')}}</span><span class="font-semibold text-primary-500">[title] [description] [release] [scene] [genre]</span></div>
         </div>
     </div>
     <div class="lg:col-span-6">
@@ -157,7 +157,7 @@
                           value="{{ old('tvshow_description', config('settings.tvshow_description')) }}"
                           placeholder="{{__('TV Show description')}}"/>
             <x-form.error class="mt-2" :messages="$errors->get('tvshow_description')"/>
-            <div class="mt-3 text-xs text-gray-400 dark:text-gray-300 flex items-center space-x-1"><span>{{__('Available variable')}}</span><span class="font-semibold text-primary-500">[title] [description] [release] [country] [genre]</span></div>
+            <div class="mt-3 text-xs text-gray-400 dark:text-gray-300 flex items-center space-x-1"><span>{{__('Available variable')}}</span><span class="font-semibold text-primary-500">[title] [description] [release] [scene] [genre]</span></div>
         </div>
     </div>
     <div class="lg:col-span-6">
@@ -167,7 +167,7 @@
                           value="{{ old('episode_title', config('settings.episode_title')) }}"
                           placeholder="{{__('Episode title')}}"/>
             <x-form.error class="mt-2" :messages="$errors->get('episode_title')"/>
-            <div class="mt-3 text-xs text-gray-400 dark:text-gray-300 flex items-center space-x-1"><span>{{__('Available variable')}}</span><span class="font-semibold text-primary-500">[title] [description] [release] [country] [genre]</span></div>
+            <div class="mt-3 text-xs text-gray-400 dark:text-gray-300 flex items-center space-x-1"><span>{{__('Available variable')}}</span><span class="font-semibold text-primary-500">[title] [description] [release] [scene] [genre]</span></div>
         </div>
     </div>
     <div class="lg:col-span-6">
@@ -177,7 +177,7 @@
                           value="{{ old('episode_title', config('settings.episode_description')) }}"
                           placeholder="{{__('Episode description')}}"/>
             <x-form.error class="mt-2" :messages="$errors->get('episode_description')"/>
-            <div class="mt-3 text-xs text-gray-400 dark:text-gray-300 flex items-center space-x-1"><span>{{__('Available variable')}}</span><span class="font-semibold text-primary-500">[title] [description] [release] [country] [genre]</span></div>
+            <div class="mt-3 text-xs text-gray-400 dark:text-gray-300 flex items-center space-x-1"><span>{{__('Available variable')}}</span><span class="font-semibold text-primary-500">[title] [description] [release] [scene] [genre]</span></div>
         </div>
     </div>
     <div class="lg:col-span-6">

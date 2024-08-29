@@ -48,15 +48,15 @@
 </div>
 <div class="grid grid-cols-1 lg:grid-cols-12 gap-x-8">
     <div class="mb-5 col-span-4">
-        <x-form.label for="country_id" :value="__('Country')"/>
-        <x-form.select name="country_id" id="country_id" x-model="importerData.country_id">
+        <x-form.label for="scene_id" :value="__('Scene Group')"/>
+        <x-form.select name="scene_id" id="scene_id" x-model="importerData.scene_id">
             <option>{{__('Choose')}}</option>
-            @foreach($countries as $country)
-                <option data-text="{{$country->code}}" value="{{$country->id}}"
-                        @if(isset($listing->country_id) AND $listing->country_id == $country->id) selected @endif>{{$country->name}}</option>
+            @foreach($scenes as $scene)
+                <option data-text="{{$scene->code}}" value="{{$scene->id}}"
+                        @if(isset($listing->scene_id) AND $listing->scene_id == $scene->id) selected @endif>{{$scene->name}}</option>
             @endforeach
         </x-form.select>
-        <x-form.error :messages="$errors->get('country_id')" class="mt-2"/>
+        <x-form.error :messages="$errors->get('scene_id')" class="mt-2"/>
     </div>
     <div class="mb-5 col-span-4">
         <x-form.label for="release_date" :value="__('Release date')"/>

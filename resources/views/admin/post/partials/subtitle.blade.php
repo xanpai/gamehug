@@ -6,11 +6,11 @@
 
             <div class="col-span-3">
                 <div class="mb-4">
-                    <x-form.select name="subtitle[][country_id]" x-model="subtitle.country_id" x-bind:name="`subtitle[${index}][country_id]`">
+                    <x-form.select name="subtitle[][scene_id]" x-model="subtitle.scene_id" x-bind:name="`subtitle[${index}][scene_id]`">
                         <option>{{__('Choose')}}</option>
-                        @foreach($countries as $country)
-                            <option data-text="{{$country->code}}" value="{{$country->id}}"
-                                    @if(isset($listing->country_id) AND $listing->country_id == $country->id) selected @endif>{{$country->name}}</option>
+                        @foreach($scenes as $scene)
+                            <option data-text="{{$scene->code}}" value="{{$scene->id}}"
+                                    @if(isset($listing->scene_id) AND $listing->scene_id == $scene->id) selected @endif>{{$scene->name}}</option>
                         @endforeach
                     </x-form.select>
                 </div>

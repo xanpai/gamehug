@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Jobs\PostJob;
 use App\Models\Genre;
-use App\Models\Country;
+use App\Models\Scene;
 use App\Models\Post;
 use App\Models\PostPeople;
 use App\Models\PostSubtitle;
@@ -83,8 +83,8 @@ class gameController extends Controller
             'advanced' => __('Advanced')
         ];
         $genres = Genre::get();
-        $countries = Country::where('subtitle', 'active')->get();
-        return view('admin.post.form', compact('config', 'tabs', 'genres', 'countries'));
+        $scenes = Scene::where('subtitle', 'disable')->get();
+        return view('admin.post.form', compact('config', 'tabs', 'genres', 'scenes'));
     }
 
     public function store(Request $request)
@@ -139,7 +139,7 @@ class gameController extends Controller
         $model->release_date = $request->input('release_date');
         $model->runtime = $request->input('runtime');
         $model->vote_average = $request->input('vote_average');
-        $model->country_id = $request->input('country_id');
+        $model->scene_id = $request->input('scene_id');
         $model->trailer = $request->input('trailer');
         $model->platform = $request->input('platform');
         $model->view = $request->input('view', '0');
@@ -190,7 +190,7 @@ class gameController extends Controller
                     $fileName = time() . '_' . $file->getClientOriginalName();
                     $file->move(public_path(config('attr.poster.subtitle_path') . $folderDate . '/'), $fileName);
                     $subtitle = new PostSubtitle();
-                    $subtitle->country_id = $key['country_id'];
+                    $subtitle->scene_id = $key['scene_id'];
                     $subtitle->link = $fileName;
                     $model->subtitles()->save($subtitle);
                 }
@@ -231,7 +231,7 @@ class gameController extends Controller
         ];
 
         $genres = Genre::get();
-        $countries = Country::where('subtitle', 'active')->get();
+        $scenes = Scene::all();
 
         $fetch = array();
 
@@ -249,7 +249,7 @@ class gameController extends Controller
             $fetch['subtitles'][] = $this->subtitlesFetch($subtitle);
         }
 
-        return view('admin.post.form', compact('config', 'listing', 'tabs', 'genres', 'countries', 'fetch'));
+        return view('admin.post.form', compact('config', 'listing', 'tabs', 'genres', 'scenes', 'fetch'));
     }
 
     public function update(Request $request, $id)
@@ -305,7 +305,7 @@ class gameController extends Controller
         $model->release_date = $request->input('release_date');
         $model->runtime = $request->input('runtime');
         $model->vote_average = $request->input('vote_average');
-        $model->country_id = $request->input('country_id');
+        $model->scene_id = $request->input('scene_id');
         $model->trailer = $request->input('trailer');
         $model->platform = $request->input('platform');
         $model->view = $request->input('view', '0');
@@ -362,7 +362,7 @@ class gameController extends Controller
                     $file->move(public_path(config('attr.poster.subtitle_path') . $folderDate . '/'), $fileName);
 
                     $getSubtitle = PostSubtitle::findOrFail($key['id']);
-                    $getSubtitle->country_id = $key['country_id'];
+                    $getSubtitle->scene_id = $key['scene_id'];
                     $getSubtitle->link = $fileName;
                     $getSubtitle->save();
                 } elseif (!empty($key['link'])) {
@@ -371,7 +371,7 @@ class gameController extends Controller
                     $fileName = time() . '_' . $file->getClientOriginalName();
                     $file->move(public_path(config('attr.poster.subtitle_path') . $folderDate . '/'), $fileName);
 
-                    $model->subtitles()->create(array('country_id' => $key['country_id'], 'link' => $fileName));
+                    $model->subtitles()->create(array('scene_id' => $key['scene_id'], 'link' => $fileName));
                 }
             }
         }

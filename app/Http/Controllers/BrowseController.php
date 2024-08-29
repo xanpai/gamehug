@@ -6,7 +6,7 @@ use App\Models\Broadcast;
 use App\Models\Category;
 use App\Models\Collection;
 use App\Models\Community;
-use App\Models\Country;
+use App\Models\Scene;
 use App\Models\Genre;
 use App\Models\People;
 use App\Models\Post;
@@ -38,8 +38,8 @@ class BrowseController extends Controller
             if ($request->genre) {
                 $queries['genre'] = implode(',',$request->genre);
             }
-            if ($request->country) {
-                $queries['country'] = implode(',',$request->country);
+            if ($request->scene) {
+                $queries['scene'] = implode(',',$request->scene);
             }
             if ($request->release) {
                 $queries['release'] = $request->release;
@@ -62,7 +62,7 @@ class BrowseController extends Controller
         );
         $old = array('[sortable]', '[category]');
 
-        $allowedParameters = ['type', 'genre', 'country', 'release', 'vote_average', 'platform', 'page', 'sort'];
+        $allowedParameters = ['type', 'genre', 'scene', 'release', 'vote_average', 'platform', 'page', 'sort'];
         $parameters = $request->query();
 
         foreach ($parameters as $key => $value) {
@@ -74,7 +74,7 @@ class BrowseController extends Controller
             $validatedData = $request->validate([
                 'sort' => 'max:40',
                 'genre' => 'max:40',
-                'country' => 'max:40',
+                'scene' => 'max:40',
                 'release' => 'max:2050|numeric',
                 'vote_average' => 'max:10',
                 'platform' => 'max:10',
@@ -224,17 +224,17 @@ class BrowseController extends Controller
                                 ->id(route('genre', $genre->slug))
                         )
                 ]);
-        } elseif ($request->route()->getName() == __('country') and $request->route()->country) {
-            $country = Country::where('slug', $request->route()->country)->firstOrFail() ?? abort(404);
-            $param['heading'] = $country->name;
+        } elseif ($request->route()->getName() == __('Scene Group') and $request->route()->scene) {
+            $scene = Scene::where('slug', $request->route()->scene)->firstOrFail() ?? abort(404);
+            $param['heading'] = $scene->name;
             $new = array(
                 $request->sort ? __(config('attr.sortable')[$request->sort]['title']) : null,
-                $country->name
+                $scene->name
             );
-            $old = array('[sortable]', '[country]');
+            $old = array('[sortable]', '[scene]');
 
-            $config['title'] = trim(str_replace($old, $new, trim(config('settings.country_title'))));
-            $config['description'] = trim(str_replace($old, $new, trim(config('settings.country_description'))));
+            $config['title'] = trim(str_replace($old, $new, trim(config('settings.scene_title'))));
+            $config['description'] = trim(str_replace($old, $new, trim(config('settings.scene_description'))));
             $config['breadcrumb'] = Schema::breadcrumbList()
                 ->itemListElement([
                     Schema::listItem()
@@ -248,8 +248,8 @@ class BrowseController extends Controller
                         ->position(2)
                         ->item(
                             Schema::thing()
-                                ->name($country->name)
-                                ->id(route('country', $country->slug))
+                                ->name($scene->name)
+                                ->id(route('scene', $scene->slug))
                         )
                 ]);
         } elseif ($request->route()->getName() == 'search') {

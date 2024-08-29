@@ -59,7 +59,7 @@ class SceneController extends Controller
         $model->filter              = $request->input('filter','disable');
         $model->save();
 
-        return redirect()->route('admin.category.index')->with('success', __(':title created', ['title' => __('Scene Group')]));
+        return redirect()->route('admin.scene.index')->with('success', __(':title created', ['title' => __('Scene Group')]));
     }
 
     public function edit($id)

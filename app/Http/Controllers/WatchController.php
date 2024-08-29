@@ -66,10 +66,10 @@ class WatchController extends Controller
                 Schema::WatchAction()
                     ->target(route($listing->type, $listing->slug))
             )
-            ->if(isset($listing->country->name), function ($schema) use ($listing) {
-                $schema->countryOfOrigin(
-                    Schema::country()
-                        ->name($listing->country->name)
+            ->if(isset($listing->scene->name), function ($schema) use ($listing) {
+                $schema->organization(
+                    Schema::organization()
+                        ->name($listing->scene->name)
                 );
             })
             ->review(
@@ -104,10 +104,10 @@ class WatchController extends Controller
                 $listing->title,
                 $listing->overview,
                 $listing->release_date->format('Y'),
-                !empty($listing->country->name) ? $listing->country->name : null,
+                !empty($listing->scene->name) ? $listing->scene->name : null,
                 isset($listing->genres[0]) ? $listing->genres[0]->title : null,
             );
-            $old = array('[title]', '[description]', '[release]', '[country]', '[genre]');
+            $old = array('[title]', '[description]', '[release]', '[scene]', '[genre]');
 
             $config['title'] = trim(str_replace($old, $new, trim(config('settings.game_title'))));
             $config['description'] = trim(str_replace($old, $new, trim(config('settings.game_description'))));
@@ -178,10 +178,10 @@ class WatchController extends Controller
                 Schema::WatchAction()
                     ->target(route($listing->type, $listing->slug))
             )
-            ->if(isset($listing->country->name), function ($schema) use ($listing) {
-                $schema->countryOfOrigin(
-                    Schema::country()
-                        ->name($listing->country->name)
+            ->if(isset($listing->scene->name), function ($schema) use ($listing) {
+                $schema->organization(
+                     Schema::organization()
+                        ->name($listing->scene->name)
                 );
             })
             ->review(
@@ -234,10 +234,10 @@ class WatchController extends Controller
                 $listing->title,
                 $listing->overview,
                 $listing->release_date->format('Y'),
-                !empty($listing->country->name) ? $listing->country->name : null,
+                !empty($listing->scene->name) ? $listing->scene->name : null,
                 isset($listing->genres[0]) ? $listing->genres[0]->title : null,
             );
-            $old = array('[title]', '[description]', '[release]', '[country]', '[genre]');
+            $old = array('[title]', '[description]', '[release]', '[scene]', '[genre]');
 
             $config['title'] = trim(str_replace($old, $new, trim(config('settings.tvshow_title'))));
             $config['description'] = trim(str_replace($old, $new, trim(config('settings.tvshow_description'))));
@@ -334,10 +334,10 @@ class WatchController extends Controller
                 $episode->episode_number,
                 $listing->overview,
                 $listing->release_date->format('Y'),
-                !empty($listing->country->name) ? $listing->country->name : null,
+                !empty($listing->scene->name) ? $listing->scene->name : null,
                 isset($listing->genres[0]) ? $listing->genres[0]->title : null,
             );
-            $old = array('[title]', '[season]', '[episode]', '[description]', '[release]', '[country]', '[genre]');
+            $old = array('[title]', '[season]', '[episode]', '[description]', '[release]', '[scene]', '[genre]');
 
             $config['title'] = trim(str_replace($old, $new, trim(config('settings.episode_title'))));
             $config['description'] = trim(str_replace($old, $new, trim(config('settings.episode_description'))));

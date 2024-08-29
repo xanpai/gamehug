@@ -100,13 +100,13 @@
 
                 <p class="text-gray-400 mt-3">{{$listing->overview}}</p>
                 <div class="my-6 space-y-2 text-sm tracking-tighter">
-                    @if($listing->country_id)
+                    @if($listing->scene_id)
                     <div class="grid sm:flex gap-x-3">
                         <div class="min-w-[150px] max-w-[200px] text-gray-500">
-                            {{__('Country')}}
+                            {{__('Scene Group')}}
                         </div>
                         <div class="font-medium text-gray-800 dark:text-gray-300">
-                            <a href="{{route('country',['country'=> $listing->country->slug])}}" class="hover:underline">{{$listing->country->name}}</a>
+                            <a href="{{route('scene',['scene'=> $listing->scene->slug])}}" class="hover:underline">{{$listing->scene->name}}</a>
                         </div>
                     </div>
                     @endif

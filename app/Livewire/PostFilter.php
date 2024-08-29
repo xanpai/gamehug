@@ -2,7 +2,7 @@
 
 namespace App\Livewire;
 
-use App\Models\Country;
+use App\Models\Scene;
 use App\Models\Genre;
 use App\Models\Post;
 use Illuminate\Http\Request;
@@ -18,7 +18,7 @@ class PostFilter extends Component
     public $param;
 
     public $genre = [];
-    public $country = [];
+    public $scene = [];
     public $release;
     public $vote_average;
     public $platform;
@@ -48,12 +48,12 @@ class PostFilter extends Component
         if($request->filled('genre')) {
             $this->genre = explode(',',$request->genre);
         }
-        if($request->filled('country')) {
-            $this->country = explode(',',$request->country);
+        if($request->filled('scene')) {
+            $this->scene = explode(',',$request->scene);
         }
-        if ($request->route()->getName() == __('country') and $request->route()->country) {
-            $countrySelect = Country::where('slug',$request->country)->first();
-            $this->country[] = $countrySelect->id;
+        if ($request->route()->getName() == __('Scene Group') and $request->route()->scene) {
+            $sceneSelect = scene::where('slug',$request->scene)->first();
+            $this->scene[] = $sceneSelect->id;
         }
         if($request->filled('platform')) {
             $this->platform = $request->platform;
@@ -97,8 +97,8 @@ class PostFilter extends Component
                 $q->whereIn('genres.id', $genre);
             });
         }
-        if($this->country) {
-            $listings = $listings->whereIn('country_id',$this->country);
+        if($this->scene) {
+            $listings = $listings->whereIn('scene_id',$this->scene);
         }
         if ($this->release) {
             $listings = $listings->whereYear('release_date','>=',$this->release);
@@ -156,8 +156,8 @@ class PostFilter extends Component
         if ($this->genre) {
             $queries['genre'] = implode(',',$this->genre);
         }
-        if ($this->country) {
-            $queries['country'] = implode(',',$this->country);
+        if ($this->scene) {
+            $queries['scene'] = implode(',',$this->scene);
         }
         if ($this->release) {
             $queries['release'] = $this->release;

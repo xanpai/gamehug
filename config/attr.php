@@ -325,8 +325,8 @@ return [
                 'admin.page.index' => [
                     'title' => 'Page',
                 ],
-                'admin.country.index' => [
-                    'title' => 'Country',
+                'admin.scene.index' => [
+                    'title' => 'Scene Group',
                 ]
             ],
         ],

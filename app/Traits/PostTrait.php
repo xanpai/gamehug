@@ -3,7 +3,7 @@
 namespace App\Traits;
 
 use App\Models\Genre;
-use App\Models\Country;
+use App\Models\Scene;
 use App\Models\People;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 use Illuminate\Http\Request;
@@ -20,8 +20,8 @@ trait PostTrait
         if ($request->has('category')) {
             $queryParams['category'] = $request->input('category');
         }
-        if ($request->has('country')) {
-            $queryParams['country'] = $request->input('country');
+        if ($request->has('scene')) {
+            $queryParams['scene'] = $request->input('scene');
         }
         if ($request->has('released')) {
             $queryParams['released'] = $request->input('released');
@@ -40,7 +40,7 @@ trait PostTrait
             'release_date' => isset($post->release_date) ? $post->release_date->format('Y-m-d') : null,
             'runtime' => $post->runtime,
             'vote_average' => $post->vote_average,
-            'country_id' => $post->country_id,
+            'scene_id' => $post->scene_id,
             'quality' => $post->quality,
             'tmdb_image' => $post->tmdb_image,
             'imdb_id' => $post->imdb_id,
@@ -103,7 +103,7 @@ trait PostTrait
     {
         $this->subtitles = [
             'id' => $subtitle->id,
-            'country_id' => $subtitle->country_id,
+            'scene_id' => $subtitle->scene_id,
             'link' => $subtitle->link,
         ];
 
@@ -163,7 +163,7 @@ trait PostTrait
                 }
             }
             if (isset($result['production_countries'][0]['iso_3166_1'])) {
-                $country = Country::where('code', $result['production_countries'][0]['iso_3166_1'])->first();
+                $scene = Scene::where('code', $result['production_countries'][0]['iso_3166_1'])->first();
             }
 
             $postArray = [
@@ -181,7 +181,7 @@ trait PostTrait
                 'runtime' => $type == 'game' ? $result['runtime'] : null,
                 'release_date' => $type == 'game' ? $result['release_date'] : $result['first_air_date'],
                 'tagline' => $result['tagline'],
-                'country_id' => !empty($country) ? $country->id : null,
+                'scene_id' => !empty($scene) ? $scene->id : null,
                 'trailer' => isset($trailer) ? $trailer : null,
                 'vote_average' => number_format($result['vote_average'], 1),
                 'tags' => $tags,

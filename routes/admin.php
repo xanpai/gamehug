@@ -252,6 +252,16 @@ Route::prefix('admin')->name('admin.')->middleware(['auth','auth.admin'])->group
         Route::post('country/{id}', 'update')->name('update')->middleware('demo');
         Route::post('countries/{id}/destroy', 'destroy')->name('destroy')->middleware('demo');
     });
+	
+// Scene
+Route::controller(\App\Http\Controllers\Admin\SceneController::class)->name('scene.')->group(function () {
+    Route::get('scenes', 'index')->name('index');
+    Route::get('scene', 'create')->name('create');
+    Route::get('scene/{id}', 'edit')->name('edit');
+    Route::post('scene', 'store')->name('store')->middleware('demo');
+    Route::post('scene/{id}', 'update')->name('update')->middleware('demo');
+    Route::post('scenes/{id}/destroy', 'destroy')->name('destroy')->middleware('demo');
+});
 
     // Community
     Route::controller(\App\Http\Controllers\Admin\CommunityController::class)->name('community.')->group(function () {

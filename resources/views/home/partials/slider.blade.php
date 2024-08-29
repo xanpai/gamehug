@@ -34,9 +34,9 @@
                                 @if($slide->runtime)
                                     <span>{{__(':time min',['time' => $slide->runtime])}}</span>
                                 @endif
-                                @if($slide->country_id)
+                                @if($slide->scene_id)
                                 <div class="font-medium text-gray-800 dark:text-gray-400">
-                                    {{$slide->country->name}}
+                                    {{$slide->scene->name}}
                                 </div>
                                 @endif
                                 @if($slide->release_date)
