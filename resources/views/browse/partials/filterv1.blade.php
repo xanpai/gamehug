@@ -170,22 +170,22 @@
                 </div>
             </div>
             <div class="mb-5">
-                <x-form.label class="text-xs dark:text-gray-400" :value="__('Country')"/>
+    <x-form.label class="text-xs dark:text-gray-400" :value="__('Scene Group')"/>
 
-                <div class="gap-2 flex flex-wrap">
-                    @foreach(\App\Models\Country::where('filter','active')->get() as $country)
-                        <div>
-                            <input type="checkbox" id="country{{$country->id}}" name="country[]"
-                                   wire:model="country"
-                                   value="{{$country->id}}" class="hidden peer">
-                            <label for="country{{$country->id}}"
-                                   class="inline-flex items-center justify-between w-full py-2.5 px-4 text-gray-500 bg-white rounded-full text-xs cursor-pointer dark:hover:text-gray-200 peer-checked:!bg-primary-500 peer-checked:!text-white hover:text-gray-600 dark:peer-checked:text-gray-300 peer-checked:text-gray-600 hover:bg-gray-50 dark:text-gray-300 dark:bg-gray-800 dark:hover:bg-gray-700">
-                                {{$country->name}}
-                            </label>
-                        </div>
-                    @endforeach
-                </div>
+    <div class="gap-2 flex flex-wrap">
+        @foreach(\App\Models\Scene::where('filter', 'active')->get() as $scene)
+            <div>
+                <input type="checkbox" id="scene{{$scene->id}}" name="scene[]"
+                       wire:model="scene"
+                       value="{{$scene->id}}" class="hidden peer">
+                <label for="scene{{$scene->id}}"
+                       class="inline-flex items-center justify-between w-full py-2.5 px-4 text-gray-500 bg-white rounded-full text-xs cursor-pointer dark:hover:text-gray-200 peer-checked:!bg-primary-500 peer-checked:!text-white hover:text-gray-600 dark:peer-checked:text-gray-300 peer-checked:text-gray-600 hover:bg-gray-50 dark:text-gray-300 dark:bg-gray-800 dark:hover:bg-gray-700">
+                    {{$scene->name}}
+                </label>
             </div>
+        @endforeach
+    </div>
+</div>
             <div class="mt-5 text-center space-y-3">
                 <x-form.secondary type="submit" size="md" class="w-full !rounded-full">{{__('Apply')}}</x-form.secondary>
             </div>

@@ -94,7 +94,6 @@ return [
     ],
     'types' => [
         'game' => 'Game',
-        'tv' => 'TV Show',
     ],
     'platform' => [
         'PC',
@@ -109,9 +108,10 @@ return [
         'Full HD',
     ],
     'reports' => [
-        '1' => 'Wrong video',
-        '2' => 'Audio not synced',
-        '3' => 'Subtitle not synced',
+        '1' => 'Outdated Version',
+        '2' => 'Wrong Game Files',
+        '3' => 'Download Link Not Working',
+		'4' => 'Corrupted Archive',
     ],
     'gender' => [
         '1' => 'Female',

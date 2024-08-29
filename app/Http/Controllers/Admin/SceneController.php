@@ -56,7 +56,7 @@ class SceneController extends Controller
         $model->code                = $request->input('code');
         $model->flag                = $request->input('flag');
         $model->subtitle            = $request->input('subtitle','disable');
-        $model->filter              = $request->input('filter','disable');
+        $model->filter              = $request->input('filter','active');
         $model->save();
 
         return redirect()->route('admin.scene.index')->with('success', __(':title created', ['title' => __('Scene Group')]));
@@ -92,7 +92,7 @@ class SceneController extends Controller
         $model->code                = $request->input('code');
         $model->flag                = $request->input('flag');
         $model->subtitle            = $request->input('subtitle','disable');
-        $model->filter              = $request->input('filter','disable');
+        $model->filter              = $request->input('filter','active');
         $model->save();
 
         return redirect()->route('admin.scene.edit',$model->id)->with('success', __(':title updated', ['title' => __('Scene Group')]));
