@@ -12,7 +12,7 @@
                         <div class="flex items-center">
                             <div class="text-2xl font-medium text-gray-800 dark:text-white mr-3">{{$count['game']}}</div>
                         </div>
-                        <div class="text-sm text-gray-400 mt-1">{{__('game')}}</div>
+                        <div class="text-sm text-gray-400 mt-1">{{__('Game')}}</div>
                     </div>
                 </div>
             </div>

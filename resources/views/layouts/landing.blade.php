@@ -53,8 +53,8 @@
         'games' => [
             'icon' => 'game',
             'nav' => 'game',
-            'title' => 'games',
-            'title' => 'games',
+            'title' => 'Games',
+            'title' => 'Games',
             'footer' => 'true',
             'vertical' => 'true',
         ],

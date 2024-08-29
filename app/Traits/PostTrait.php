@@ -54,7 +54,7 @@ trait PostTrait
     {
         $this->post = [
             'id' => $post->id,
-            'type' => $post->type == 'game' ? __('game') : __('TV Show'),
+            'type' => $post->type == 'game' ? __('Game') : __('TV Show'),
             'title' => $post->title,
             'image' => $post->imageurl
         ];

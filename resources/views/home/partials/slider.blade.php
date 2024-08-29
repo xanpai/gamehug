@@ -47,7 +47,7 @@
                             </div>
                             <p class="text-base text-white/60 line-clamp-2 leading-loose">{{$slide->overview}}</p>
                             <div class="mt-8 space-x-4 lg:block hidden">
-                                <x-form.primary class="!rounded-full px-6 lg:px-10 py-4" size="md">{{__('Watch now')}}
+                                <x-form.primary class="!rounded-full px-6 lg:px-10 py-4" size="md">{{__('Download now')}}
                                 </x-form.primary>
                             </div>
                         </div>

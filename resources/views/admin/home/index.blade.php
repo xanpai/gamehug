@@ -12,7 +12,7 @@
                     </div>
                     <div>
                         <p class="text-sm text-gray-500">
-                            {{__('games')}}
+                            {{__('Games')}}
                         </p>
                         <div class="flex items-center gap-x-2">
                             <h3 class="mt-1 text-xl lg:text-2xl font-medium text-gray-800 dark:text-gray-200">

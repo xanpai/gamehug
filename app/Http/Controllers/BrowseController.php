@@ -120,7 +120,7 @@ class BrowseController extends Controller
 
         } elseif ($request->route()->getName() == 'games') {
             $param['type'] = 'game';
-            $param['heading'] = __('games');
+            $param['heading'] = __('Games');
             $new = array(
                 $request->sort ? __(config('attr.sortable')[$request->sort]['title']) : null
             );
@@ -142,7 +142,7 @@ class BrowseController extends Controller
                         ->position(2)
                         ->item(
                             Schema::thing()
-                                ->name(__('games'))
+                                ->name(__('Games'))
                                 ->id(route('games'))
                         )
                 ]);
@@ -405,7 +405,7 @@ class BrowseController extends Controller
         $listing = Community::where('slug', $slug)->firstOrFail() ?? abort(404);
 
         $config = [
-            'title' => __('game'),
+            'title' => __('Game'),
             'route' => 'game',
             'nav' => 'game',
         ];

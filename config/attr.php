@@ -93,7 +93,7 @@ return [
         'youtube' => 'Youtube',
     ],
     'types' => [
-        'game' => 'game',
+        'game' => 'Game',
         'tv' => 'TV Show',
     ],
     'quality' => [
@@ -119,7 +119,7 @@ return [
             'vote_average.desc' => 'Top rated'
         ],
         'type' => [
-            'game' => 'game',
+            'game' => 'Game',
             'tv' => 'TV Show',
         ]
     ],
@@ -158,7 +158,7 @@ return [
     'modules' => [
         'home' => [
             'slider' => 'Slider',
-            'games' => 'games',
+            'games' => 'Games',
         ],
     ],
     'payments' => [
@@ -193,7 +193,7 @@ return [
         'admin.game.index' => [
             'icon' => 'game',
             'nav' => 'game',
-            'title' => 'game'
+            'title' => 'Game'
         ],
         'admin.tv.index' => [
             'icon' => 'tv',

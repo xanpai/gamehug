@@ -19,7 +19,7 @@
                                 <div class="text-xs text-white/50 space-x-3 mt-3 flex items-center">
 
                                     <div
-                                        class="text-xxs bg-gray-800 rounded py-0.5 px-1.5 text-gray-300">{{$item->postable->type == 'game' ? __('game') : __('TV Show')}}</div>
+                                        class="text-xxs bg-gray-800 rounded py-0.5 px-1.5 text-gray-300">{{$item->postable->type == 'game' ? __('Game') : __('TV Show')}}</div>
 
                                 </div>
                             </div>

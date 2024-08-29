@@ -10,7 +10,7 @@
     ];
     if(isset(Auth::user()->id) AND Auth::user()->id == $listing->id) {
         $tab['history'] = [
-            'title' => 'Watch history',
+            'title' => 'Game history',
             'nav' => 'profile.history'
         ];
     }

@@ -18,7 +18,7 @@
                                 <h3 class="text-base tracking-tighter font-medium text-gray-300 line-clamp-2 group-hover:underline">{{$item->postable->title}}</h3>
                                 <div class="text-xs text-white/50 space-x-3 mt-1 flex items-center">
                                     <div
-                                        class="hidden lg:block">{{__('Watched on, :date',['date' => $item->created_at->diffForHumans()])}}</div>
+                                        class="hidden lg:block">{{__('Viewed on, :date',['date' => $item->created_at->diffForHumans()])}}</div>
 
                                 </div>
                             </div>
@@ -37,7 +37,7 @@
                                 <div class="text-xs text-white/50 space-x-3 mt-1 flex items-center">
 
                                     <div
-                                        class="hidden lg:block">{{__('Watched on, :date',['date' => $item->created_at->diffForHumans()])}}</div>
+                                        class="hidden lg:block">{{__('Viewed on, :date',['date' => $item->created_at->diffForHumans()])}}</div>
 
                                 </div>
                             </div>

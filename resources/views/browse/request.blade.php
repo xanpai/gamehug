@@ -15,7 +15,7 @@
                                 {{__('Request is for members only')}}
                             </h1>
                             <p class="mt-3 text-gray-600 dark:text-gray-400">
-                                {{__('Request the games and series you want to see or watch here, and we\'ll add them quickly')}}
+                                {{__('Request the Games that you would like to download, and we\'ll add them quickly')}}
                             </p>
                         </div>
                     </div>
