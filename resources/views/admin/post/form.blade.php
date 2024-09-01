@@ -32,6 +32,14 @@
                     @endif
                 </div>
             </div>
+			<!-- TinyMCE Text Area -->
+<div class="mb-5">
+    <x-form.label for="body" :value="__('Content')"/>
+    <x-form.textarea name="body"
+                     id="editor">{!! old('body', isset($listing) ? $listing->body : '')  !!}</x-form.textarea>
+    <x-form.error :messages="$errors->get('body')" class="mt-2"/>
+</div>
+			
             <div class="max-w-xs w-full">
 
                 <div class="flex items-center justify-center w-full mb-5">
@@ -106,7 +114,7 @@
                                       :value="__('Send Push Notification')"/>
                     </div>
                 </div>
-                <x-form.primary class="w-full mt-5">{{__('Save change')}}</x-form.primary>
+                <x-form.primary class="w-full mt-5">{{__('Save changes')}}</x-form.primary>
 
                 <x-form.secondary type="button"
                                   class="w-full mt-3"
@@ -209,6 +217,7 @@
             </div>
         </div>
     </div>
+	<x-form.tinymce/>
     @push('javascript')
         <script src="{{asset('static/js/jquery.js')}}" type="text/javascript"></script>
         <script src="{{asset('static/js/select.js')}}" type="text/javascript"></script>
