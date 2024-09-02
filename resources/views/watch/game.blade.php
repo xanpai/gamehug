@@ -178,7 +178,7 @@
         // Added Body here 
         @if($listing->body)
             <div class="mt-6">
-                <h2 class="text-xl font-semibold text-white mb-3">{{__('Description')}}</h2>
+                <h2 class="text-xl font-semibold text-white mb-3">{{$listing->title}} {{__('Free Download - Review')}} </h2>
                 <div class="text-gray-300 prose prose-invert max-w-none">
                 {!! $listing->body !!}
         </div>

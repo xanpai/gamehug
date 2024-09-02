@@ -114,9 +114,9 @@ return [
 		'4' => 'Corrupted Archive',
     ],
     'gender' => [
-        '1' => 'Female',
-        '2' => 'Male',
-        '3' => 'Other',
+        '1' => 'Cracked',
+        '2' => 'Unlocked',
+        '3' => 'TBD',
     ],
     'tmdb' => [
         'sortable' => [

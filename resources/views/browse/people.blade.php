@@ -13,7 +13,7 @@
                     <h3 class="text-lg font-medium text-gray-700 dark:text-white mb-3">{{__('Overview')}}</h3>
                     <div class="py-2">
                         <div class="text-white text-sm font-medium">{{__('Know for')}}</div>
-                        <div class="text-gray-400 text-sm">{{__('Acting')}}</div>
+                        <div class="text-gray-400 text-sm">{{__('Stunning Games')}}</div>
                     </div>
                     <div class="py-2">
                         <div class="text-white text-sm font-medium">{{__('Gender')}}</div>
@@ -30,13 +30,6 @@
                             <div class="text-white text-sm font-medium">{{__('Birthday')}}</div>
                             <div
                                 class="text-gray-400 text-sm">{{$listing->birthday->translatedFormat('d M, Y').' ('.__(':age years old',['age' => $listing->birthday->diffInYears()]).')'}}</div>
-                        </div>
-                    @endif
-                    @if(!empty($listing->death_date))
-                        <div class="py-2">
-                            <div class="text-white text-sm font-medium">{{__('Death date')}}</div>
-                            <div
-                                class="text-gray-400 text-sm">{{$listing->death_date->translatedFormat('d M, Y')}}</div>
                         </div>
                     @endif
                 </div>
@@ -64,7 +57,7 @@
                     </div>
                 </div>
                 <div class="my-6">
-                    <h3 class="text-lg font-medium text-gray-700 dark:text-white mb-4">{{__('Acting')}}</h3>
+                    <h3 class="text-lg font-medium text-gray-700 dark:text-white mb-4">{{__('Popular Games From')}} {{$listing->name}}</h3>
                     <div class="bg-gray-900 rounded-lg px-6 py-3 divide-y divide-gray-800/30">
                         @foreach($listing->posts as $post)
                         <a href="{{route($post->type,$post->slug)}}" class="flex group flex-wrap gap-x-6 items-center py-3">
