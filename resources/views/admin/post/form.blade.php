@@ -31,15 +31,15 @@
                         @endforeach
                     @endif
                 </div>
+                    <!-- TinyMCE Text Area -->
+                    <div class="mb-5">
+                        <x-form.label for="body" :value="__('Content')"/>
+                        <x-form.textarea name="body"
+                        id="editor">{!! old('body', isset($listing) ? $listing->body : '')  !!}</x-form.textarea>
+                        <x-form.error :messages="$errors->get('body')" class="mt-2"/>
+                    </div>
+	            <x-form.tinymce/>
             </div>
-			<!-- TinyMCE Text Area -->
-<div class="mb-5">
-    <x-form.label for="body" :value="__('Content')"/>
-    <x-form.textarea name="body"
-                     id="editor">{!! old('body', isset($listing) ? $listing->body : '')  !!}</x-form.textarea>
-    <x-form.error :messages="$errors->get('body')" class="mt-2"/>
-</div>
-			
             <div class="max-w-xs w-full">
 
                 <div class="flex items-center justify-center w-full mb-5">
@@ -217,7 +217,6 @@
             </div>
         </div>
     </div>
-	<x-form.tinymce/>
     @push('javascript')
         <script src="{{asset('static/js/jquery.js')}}" type="text/javascript"></script>
         <script src="{{asset('static/js/select.js')}}" type="text/javascript"></script>

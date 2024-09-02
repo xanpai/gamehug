@@ -175,6 +175,15 @@
             </x-form.primary>
         </div>
         @endif
+        // Added Body here 
+        @if($listing->body)
+            <div class="mt-6">
+                <h2 class="text-xl font-semibold text-white mb-3">{{__('Description')}}</h2>
+                <div class="text-gray-300 prose prose-invert max-w-none">
+                {!! $listing->body !!}
+        </div>
+            </div>
+        @endif
         <div class="flex flex-wrap gap-2 mt-5 mb-6">
             @include('watch.partials.tag')
         </div>

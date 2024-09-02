@@ -154,6 +154,8 @@ class gameController extends Controller
         $model->member = $request->input('member', 'disable');
         $model->comment = $request->input('comment', 'disable');
         $model->status = $request->input('status', 'publish');
+        // Added body
+        $model->body = $request->input('body');
         $model->save();
 
         // Category
@@ -320,6 +322,8 @@ class gameController extends Controller
         $model->member = $request->input('member', 'disable');
         $model->comment = $request->input('comment', 'disable');
         $model->status = $request->input('status', 'publish');
+        // Added Body
+        $model->body = $request->input('body');
         $model->update();
 
         PostJob::dispatch($model, $request->send_notification)->afterResponse();
