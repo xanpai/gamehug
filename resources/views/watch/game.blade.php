@@ -22,7 +22,7 @@
                         class="bg-gray-500/50 backdrop-blur-lg text-gray-200 text-xxs font-semibold tracking-wide py-0.5 px-1.5 rounded">{{$listing->platform}}</span>
                     @endif
                     @if($listing->runtime)
-                    <span>{{__(':time min',['time' => $listing->runtime])}}</span>
+                    <span>{{$listing->runtime}}</span>
                     @endif
                     @if($listing->release_date)
                     <span>{{$listing->release_date->translatedFormat('Y')}}</span>
@@ -82,7 +82,7 @@
                         <span class="bg-gray-500/50 backdrop-blur-lg text-gray-200 text-xxs font-semibold tracking-wide py-0.5 px-1.5 rounded">{{$listing->platform}}</span>
                         @endif
                         @if($listing->runtime)
-                        <span>{{__(':time min',['time' => $listing->runtime])}}</span>
+                        <span>{{$listing->runtime}}</span>
                         @endif
                         @if($listing->release_date)
                         <span>{{$listing->release_date->translatedFormat('Y')}}</span>
@@ -90,24 +90,20 @@
                         <span class="hidden lg:block">{{__('Published on, :date',['date' => $listing->created_at->diffForHumans()])}}</span>
                     </div>
                     <div class="flex items-center gap-6 my-5">
-
-                        <div
-                            class="flex relative w-10 h-10 items-center justify-center text-white ">
-                            <span class="text-xs">{{$listing->vote_average}}</span>
-                            <svg x="0px" y="0px" viewBox="0 0 36 36"
-                                class="absolute -inset-0 text-amber-400 bg-amber-400/20 w-10 h-10 rounded-full">
-                                <circle fill="none" stroke="currentColor" stroke-width="3" cx="18" cy="18" r="16"
-                                    stroke-dasharray="{{is_numeric($listing->vote_average) ? round($listing->vote_average * 10) : 0}} 100"
-                                    stroke-linecap="round" stroke-dashoffset="0"
-                                    transform="rotate(-90 18 18)"></circle>
-                            </svg>
-                        </div>
-
-                        <div class="flex flex-1 items-center gap-x-1">
-                            <livewire:watchlist-component :model="$listing" />
-                            <livewire:report-component :model="$listing" />
-                            <div class="mx-6 hidden lg:block"></div>
-                            <livewire:reaction-component :model="$listing" />
+                        <div class="flex items-center gap-x-4 flex-grow">
+                            <div class="flex-shrink-0">
+                                <div class="relative inline-flex items-center justify-center overflow-hidden">
+                                    <span class="inline-flex whitespace-nowrap items-center justify-center px-2 py-2 text-sm rounded-base font-[450] border border-transparent text-white bg-green-500">
+                                        {{$listing->vote_average}}
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="flex flex-1 items-center gap-x-1">
+                                <livewire:watchlist-component :model="$listing" />
+                                <livewire:report-component :model="$listing" />
+                                <div class="mx-6 hidden lg:block"></div>
+                                <livewire:reaction-component :model="$listing" />
+                            </div>
                         </div>
                     </div>
 
@@ -160,29 +156,29 @@
                         </div>
                         @endif
                     </div>
+                    @if(count($listing->downloads)>0)
+                    <div class="my-5">
+                        <x-form.primary class="px-8 gap-4 !rounded-full" @click="downloadOpen = true">
+                            <span>{{__('Download')}}</span>
+                            <svg class="w-5 h-5 animate-bounce fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M0 0h24v24H0V0z" fill="none"></path>
+                                <path d="M16.59 9H15V4c0-.55-.45-1-1-1h-4c-.55 0-1 .45-1 1v5H7.41c-.89 0-1.34 1.08-.71 1.71l4.59 4.59c.39.39 1.02.39 1.41 0l4.59-4.59c.63-.63.19-1.71-.7-1.71zM5 19c0 .55.45 1 1 1h12c.55 0 1-.45 1-1s-.45-1-1-1H6c-.55 0-1 .45-1 1z"></path>
+                            </svg>
+                        </x-form.primary>
+                    </div>
+                    @endif
                 </div>
             </div>
             @include('partials.ads',['id'=> 1])
         </div>
-        @if(count($listing->downloads)>0)
-        <div class="my-5">
-            <x-form.primary class="px-8 gap-4 !rounded-full" @click="downloadOpen = true">
-                <span>{{__('Download')}}</span>
-                <svg class="w-5 h-5 animate-bounce fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M0 0h24v24H0V0z" fill="none"></path>
-                    <path d="M16.59 9H15V4c0-.55-.45-1-1-1h-4c-.55 0-1 .45-1 1v5H7.41c-.89 0-1.34 1.08-.71 1.71l4.59 4.59c.39.39 1.02.39 1.41 0l4.59-4.59c.63-.63.19-1.71-.7-1.71zM5 19c0 .55.45 1 1 1h12c.55 0 1-.45 1-1s-.45-1-1-1H6c-.55 0-1 .45-1 1z"></path>
-                </svg>
-            </x-form.primary>
-        </div>
-        @endif
-        // Added Body here 
+        // Added Body here
         @if($listing->body)
-            <div class="mt-6">
-                <h2 class="text-xl font-semibold text-white mb-3">{{$listing->title}} {{__('Free Download - Review')}} </h2>
-                <div class="text-gray-300 prose prose-invert max-w-none">
+        <div class="mt-6">
+            <h2 class="text-xl font-semibold text-white mb-3">{{$listing->title}} {{__('Free Download - Game Review')}} </h2>
+            <div class="text-gray-300 prose prose-invert max-w-none">
                 {!! $listing->body !!}
-        </div>
             </div>
+        </div>
         @endif
         <div class="flex flex-wrap gap-2 mt-5 mb-6">
             @include('watch.partials.tag')

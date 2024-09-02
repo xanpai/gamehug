@@ -2,16 +2,10 @@
     <a href="{{route($listing->type,$listing->slug)}}"
         class="aspect-poster relative transition overflow-hidden cursor-pointer before:absolute before:-inset-px @if(config('settings.poster_type') == 'v2'){{'before:bg-gradient-to-t  before:to-gray-950/[.7]'}}@else{{'before:bg-gradient-to-b  before:to-gray-950/[.4]'}}@endif before:from-gray-950 before:-m-px before:z-[1] before:opacity-0 group-hover:before:opacity-100 block">
         {!! picture($listing->imageurl,config('attr.poster.size_x').','.config('attr.poster.size_y'),'absolute h-full w-full object-cover rounded-md',$listing->title,'post') !!}
-        <div
-            class="absolute right-3 top-3 w-10 h-10 items-center justify-center text-white z-20 hidden group-hover:flex">
-            <span class="text-xs">{{$listing->vote_average}}</span>
-            <svg x="0px" y="0px" viewBox="0 0 36 36"
-                class="absolute -inset-0 text-amber-400 bg-amber-400/20 w-10 h-10 rounded-full">
-                <circle fill="none" stroke="currentColor" stroke-width="3" cx="18" cy="18" r="16"
-                    stroke-dasharray="{{is_numeric($listing->vote_average) ? round($listing->vote_average * 10) : 0}} 100"
-                    stroke-linecap="round" stroke-dashoffset="0"
-                    transform="rotate(-90 18 18)"></circle>
-            </svg>
+        <div class="absolute right-3 top-3 flex items-center justify-end w-auto min-w-[2.5rem] h-10 text-white z-20 hidden group-hover:flex">
+            <span class="text-xs inline-flex whitespace-nowrap items-center justify-center px-1 py-1 text-sm rounded border border-transparent text-white bg-green-500">
+                {{$listing->vote_average}}
+            </span>
         </div>
         <div
             class="hidden group-hover:flex absolute left-1/2 top-1/2 -translate-x-1/2 z-20 -translate-y-1/2 h-14 w-14 items-center justify-center cursor-pointer rounded-full bg-white/50 text-white transition">
@@ -34,7 +28,7 @@
         class="p-4 absolute -bottom-10 group-hover:bottom-0 left-0 right-0 transition-all opacity-0 group-hover:opacity-100 z-10">
         <div class="text-xs text-white/50 gap-x-3 mb-0.5">
             @if($listing->runtime)
-            <span>{{__(':time min',['time' => $listing->runtime])}}</span>
+            <span>{{$listing->runtime}}</span>
             @endif
             @if($listing->release_date)
             <span>{{$listing->release_date->translatedFormat('Y')}}</span>
@@ -52,7 +46,7 @@
         class="pt-4 transition">
         <div class="text-xs text-white/50 gap-x-3 mb-0.5">
             @if($listing->runtime)
-            <span>{{__(':time min',['time' => $listing->runtime])}}</span>
+            <span>{{$listing->runtime}}</span>
             @endif
             @if($listing->release_date)
             <span>{{$listing->release_date->translatedFormat('Y')}}</span>

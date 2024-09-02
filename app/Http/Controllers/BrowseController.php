@@ -431,7 +431,7 @@ class BrowseController extends Controller
             'q' => 'required|string|min:3',
         ]);
 
-        $result = Http::get('https://api.thegamedb.org/3/search/'.$request->type.'?query='.$request->q.'&api_key='.config('settings.tmdb_api').'&language='.config('settings.tmdb_language'));
+        $result = Http::get('https://api.themoviedb.org/3/search/'.$request->type.'?query='.$request->q.'&api_key='.config('settings.tmdb_api').'&language='.config('settings.tmdb_language'));
         $result = json_decode($result->getBody(), true);
         $listings = [];
         if (isset($result['results'])) {

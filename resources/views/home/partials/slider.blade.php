@@ -2,61 +2,52 @@
     <div class="swiper swiper-hero">
         <div class="swiper-wrapper">
             @foreach($listings['slider'] as $slide)
-                <a href="{{route($slide->type,$slide->slug)}}" class="swiper-slide bg-gray-950">
+            <a href="{{route($slide->type,$slide->slug)}}" class="swiper-slide bg-gray-950">
+                <div
+                    class="lg:aspect-slide aspect-square relative before:absolute before:inset-0 before:bg-gradient-to-b before:from-gray-950 before:to-transparent before:z-10 after:absolute after:inset-0 after:bg-gradient-to-t after:from-gray-950 after:to-transparent after:via-gray-950/60 after:z-10 rounded-lg">
                     <div
-                        class="lg:aspect-slide aspect-square relative before:absolute before:inset-0 before:bg-gradient-to-b before:from-gray-950 before:to-transparent before:z-10 after:absolute after:inset-0 after:bg-gradient-to-t after:from-gray-950 after:to-transparent after:via-gray-950/60 after:z-10 rounded-lg">
-                        <div
-                            class="absolute inset-0 before:absolute before:right-0 rtl:before:left-0 before:top-0 before:bottom-0 before:w-1/5 before:bg-gradient-to-l before:from-gray-950 before:to-transparent after:absolute after:left-0 after:top-0 after:bottom-0 after:w-1/2 after:bg-gradient-to-r after:from-gray-950 after:to-transparent z-10"></div>
+                        class="absolute inset-0 before:absolute before:right-0 rtl:before:left-0 before:top-0 before:bottom-0 before:w-1/5 before:bg-gradient-to-l before:from-gray-950 before:to-transparent after:absolute after:left-0 after:top-0 after:bottom-0 after:w-1/2 after:bg-gradient-to-r after:from-gray-950 after:to-transparent z-10"></div>
 
-                        <img src="{{$slide->slideurl}}"
-                             class="absolute h-full w-full object-cover">
-                        <div class="absolute left-0 rtl:right-0 rtl:left-auto rtl:text-right lg:top-0 bottom-0 flex flex-col justify-center items-center text-center lg:text-left lg:items-start lg:max-w-3xl w-full z-20">
+                    <img src="{{$slide->slideurl}}"
+                        class="absolute h-full w-full object-cover">
+                    <div class="absolute left-0 rtl:right-0 rtl:left-auto rtl:text-right lg:top-0 bottom-0 flex flex-col justify-center items-center text-center lg:text-left lg:items-start lg:max-w-3xl w-full z-20">
 
-                            <h3 class="text-3xl 2xl:text-6xl font-bold text-white mb-4 texture-text">{{$slide->title}}</h3>
+                        <h3 class="text-3xl 2xl:text-6xl font-bold text-white mb-4 texture-text">{{$slide->title}}</h3>
 
-                            <div class="flex items-center text-sm text-gray-800 dark:text-gray-400 gap-6 mb-4">
+                        <div class="flex items-center text-sm text-gray-800 dark:text-gray-400 gap-6 mb-4">
 
-                                <div
-                                    class="flex relative w-10 h-10 items-center justify-center text-white ">
-                                    @php
-                                        $voteAverage = is_numeric($slide->vote_average) ? floatval($slide->vote_average) : 0;
-                                        $strokeDasharray = round($voteAverage * 10) . ' 100';
-                                    @endphp
-                                    <span class="text-xs">{{ number_format($voteAverage, 1) }}</span>
-                                    <svg x="0px" y="0px" viewBox="0 0 36 36"
-                                         class="absolute -inset-0 text-amber-400 bg-amber-400/20 w-10 h-10 rounded-full">
-                                        <circle fill="none" stroke="currentColor" stroke-width="3" cx="18" cy="18" r="16"
-                                                stroke-dasharray="{{ $strokeDasharray }}"
-                                                stroke-linecap="round" stroke-dashoffset="0"
-                                                transform="rotate(-90 18 18)"></circle>
-                                    </svg>
-                                </div>
-                                @if($slide->quality)
-                                    <span
-                                        class="bg-gray-500/50 backdrop-blur-lg text-gray-200 text-xxs font-semibold tracking-wide py-0.5 px-1.5 rounded">{{$slide->quality}}</span>
-                                @endif
-                                @if($slide->runtime)
-                                    <span>{{__(':time min',['time' => $slide->runtime])}}</span>
-                                @endif
-                                @if($slide->scene_id)
-                                <div class="font-medium text-gray-800 dark:text-gray-400">
-                                    {{$slide->scene->name}}
-                                </div>
-                                @endif
-                                @if($slide->release_date)
-                                <div class="font-medium text-gray-800 dark:text-gray-400">
-                                    {{$slide->release_date->translatedFormat('Y')}}
-                                </div>
-                                @endif
+                            <div class="relative inline-flex items-center justify-center overflow-hidden ">
+
+                                <span class="inline-flex whitespace-nowrap items-center justify-center px-2 py-2 text-sm rounded-base font-[450] border border-transparent text-white bg-green-500">
+                                    {{$slide->vote_average}}
+                                </span>
                             </div>
-                            <p class="text-base text-white/60 line-clamp-2 leading-loose">{{$slide->overview}}</p>
-                            <div class="mt-8 space-x-4 lg:block hidden">
-                                <x-form.primary class="!rounded-full px-6 lg:px-10 py-4" size="md">{{__('Download now')}}
-                                </x-form.primary>
+                            @if($slide->platform)
+                            <span
+                                class="bg-gray-500/50 backdrop-blur-lg text-gray-200 text-xxs font-semibold tracking-wide py-0.5 px-1.5 rounded">{{$slide->platform}}</span>
+                            @endif
+                            @if($slide->runtime)
+                            <span>{{$slide->runtime}}</span>
+                            @endif
+                            @if($slide->scene_id)
+                            <div class="font-medium text-gray-800 dark:text-gray-400">
+                                {{$slide->scene->name}}
                             </div>
+                            @endif
+                            @if($slide->release_date)
+                            <div class="font-medium text-gray-800 dark:text-gray-400">
+                                {{$slide->release_date->translatedFormat('Y')}}
+                            </div>
+                            @endif
+                        </div>
+                        <p class="text-base text-white/60 line-clamp-2 leading-loose">{{$slide->overview}}</p>
+                        <div class="mt-8 space-x-4 lg:block hidden">
+                            <x-form.primary class="!rounded-full px-6 lg:px-10 py-4" size="md">{{__('Download now')}}
+                            </x-form.primary>
                         </div>
                     </div>
-                </a>
+                </div>
+            </a>
             @endforeach
         </div>
         <!-- Add Arrows -->
@@ -69,24 +60,24 @@
     </div>
 </div>
 @push('javascript')
-    <script>
-        var swiper = new Swiper('.swiper-hero', {
-            pagination: {
-                el: '.swiper-hero .swiper-pagination',
-                clickable: true
-            },
-            navigation: {
-                nextEl: '.swiper-hero .swiper-button-next',
-                prevEl: '.swiper-hero .swiper-button-prev'
-            },
-            autoplay: {
-                delay: 3000,
-                disableOnInteraction: false
-            },
-            loop: true,
-            autoHeight: true,
-            effect: 'fade',
-            watchSlidesProgress: true
-        });
-    </script>
+<script>
+    var swiper = new Swiper('.swiper-hero', {
+        pagination: {
+            el: '.swiper-hero .swiper-pagination',
+            clickable: true
+        },
+        navigation: {
+            nextEl: '.swiper-hero .swiper-button-next',
+            prevEl: '.swiper-hero .swiper-button-prev'
+        },
+        autoplay: {
+            delay: 3000,
+            disableOnInteraction: false
+        },
+        loop: true,
+        autoHeight: true,
+        effect: 'fade',
+        watchSlidesProgress: true
+    });
+</script>
 @endpush

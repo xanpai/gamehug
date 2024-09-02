@@ -49,9 +49,9 @@ class TmdbController extends Controller
                 $tool_filter .= '&page=' . $request->get('page');
             }
             if ($request->has('q')) {
-                $result = Http::get('https://api.thegamedb.org/3/search/' . $request->type . '?query=' . $request->q . $tool_filter . '&api_key=' . config('settings.tmdb_api') . '&language=' . config('settings.tmdb_language'));
+                $result = Http::get('https://api.themoviedbdb.org/3/search/' . $request->type . '?query=' . $request->q . $tool_filter . '&api_key=' . config('settings.tmdb_api') . '&language=' . config('settings.tmdb_language'));
             } elseif ($request->has('sortable')) {
-                $result = Http::get('https://api.thegamedb.org/3/discover/' . $request->type . '?sort_by=' . $request->sortable . $tool_filter . '&api_key=' . config('settings.tmdb_api') . '&language=' . config('settings.tmdb_language'));
+                $result = Http::get('https://api.themoviedbdb.org/3/discover/' . $request->type . '?sort_by=' . $request->sortable . $tool_filter . '&api_key=' . config('settings.tmdb_api') . '&language=' . config('settings.tmdb_language'));
             }
             $result = json_decode($result->getBody(), true);
             if (isset($result['results'])) {
