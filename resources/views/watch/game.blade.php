@@ -248,7 +248,7 @@
                     @foreach($listing->downloads as $download)
                     <li class="inline-flex items-center justify-between gap-x-2 py-4 font-medium text-gray-800 dark:text-white">
                         <div>{{$download->label}}</div>
-                        <x-form.primary href="{{$download->link}}" target="_blank" class="px-5 gap-2 !py-2.5 !rounded-full">
+                        <x-form.primary href="{{ route('download.initiate', ['id' => $download->id]) }}" class="px-5 gap-2 !py-2.5 !rounded-full">
                             <span class="font-normal">{{__('Download')}}</span>
                             <svg class="w-4 h-4 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
                                 <path d="M0 0h24v24H0V0z" fill="none"></path>

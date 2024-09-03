@@ -16,6 +16,7 @@ class PostVideo extends Model
         'type',
         'link'
     ];
+
     public function postable()
     {
         return $this->morphTo();

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DownloadController;  // Download Controller
 
 if (config('settings.language')) {
     App::setLocale(config('settings.language'));
@@ -102,6 +103,10 @@ Route::post(__('contact'), [App\Http\Controllers\PageController::class, 'contact
 Route::prefix('ajax')->name('ajax.')->middleware(['auth'])->group(function () {
     Route::post('reaction', [App\Http\Controllers\AjaxController::class, 'reaction'])->name('reaction');
 });
+
+// Download page controller
+Route::get('/download', [DownloadController::class, 'show'])->name('download.page');
+Route::get('/initiate-download/{id}', [DownloadController::class, 'initiate'])->name('download.initiate');
 
 Route::get('lang/{lang}', ['as' => 'lang.switch', 'uses' => 'App\Http\Controllers\AjaxController@switchLang']);
 
