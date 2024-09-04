@@ -6,7 +6,7 @@
 <meta name="description" content="Download your favorite content securely and quickly. Your loot awaits!">
 @endsection
 @section('content')
-<div class="relative overflow-hidden">
+<div class="relative overflow-hidden h-full">
     <div class="text-white max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-24 relative">
         <div class="absolute inset-0 z-0">
             <img src="{{ $listing->coverurl }}" alt="{{ $listing->title }} cover" class="absolute h-full w-full object-cover">

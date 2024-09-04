@@ -21,20 +21,11 @@ module.exports = {
             },
             screens: {
                 'sm': '640px',
-                // => @media (min-width: 640px) { ... }
-
                 'md': '768px',
-                // => @media (min-width: 768px) { ... }
-
                 'lg': '1024px',
-                // => @media (min-width: 1024px) { ... }
-
                 'xl': '1280px',
-                // => @media (min-width: 1280px) { ... }
-
                 '2xl': '1536px',
                 '3xl': '1930px',
-                // => @media (min-width: 1536px) { ... }
             },
             letterSpacing: {
                 tighter: '-.015em',
@@ -89,9 +80,14 @@ module.exports = {
                     '50%': { left: '100%' },
                     '100%': { left: '-100%' },
                 },
+                glow: {
+                    '0%, 100%': { boxShadow: '0 0 5px #10B981, 0 0 10px #10B981' },
+                    '50%': { boxShadow: '0 0 20px #10B981, 0 0 30px #10B981' },
+                },
             },
             animation: {
                 loading: 'loading 2s linear infinite',
+                glow: 'glow 2s ease-in-out infinite',
             },
             backgroundImage: {
                 'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',

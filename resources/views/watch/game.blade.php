@@ -158,7 +158,7 @@
                     </div>
                     @if(count($listing->downloads)>0)
                     <div class="my-5">
-                        <x-form.primary class="px-8 gap-4 !rounded-full" @click="downloadOpen = true">
+                        <x-form.primary class="px-8 gap-4" @click="downloadOpen = true">
                             <span>{{__('Download')}}</span>
                             <svg class="w-5 h-5 animate-bounce fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
                                 <path d="M0 0h24v24H0V0z" fill="none"></path>

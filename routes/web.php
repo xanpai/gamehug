@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DownloadController;  // Download Controller
+use App\Http\Controllers\WatchController;
 
 if (config('settings.language')) {
     App::setLocale(config('settings.language'));
@@ -107,6 +108,9 @@ Route::prefix('ajax')->name('ajax.')->middleware(['auth'])->group(function () {
 // Download page controller
 Route::get('/download', [DownloadController::class, 'show'])->name('download.page');
 Route::get('/initiate-download/{id}', [DownloadController::class, 'initiate'])->name('download.initiate');
+
+// Recent Updates Controller
+Route::get('/recent-updates', [WatchController::class, 'recentPosts'])->name('posts.recent');
 
 Route::get('lang/{lang}', ['as' => 'lang.switch', 'uses' => 'App\Http\Controllers\AjaxController@switchLang']);
 
