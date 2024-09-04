@@ -84,10 +84,15 @@ module.exports = {
                     '0%, 100%': { boxShadow: '0 0 5px #10B981, 0 0 10px #10B981' },
                     '50%': { boxShadow: '0 0 20px #10B981, 0 0 30px #10B981' },
                 },
+                pulse: {
+                    '0%, 100%': { opacity: 1 },
+                    '50%': { opacity: 0.5 },
+                },
             },
             animation: {
                 loading: 'loading 2s linear infinite',
                 glow: 'glow 2s ease-in-out infinite',
+                pulse: 'pulse 2s infinite ease-in-out',
             },
             backgroundImage: {
                 'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
