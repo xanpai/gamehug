@@ -1,0 +1,4 @@
+vendor
+public
+.env
+node_modules

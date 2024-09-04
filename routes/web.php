@@ -2,24 +2,17 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\DownloadController;  // Download Controller
+use App\Http\Controllers\DownloadController;
 use App\Http\Controllers\WatchController;
+use App\Http\Controllers\Admin\RequestPostController;
+use App\Http\Controllers\GameRequestController;
 
 if (config('settings.language')) {
     App::setLocale(config('settings.language'));
-} else { // This is optional as Laravel will automatically set the fallback language if there is none specified
+} else {
     App::setLocale('en');
 }
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
+
 if (config('settings.landing') == 'active') {
     Route::get('/', [\App\Http\Controllers\IndexController::class, 'landing'])->name('landing');
     Route::post('/', [\App\Http\Controllers\IndexController::class, 'search'])->name('landing');
@@ -27,6 +20,12 @@ if (config('settings.landing') == 'active') {
 } else {
     Route::get('/', [\App\Http\Controllers\IndexController::class, 'index'])->name('index');
 }
+
+Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/requests', [RequestPostController::class, 'index'])->name('request.index');
+    Route::delete('/requests/{id}', [RequestPostController::class, 'destroy'])->name('request.destroy');
+    Route::patch('/requests/{id}/status', [RequestPostController::class, 'updateStatus'])->name('request.update-status');
+});
 
 // Browse
 Route::get(__('browse'), [App\Http\Controllers\BrowseController::class, 'index'])->name('browse');
@@ -112,6 +111,9 @@ Route::get('/initiate-download/{id}', [DownloadController::class, 'initiate'])->
 // Recent Updates Controller
 Route::get('/recent-updates', [WatchController::class, 'recentPosts'])->name('posts.recent');
 
+// Game Request
+Route::post('/game-request', [GameRequestController::class, 'store'])->name('game.request.store');
+
 Route::get('lang/{lang}', ['as' => 'lang.switch', 'uses' => 'App\Http\Controllers\AjaxController@switchLang']);
 
 // Sitemap
@@ -123,7 +125,6 @@ Route::get('sitemap_people_{page}.xml', [App\Http\Controllers\SitemapController:
 Route::get('sitemap_genre_{page}.xml', [App\Http\Controllers\SitemapController::class, 'genre'])->name('sitemap.genre');
 
 // Webhook routes
-
 Route::post('webhooks/paypal', [\App\Http\Controllers\WebhookController::class, 'paypal'])->name('webhooks.paypal');
 Route::post('webhooks/stripe', [\App\Http\Controllers\WebhookController::class, 'stripe'])->name('webhooks.stripe');
 
@@ -134,5 +135,6 @@ Route::controller(App\Http\Controllers\InstallController::class)->name('install.
     Route::get('install/complete', 'complete')->name('complete');
     Route::post('install/config', 'store')->name('store');
 });
+
 require __DIR__ . '/auth.php';
 require __DIR__ . '/admin.php';
