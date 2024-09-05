@@ -30,7 +30,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
 // Browse
 Route::get(__('browse'), [App\Http\Controllers\BrowseController::class, 'index'])->name('browse');
 Route::post(__('browse'), [App\Http\Controllers\BrowseController::class, 'index'])->name('browse');
-Route::get(__('top-imdb'), [App\Http\Controllers\BrowseController::class, 'index'])->name('topimdb');
+Route::get(__('top-games'), [App\Http\Controllers\BrowseController::class, 'index'])->name('topimdb');
 Route::get(__('games'), [App\Http\Controllers\BrowseController::class, 'index'])->name('games');
 Route::get(__('anime'), [App\Http\Controllers\BrowseController::class, 'index'])->name('anime');
 Route::get(__('tv-shows'), [App\Http\Controllers\BrowseController::class, 'index'])->name('tvshows');

@@ -79,7 +79,7 @@
 
                     <div class="hidden lg:flex items-center text-gray-400 text-xs mt-3 space-x-4">
                         @if($listing->platform)
-                        <span class="bg-gray-500/50 backdrop-blur-lg text-gray-200 text-xxs font-semibold tracking-wide py-0.5 px-1.5 rounded">{{$listing->platform}}</span>
+                        <span class="bg-gray-500/50 backdrop-blur-lg text-gray-200 text-xs font-semibold tracking-wide py-0.5 px-1.5 rounded">{{$listing->platform}}</span>
                         @endif
                         @if($listing->runtime)
                         <span>{{$listing->runtime}}</span>
@@ -92,12 +92,14 @@
                     <div class="flex items-center gap-6 my-5">
                         <div class="flex items-center gap-x-4 flex-grow">
                             <div class="flex-shrink-0">
-                                <div class="relative inline-flex items-center justify-center overflow-hidden">
-                                    <span class="inline-flex whitespace-nowrap items-center justify-center px-2 py-2 text-sm rounded-base font-[450] border border-transparent text-white bg-green-500">
+                                <div class="relative inline-flex items-center justify-center overflow-visible">
+                                    <!-- Inner glowing circle with custom animation -->
+                                    <span class="relative inline-flex whitespace-nowrap items-center justify-center px-1.5 py-1.5 text-sm rounded-base font-[450] border border-transparent text-white bg-green-500 animate-glow">
                                         {{$listing->vote_average}}
                                     </span>
                                 </div>
                             </div>
+
                             <div class="flex flex-1 items-center gap-x-1">
                                 <livewire:watchlist-component :model="$listing" />
                                 <livewire:report-component :model="$listing" />
@@ -152,6 +154,14 @@
                                 <a href="{{route('people',['slug'=> $people->slug])}}"
                                     class="not-last-child-after inline-block mr-1 after:content-[','] last:mr-0 last:after:hidden hover:underline">{{$people->name}}</a>
                                 @endforeach
+                            </div>
+
+                        </div>
+                        <div class="grid sm:flex gap-x-3">
+                            <div class="min-w-[250px] max-w-[300px] text-gray-500">
+                                <div class="font-medium text-gray-800 dark:text-gray-300">
+                                    <span>Please support the developers - publishers by purchasing the game.</span>
+                                </div>
                             </div>
                         </div>
                         @endif

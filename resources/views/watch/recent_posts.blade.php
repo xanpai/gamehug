@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-<main class="container mx-auto px-4 py-8">
-    <div class="my-6">
+<main class="container mx-auto px-4 py-8 min-h-screen flex flex-col">
+    <div class="my-6 flex-grow">
         <h1 class="text-lg font-medium text-gray-700 dark:text-white mb-4">{{ __('Recently Updated Games') }}</h1>
         <div class="bg-gray-900 rounded-lg px-6 py-3 divide-y divide-gray-800/30">
             @forelse ($recentPosts as $post)

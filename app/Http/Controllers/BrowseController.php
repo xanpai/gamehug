@@ -36,10 +36,10 @@ class BrowseController extends Controller
                 $queries['type'] = $request->type;
             }
             if ($request->genre) {
-                $queries['genre'] = implode(',',$request->genre);
+                $queries['genre'] = implode(',', $request->genre);
             }
             if ($request->scene) {
-                $queries['scene'] = implode(',',$request->scene);
+                $queries['scene'] = implode(',', $request->scene);
             }
             if ($request->release) {
                 $queries['release'] = $request->release;
@@ -79,7 +79,6 @@ class BrowseController extends Controller
                 'vote_average' => 'max:10',
                 'platform' => 'max:10',
             ]);
-
         } catch (ValidationException $exception) {
             if ($request->expectsJson()) {
                 return response()->json(['error' => 'Error'], 404);
@@ -117,7 +116,6 @@ class BrowseController extends Controller
                                 ->id(route('tvshows'))
                         )
                 ]);
-
         } elseif ($request->route()->getName() == 'games') {
             $param['type'] = 'game';
             $param['heading'] = __('Games');
@@ -146,7 +144,6 @@ class BrowseController extends Controller
                                 ->id(route('games'))
                         )
                 ]);
-
         } elseif ($request->route()->getName() == 'trending') {
             $param['heading'] = __('Trending');
             $config['sort'] = $request->sort ?? 'like_count';
@@ -171,7 +168,7 @@ class BrowseController extends Controller
                         )
                 ]);
         } elseif ($request->route()->getName() == 'topimdb') {
-            $param['heading'] = __('Top IMDb');
+            $param['heading'] = __('Top Rated Games');
             $config['sort'] = $request->sort ?? 'vote_average';
             $config['title'] = trim(config('settings.topimdb_title'));
             $config['description'] = trim(config('settings.topimdb_description'));
@@ -203,10 +200,16 @@ class BrowseController extends Controller
             );
             $old = array('[sortable]', '[genre]');
 
-            $config['title'] = $genre->meta_title ?? trim(str_replace($old, $new,
-                trim(config('settings.genre_title'))));
-            $config['description'] = $genre->meta_description ?? trim(str_replace($old, $new,
-                trim(config('settings.genre_description'))));
+            $config['title'] = $genre->meta_title ?? trim(str_replace(
+                $old,
+                $new,
+                trim(config('settings.genre_title'))
+            ));
+            $config['description'] = $genre->meta_description ?? trim(str_replace(
+                $old,
+                $new,
+                trim(config('settings.genre_description'))
+            ));
             $config['breadcrumb'] = Schema::breadcrumbList()
                 ->itemListElement([
                     Schema::listItem()
@@ -309,7 +312,7 @@ class BrowseController extends Controller
         }
 
 
-        return view('browse.index', compact('config','param', 'request'));
+        return view('browse.index', compact('config', 'param', 'request'));
     }
 
     public function broadcasts(Request $request)
@@ -323,8 +326,10 @@ class BrowseController extends Controller
 
         ## SEO ##
 
-        $listings = $listings->orderby('id',
-            'desc')->paginate(!config('settings.listing_limit') ? 24 : config('settings.listing_limit'));
+        $listings = $listings->orderby(
+            'id',
+            'desc'
+        )->paginate(!config('settings.listing_limit') ? 24 : config('settings.listing_limit'));
         return view('browse.broadcasts', compact('config', 'listings', 'request'));
     }
 
@@ -337,8 +342,10 @@ class BrowseController extends Controller
         $config['heading'] = __('Peoples');
         ## SEO ##
 
-        $listings = $listings->orderby('id',
-            'desc')->paginate(!config('settings.listing_limit') ? 24 : config('settings.listing_limit'));
+        $listings = $listings->orderby(
+            'id',
+            'desc'
+        )->paginate(!config('settings.listing_limit') ? 24 : config('settings.listing_limit'));
 
         return view('browse.peoples', compact('config', 'listings', 'request'));
     }
@@ -379,7 +386,8 @@ class BrowseController extends Controller
         return view('browse.discussions', compact('config', 'listings', 'request'));
     }
 
-    public function discussionStore(Request $request) {
+    public function discussionStore(Request $request)
+    {
 
         $this->validate($request, [
             'title' => 'required|string|max:255',
@@ -392,12 +400,12 @@ class BrowseController extends Controller
         $model->description         = $request->input('description');
         $model->post_id             = $request->input('post_id');
         $model->user_id             = $request->user()->id;
-        $model->featured            = $request->input('featured','disable');
-        $model->comment             = $request->input('comment','disable');
-        $model->status              = $request->input('status','draft');
+        $model->featured            = $request->input('featured', 'disable');
+        $model->comment             = $request->input('comment', 'disable');
+        $model->status              = $request->input('status', 'draft');
         $model->save();
 
-        return redirect()->route('discussion',$model->slug)->with('success', __(':title created', ['title' => $request->input('title')]));
+        return redirect()->route('discussion', $model->slug)->with('success', __(':title created', ['title' => $request->input('title')]));
     }
 
     public function discussion(Request $request, $slug)
@@ -431,7 +439,7 @@ class BrowseController extends Controller
             'q' => 'required|string|min:3',
         ]);
 
-        $result = Http::get('https://api.themoviedb.org/3/search/'.$request->type.'?query='.$request->q.'&api_key='.config('settings.tmdb_api').'&language='.config('settings.tmdb_language'));
+        $result = Http::get('https://api.themoviedb.org/3/search/' . $request->type . '?query=' . $request->q . '&api_key=' . config('settings.tmdb_api') . '&language=' . config('settings.tmdb_language'));
         $result = json_decode($result->getBody(), true);
         $listings = [];
         if (isset($result['results'])) {
@@ -465,8 +473,10 @@ class BrowseController extends Controller
 
     public function collections(Request $request)
     {
-        $listings = Collection::withCount('posts')->orderby('id',
-            'desc')->paginate(!config('settings.listing_limit') ? 24 : config('settings.listing_limit'));
+        $listings = Collection::withCount('posts')->orderby(
+            'id',
+            'desc'
+        )->paginate(!config('settings.listing_limit') ? 24 : config('settings.listing_limit'));
 
         ## SEO ##
         $config['title'] = trim(config('settings.collections_title'));
