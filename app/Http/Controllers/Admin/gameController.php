@@ -91,7 +91,9 @@ class gameController extends Controller
     {
 
         $this->validate($request, [
-            'title' => 'required|string|max:255'
+            'title' => 'required|string|max:255',
+            'developer_name' => 'nullable|string|max:255',
+            'developer_link' => 'nullable|url|max:255',
         ]);
 
 
@@ -156,6 +158,9 @@ class gameController extends Controller
         $model->status = $request->input('status', 'publish');
         // Added body
         $model->body = $request->input('body');
+        // Added develiper support
+        $model->developer_name = $request->input('developer_name');
+        $model->developer_link = $request->input('developer_link');
         $model->save();
 
         // Category
@@ -258,7 +263,9 @@ class gameController extends Controller
     {
 
         $this->validate($request, [
-            'title' => 'required|string|max:255'
+            'title' => 'required|string|max:255',
+            'developer_name' => 'nullable|string|max:255',
+            'developer_link' => 'nullable|url|max:255',
         ]);
 
         $model = Post::findOrFail($id);
@@ -324,6 +331,9 @@ class gameController extends Controller
         $model->status = $request->input('status', 'publish');
         // Added Body
         $model->body = $request->input('body');
+        // Added developer support
+        $model->developer_name = $request->input('developer_name');
+        $model->developer_link = $request->input('developer_link');
         $model->update();
 
         PostJob::dispatch($model, $request->send_notification)->afterResponse();

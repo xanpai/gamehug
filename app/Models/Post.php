@@ -14,7 +14,12 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 class Post extends Model
 {
 
-    use HasFactory,Sluggable,Commentable,Reactable;
+    use HasFactory, Sluggable, Commentable, Reactable;
+
+    protected $fillable = [
+        'developer_name',  // New field
+        'developer_link',  // New field
+    ];
 
     protected $casts = [
         'release_date' => 'date:Y-m-d',
@@ -23,78 +28,77 @@ class Post extends Model
     public static function boot()
     {
         parent::boot();
-
     }
 
     public function getImageUrlAttribute()
     {
-        if(config('settings.tmdb_image') == 'active') {
-            if($this->tmdb_image AND empty($this->image)) {
-                return 'https://image.tmdb.org/t/p/w300'.$this->tmdb_image;
+        if (config('settings.tmdb_image') == 'active') {
+            if ($this->tmdb_image and empty($this->image)) {
+                return 'https://image.tmdb.org/t/p/w300' . $this->tmdb_image;
             } else {
                 return $this->image
-                    ? asset(config('attr.poster.path') . $this->created_at->translatedFormat('m-Y').'/'.$this->image)
+                    ? asset(config('attr.poster.path') . $this->created_at->translatedFormat('m-Y') . '/' . $this->image)
                     : '';
             }
         } else {
             return $this->image
-                ? asset(config('attr.poster.path') . $this->created_at->translatedFormat('m-Y').'/'.$this->image)
+                ? asset(config('attr.poster.path') . $this->created_at->translatedFormat('m-Y') . '/' . $this->image)
                 : '';
         }
     }
     public function getCoverUrlAttribute()
     {
-        if(config('settings.tmdb_image') == 'active') {
+        if (config('settings.tmdb_image') == 'active') {
 
-            if($this->tmdb_image AND empty($this->cover)) {
-                return 'https://image.tmdb.org/t/p/w1280_and_h720_bestv2'.$this->tmdb_image;
+            if ($this->tmdb_image and empty($this->cover)) {
+                return 'https://image.tmdb.org/t/p/w1280_and_h720_bestv2' . $this->tmdb_image;
             } else {
                 return $this->cover
-                    ? asset(config('attr.poster.path') . $this->created_at->translatedFormat('m-Y').'/'.$this->cover)
+                    ? asset(config('attr.poster.path') . $this->created_at->translatedFormat('m-Y') . '/' . $this->cover)
                     : '';
             }
         } else {
             return $this->cover
-                ? asset(config('attr.poster.path') . $this->created_at->translatedFormat('m-Y').'/'.$this->cover)
+                ? asset(config('attr.poster.path') . $this->created_at->translatedFormat('m-Y') . '/' . $this->cover)
                 : '';
         }
     }
     public function getSlideUrlAttribute()
     {
-        if(config('settings.tmdb_image') == 'active') {
+        if (config('settings.tmdb_image') == 'active') {
 
-            if($this->tmdb_image AND empty($this->slide)) {
-                return 'https://image.tmdb.org/t/p/w1920_and_h800_multi_faces'.$this->tmdb_image;
+            if ($this->tmdb_image and empty($this->slide)) {
+                return 'https://image.tmdb.org/t/p/w1920_and_h800_multi_faces' . $this->tmdb_image;
             } else {
                 return $this->slide
-                    ? asset(config('attr.poster.path') . $this->created_at->translatedFormat('m-Y').'/'.$this->slide)
+                    ? asset(config('attr.poster.path') . $this->created_at->translatedFormat('m-Y') . '/' . $this->slide)
                     : '';
             }
         } else {
             return $this->slide
-                ? asset(config('attr.poster.path') . $this->created_at->translatedFormat('m-Y').'/'.$this->slide)
+                ? asset(config('attr.poster.path') . $this->created_at->translatedFormat('m-Y') . '/' . $this->slide)
                 : '';
         }
     }
     public function getStoryUrlAttribute()
     {
-        if(config('settings.tmdb_image') == 'active') {
-            if($this->tmdb_image AND empty($this->story)) {
-                return 'https://image.tmdb.org/t/p/w235_and_h235_face'.$this->tmdb_image;
+        if (config('settings.tmdb_image') == 'active') {
+            if ($this->tmdb_image and empty($this->story)) {
+                return 'https://image.tmdb.org/t/p/w235_and_h235_face' . $this->tmdb_image;
             } else {
                 return $this->story
-                    ? asset(config('attr.poster.path') . $this->created_at->translatedFormat('m-Y').'/'.$this->story)
+                    ? asset(config('attr.poster.path') . $this->created_at->translatedFormat('m-Y') . '/' . $this->story)
                     : '';
             }
         } else {
             return $this->story
-                ? asset(config('attr.poster.path') . $this->created_at->translatedFormat('m-Y').'/'.$this->story)
+                ? asset(config('attr.poster.path') . $this->created_at->translatedFormat('m-Y') . '/' . $this->story)
                 : '';
         }
     }
     public function scopeSearchUrl(Builder $query, $value)
     {
-        return $query->where('title', 'like', '%'.$value.'%');
+        return $query->where('title', 'like', '%' . $value . '%');
     }
 
     public function tags()
@@ -108,7 +112,7 @@ class Post extends Model
     }
     public function episodes()
     {
-        return $this->hasMany(PostEpisode::class)->where('status','publish');
+        return $this->hasMany(PostEpisode::class)->where('status', 'publish');
     }
     public function genres()
     {
@@ -116,11 +120,11 @@ class Post extends Model
     }
     public function videos()
     {
-        return $this->morphMany(PostVideo::class, 'Postable')->whereNot('type','download');
+        return $this->morphMany(PostVideo::class, 'Postable')->whereNot('type', 'download');
     }
     public function downloads()
     {
-        return $this->morphMany(PostVideo::class, 'Postable')->where('type','download');
+        return $this->morphMany(PostVideo::class, 'Postable')->where('type', 'download');
     }
     public function subtitles()
     {
@@ -137,7 +141,7 @@ class Post extends Model
     }
     public function watchlist()
     {
-        return $this->morphToMany(User::class, 'postable','watchlists');
+        return $this->morphToMany(User::class, 'postable', 'watchlists');
     }
     public function report()
     {
