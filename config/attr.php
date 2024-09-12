@@ -101,7 +101,7 @@ return [
         'EMU',
         'APP',
     ],
-	'quality' => [
+    'quality' => [
         '4K',
         'Cam',
         'HD',
@@ -111,7 +111,7 @@ return [
         '1' => 'Outdated Version',
         '2' => 'Wrong Game Files',
         '3' => 'Download Link Not Working',
-		'4' => 'Corrupted Archive',
+        '4' => 'Corrupted Archive',
     ],
     'gender' => [
         '1' => 'Cracked',
@@ -228,7 +228,7 @@ return [
                     'title' => 'Genre',
                 ],
                 'admin.people.index' => [
-                    'title' => 'People',
+                    'title' => 'Publishers',
                 ],
             ],
         ],
