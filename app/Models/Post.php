@@ -19,6 +19,7 @@ class Post extends Model
     protected $fillable = [
         'developer_name',  // New field
         'developer_link',  // New field
+        'repack_features',
     ];
 
     protected $casts = [

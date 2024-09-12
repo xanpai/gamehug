@@ -24,7 +24,6 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'auth.admin'])->grou
         if (function_exists('opcache_reset')) {
             opcache_reset();
         }
-        Artisan::call('php:restart');
 
         return redirect()->route('admin.index')->with('success', __('Cache cleared'));
     })->name('cache.clear');

@@ -161,6 +161,8 @@ class gameController extends Controller
         // Added develiper support
         $model->developer_name = $request->input('developer_name');
         $model->developer_link = $request->input('developer_link');
+        // Added Repack Features
+        $model->repack_features = $request->input('repack_features');
         $model->save();
 
         // Category
@@ -334,6 +336,8 @@ class gameController extends Controller
         // Added developer support
         $model->developer_name = $request->input('developer_name');
         $model->developer_link = $request->input('developer_link');
+        // Added Repack Features
+        $model->repack_features = $request->input('repack_features');
         $model->update();
 
         PostJob::dispatch($model, $request->send_notification)->afterResponse();

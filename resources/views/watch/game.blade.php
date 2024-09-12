@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-    <div x-data="{ selectedStream: '0', trailerOpen: false, iframeSrc: '', downloadOpen: false }">
+    <div x-data="{ selectedStream: '0', trailerOpen: false, iframeSrc: '', downloadOpen: false, repackFeaturesOpen: false }">
         <div class="container">
             <!--Removed Player By commenting out below line -->
             {{-- <livewire:watch-component :listing="$listing" /> --}}
@@ -8,7 +8,7 @@
 
                 <div class="max-w-[6rem] w-full mx-auto">
                     <div class="aspect-[2/3] relative rounded-md transition overflow-hidden cursor-pointer ">
-                        <img src="{{ $listing->coverurl }}" class="absolute  h-full w-full object-cover">
+                        <img src="{{ $listing->imageurl }}" class="absolute  h-full w-full object-cover">
                     </div>
                 </div>
                 <div class="flex-1">
@@ -183,8 +183,8 @@
                                 </div>
                             @endif
                         </div>
-                        @if (count($listing->downloads) > 0)
-                            <div class="my-5">
+                        <div class="flex items-center justify-start gap-4 my-5">
+                            @if (count($listing->downloads) > 0)
                                 <x-form.primary class="px-8 gap-4" @click="downloadOpen = true">
                                     <span>{{ __('Download') }}</span>
                                     <svg class="w-5 h-5 animate-bounce fill-current" xmlns="http://www.w3.org/2000/svg"
@@ -195,8 +195,13 @@
                                         </path>
                                     </svg>
                                 </x-form.primary>
-                            </div>
-                        @endif
+                            @endif
+                            @if ($listing->repack_features)
+                                <x-form.secondary class="px-8 gap-4 ml-auto" @click.prevent="repackFeaturesOpen = true">
+                                    <span>{{ __('Repack Features') }}</span>
+                                </x-form.secondary>
+                            @endif
+                        </div>
                     </div>
                 </div>
                 @include('partials.ads', ['id' => 1])
@@ -296,6 +301,37 @@
                 </div>
             </div>
         </div>
+        @if ($listing->repack_features)
+            <!-- Repack Features Modal -->
+            <div class="fixed inset-0 z-[60] overflow-hidden" x-show="repackFeaturesOpen"
+                x-transition:enter="transition ease-out" x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in"
+                x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" style="display: none;">
+                <!-- Overlay -->
+                <div class="absolute inset-0 bg-gray-800/40 backdrop-blur-md" @click="repackFeaturesOpen = false"></div>
+
+                <!-- Modal content -->
+                <div class="flex items-center justify-center min-h-screen p-4">
+                    <div class="relative bg-white dark:bg-gray-900 max-w-xl w-full rounded-xl shadow-lg p-6 lg:p-10 overflow-hidden"
+                        x-show="repackFeaturesOpen" x-transition:enter="transition ease-out duration-300"
+                        x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                        x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
+                        x-transition:leave="transition ease-in duration-200"
+                        x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
+                        x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                        @click.away="repackFeaturesOpen = false" @keydown.escape.window="repackFeaturesOpen = false">
+
+                        <h3 class="text-lg xl:text-xl text-gray-900 dark:text-white font-semibold mb-3 text-center">
+                            {{ __('Repack Features') }}
+                        </h3>
+                        <div
+                            class="prose dark:prose-invert max-w-none max-h-[60vh] overflow-auto scrollbar-thumb-gray-700 scrollbar-track-transparent pr-4 scrollbar-rounded-lg scrollbar-thin">
+                            {!! $listing->repack_features !!}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endif
 
         @push('javascript')
             <script>
