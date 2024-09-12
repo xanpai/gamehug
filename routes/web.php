@@ -33,15 +33,15 @@ Route::post(__('browse'), [App\Http\Controllers\BrowseController::class, 'index'
 Route::get(__('top-games'), [App\Http\Controllers\BrowseController::class, 'index'])->name('topimdb');
 Route::get(__('games'), [App\Http\Controllers\BrowseController::class, 'index'])->name('games');
 Route::get(__('anime'), [App\Http\Controllers\BrowseController::class, 'index'])->name('anime');
-Route::get(__('tv-shows'), [App\Http\Controllers\BrowseController::class, 'index'])->name('tvshows');
+Route::get(__('tv-shows'), [App\Http\Controllers\BrowseController::class, 'index'])->name('tvshows')->middleware('noindex');
 Route::get(__('live-broadcasts'), [App\Http\Controllers\BrowseController::class, 'broadcasts'])->name('broadcasts');
 Route::get(__('trending'), [App\Http\Controllers\BrowseController::class, 'index'])->name('trending');
 Route::get(__('genre') . '/{genre}', [App\Http\Controllers\BrowseController::class, 'index'])->name('genre');
-Route::get(__('scene') . '/{scene}', [App\Http\Controllers\BrowseController::class, 'index'])->name('scene');
-Route::get(__('search') . '/' . '{search}', [App\Http\Controllers\BrowseController::class, 'index'])->name('search');
-Route::get(__('tag') . '/{tag}', [App\Http\Controllers\BrowseController::class, 'tag'])->name('tag');
+Route::get(__('scene') . '/{scene}', [App\Http\Controllers\BrowseController::class, 'index'])->name('scene')->middleware('noindex');
+Route::get(__('search') . '/' . '{search}', [App\Http\Controllers\BrowseController::class, 'index'])->name('search')->middleware('noindex');
+Route::get(__('tag') . '/{tag}', [App\Http\Controllers\BrowseController::class, 'tag'])->name('tag')->middleware('noindex');
 Route::get(__('find-it-now'), [App\Http\Controllers\BrowseController::class, 'find'])->name('browse.find');
-Route::get(__('peoples'), [App\Http\Controllers\BrowseController::class, 'community'])->name('peoples');
+Route::get(__('peoples'), [App\Http\Controllers\BrowseController::class, 'community'])->name('peoples')->middleware('noindex');
 Route::get(__('request'), [App\Http\Controllers\BrowseController::class, 'request'])->name('request');
 Route::post(__('request'), [App\Http\Controllers\BrowseController::class, 'requestPost'])->name('requestPost');
 
