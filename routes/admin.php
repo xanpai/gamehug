@@ -1,8 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Cache;
 
-Route::prefix('admin')->name('admin.')->middleware(['auth','auth.admin'])->group(function () {
+Route::prefix('admin')->name('admin.')->middleware(['auth', 'auth.admin'])->group(function () {
 
     Route::get('/', [\App\Http\Controllers\Admin\IndexController::class, 'index'])->name('index');
     Route::controller(\App\Http\Controllers\Admin\IndexController::class)->name('index.')->group(function () {
@@ -15,6 +16,15 @@ Route::prefix('admin')->name('admin.')->middleware(['auth','auth.admin'])->group
         Artisan::call('route:clear');
         Artisan::call('view:clear');
         Artisan::call('config:clear');
+
+        // All the other caches
+        Cache::flush();
+
+        // clear opcache
+        if (function_exists('opcache_reset')) {
+            opcache_reset();
+        }
+        Artisan::call('php:restart');
 
         return redirect()->route('admin.index')->with('success', __('Cache cleared'));
     })->name('cache.clear');
@@ -252,16 +262,16 @@ Route::prefix('admin')->name('admin.')->middleware(['auth','auth.admin'])->group
         Route::post('country/{id}', 'update')->name('update')->middleware('demo');
         Route::post('countries/{id}/destroy', 'destroy')->name('destroy')->middleware('demo');
     });
-	
-// Scene
-Route::controller(\App\Http\Controllers\Admin\SceneController::class)->name('scene.')->group(function () {
-    Route::get('scenes', 'index')->name('index');
-    Route::get('scene', 'create')->name('create');
-    Route::get('scene/{id}', 'edit')->name('edit');
-    Route::post('scene', 'store')->name('store')->middleware('demo');
-    Route::post('scene/{id}', 'update')->name('update')->middleware('demo');
-    Route::post('scenes/{id}/destroy', 'destroy')->name('destroy')->middleware('demo');
-});
+
+    // Scene
+    Route::controller(\App\Http\Controllers\Admin\SceneController::class)->name('scene.')->group(function () {
+        Route::get('scenes', 'index')->name('index');
+        Route::get('scene', 'create')->name('create');
+        Route::get('scene/{id}', 'edit')->name('edit');
+        Route::post('scene', 'store')->name('store')->middleware('demo');
+        Route::post('scene/{id}', 'update')->name('update')->middleware('demo');
+        Route::post('scenes/{id}/destroy', 'destroy')->name('destroy')->middleware('demo');
+    });
 
     // Community
     Route::controller(\App\Http\Controllers\Admin\CommunityController::class)->name('community.')->group(function () {

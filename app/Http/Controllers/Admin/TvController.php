@@ -45,7 +45,7 @@ class TvController extends Controller
         $perPage = config('attr.page_limit');
 
         // Query
-        $listings = Post::where('type','tv')->when($search, function ($query) use ($search) {
+        $listings = Post::where('type', 'tv')->when($search, function ($query) use ($search) {
             return $query->searchUrl($search);
         })->when($status, function ($query) use ($status) {
             return $query->where('status', $status);
@@ -61,7 +61,7 @@ class TvController extends Controller
             });
         })->orderBy('id', $sort)->paginate($perPage)->appends(['q' => $search, 'sort' => $sort, 'status' => $status, 'genre_id' => $genre_id]);
 
-        return view('admin.post.index', compact('config', 'listings','request'));
+        return view('admin.post.index', compact('config', 'listings', 'request'));
     }
 
     public function create()
@@ -201,8 +201,8 @@ class TvController extends Controller
                                 if (isset($episodeKey['image'])) {
                                     $imagename = Str::random(10);
                                     $imageFile = $episodeKey['image'];
-                                    $uploaded_image = fileUpload($imageFile, config('attr.poster.episode_path'). $folderDate . '/', config('attr.poster.episode_size_x'), config('attr.poster.episode_size_y'), $imagename);
-                                    fileUpload($imageFile, config('attr.poster.episode_path'). $folderDate . '/', config('attr.poster.episode_size_x'), config('attr.poster.episode_size_y'), $imagename, 'webp');
+                                    $uploaded_image = fileUpload($imageFile, config('attr.poster.episode_path') . $folderDate . '/', config('attr.poster.episode_size_x'), config('attr.poster.episode_size_y'), $imagename);
+                                    fileUpload($imageFile, config('attr.poster.episode_path') . $folderDate . '/', config('attr.poster.episode_size_x'), config('attr.poster.episode_size_y'), $imagename, 'webp');
                                     $episode->image = $uploaded_image;
                                 }
                             }
@@ -388,8 +388,8 @@ class TvController extends Controller
                                     if (isset($episodeKey['image'])) {
                                         $imagename = Str::random(10);
                                         $imageFile = $episodeKey['image'];
-                                        $uploaded_image = fileUpload($imageFile, config('attr.poster.episode_path'). $folderDate . '/', config('attr.poster.episode_size_x'), config('attr.poster.episode_size_y'), $imagename);
-                                        fileUpload($imageFile, config('attr.poster.episode_path'). $folderDate . '/', config('attr.poster.episode_size_x'), config('attr.poster.episode_size_y'), $imagename, 'webp');
+                                        $uploaded_image = fileUpload($imageFile, config('attr.poster.episode_path') . $folderDate . '/', config('attr.poster.episode_size_x'), config('attr.poster.episode_size_y'), $imagename);
+                                        fileUpload($imageFile, config('attr.poster.episode_path') . $folderDate . '/', config('attr.poster.episode_size_x'), config('attr.poster.episode_size_y'), $imagename, 'webp');
 
                                         $episode->image = $uploaded_image;
                                     }
@@ -410,6 +410,8 @@ class TvController extends Controller
                 }
             }
         }
+        // Clear latest tv module cache
+        Cache::forget('home-tv');
         return redirect()->route('admin.tv.edit', $model->id)->with('success', __(':title updated', ['title' => $request->input('title')]));
     }
 
