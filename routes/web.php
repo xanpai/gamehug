@@ -6,6 +6,7 @@ use App\Http\Controllers\DownloadController;
 use App\Http\Controllers\WatchController;
 use App\Http\Controllers\Admin\RequestPostController;
 use App\Http\Controllers\GameRequestController;
+use App\Http\Controllers\FaqController;
 
 if (config('settings.language')) {
     App::setLocale(config('settings.language'));
@@ -113,8 +114,9 @@ Route::get('/recent-updates', [WatchController::class, 'recentPosts'])->name('po
 
 // Game Request
 Route::post('/game-request', [GameRequestController::class, 'store'])->name('game.request.store');
-
 Route::get('lang/{lang}', ['as' => 'lang.switch', 'uses' => 'App\Http\Controllers\AjaxController@switchLang']);
+// Faq
+Route::get('/faqs', [FaqController::class, 'index'])->name('faq.index');
 
 // Sitemap
 Route::get('sitemap.xml', [App\Http\Controllers\SitemapController::class, 'index'])->name('sitemap');

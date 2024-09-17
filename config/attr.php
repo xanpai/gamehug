@@ -156,7 +156,7 @@ return [
             'order' => 'asc',
         ],
         'vote_average' => [
-            'title' => 'IMDb',
+            'title' => 'Top Rated',
             'type' => 'vote_average',
             'order' => 'desc',
         ]
@@ -199,7 +199,7 @@ return [
         'admin.game.index' => [
             'icon' => 'game',
             'nav' => 'game',
-            'title' => 'Game'
+            'title' => 'Games'
         ],
         'admin.tv.index' => [
             'icon' => 'tv',
