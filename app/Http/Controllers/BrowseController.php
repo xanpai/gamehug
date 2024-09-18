@@ -227,9 +227,11 @@ class BrowseController extends Controller
                                 ->id(route('genre', $genre->slug))
                         )
                 ]);
-        } elseif ($request->route()->getName() == __('Scene Group') and $request->route()->scene) {
+        } elseif ($request->route()->getName() == 'scene' and $request->route()->scene) {
             $scene = Scene::where('slug', $request->route()->scene)->firstOrFail() ?? abort(404);
             $param['heading'] = $scene->name;
+            $param['scene'] = $scene->id; // Store the scene ID
+
             $new = array(
                 $request->sort ? __(config('attr.sortable')[$request->sort]['title']) : null,
                 $scene->name

@@ -1,13 +1,11 @@
 @extends('layouts.app')
 @section('content')
-
-    <livewire:post-filter :param="$param" :type="$param['type']" :genre="$param['genre']" />
+    <livewire:post-filter :param="$param" :type="$param['type']" :genre="$param['genre']" :scene="$param['scene'] ?? null" />
 
     @push('javascript')
-
         <script>
             // waiting for DOM loaded
-            document.addEventListener('DOMContentLoaded', function () {
+            document.addEventListener('DOMContentLoaded', function() {
 
                 // listen for the event
                 Livewire.on('scrollTop', param => {
