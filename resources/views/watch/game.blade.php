@@ -120,7 +120,7 @@
                             @if ($listing->scene_id)
                                 <div class="grid sm:flex gap-x-3">
                                     <div class="min-w-[150px] max-w-[200px] text-gray-500">
-                                        {{ __('Scene Group') }}
+                                        {{ __('Release Group') }}
                                     </div>
                                     <div class="font-medium text-gray-800 dark:text-gray-300">
                                         <a href="{{ route('scene', ['scene' => $listing->scene->slug]) }}"

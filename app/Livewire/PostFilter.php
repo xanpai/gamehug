@@ -70,7 +70,7 @@ class PostFilter extends Component
         }
 
         if ($request->route()->getName() == 'topimdb' and !$request->filled('sort')) {
-            $this->sort = 'vote_average';
+            $this->sort = 'view';
         } elseif ($request->route()->getName() == 'trending' and !$request->filled('sort')) {
             $this->sort = 'like_count';
         }

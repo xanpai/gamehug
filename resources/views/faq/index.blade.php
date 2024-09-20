@@ -6,7 +6,7 @@
             <h1 class="text-lg font-medium text-gray-700 dark:text-white mb-4">{{ __('Frequently Asked Questions') }}</h1>
             <span
                 class="text-lg tracking-tighter font-medium text-center mb-5 text-gray-400 line-clamp-1 hidden lg:block">Greetings
-                FitGirl -
+                FitGirl - Razor12911-
                 Dodi - KaOs</span>
             <div class="bg-gray-900 rounded-lg px-6 py-3 divide-y divide-gray-800/30">
                 @forelse ($faqs as $index => $faq)
