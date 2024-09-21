@@ -7,6 +7,7 @@ use App\Http\Controllers\WatchController;
 use App\Http\Controllers\Admin\RequestPostController;
 use App\Http\Controllers\GameRequestController;
 use App\Http\Controllers\FaqController;
+use App\Http\Controllers\RecentPostsController;
 
 if (config('settings.language')) {
     App::setLocale(config('settings.language'));
@@ -110,7 +111,7 @@ Route::get('/download', [DownloadController::class, 'show'])->name('download.pag
 Route::get('/initiate-download/{id}', [DownloadController::class, 'initiate'])->name('download.initiate');
 
 // Recent Updates Controller
-Route::get('/recent-updates', [WatchController::class, 'recentPosts'])->name('posts.recent');
+Route::get('/recent-updates', [RecentPostsController::class, 'index'])->name('recent.posts');
 
 // Game Request
 Route::post('/game-request', [GameRequestController::class, 'store'])->name('game.request.store');

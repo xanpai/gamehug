@@ -167,7 +167,7 @@
 
                             @if ($listing->developer_name)
                                 <div class="grid sm:flex gap-x-3 mt-2">
-                                    <div class="min-w-[250px] max-w-[300px] text-gray-500">
+                                    <div class="min-w-[300px] max-w-[600px] text-gray-500">
                                         <div class="font-medium text-gray-800 dark:text-gray-300">
                                             <span>Please support the developers - publishers by purchasing the game at
                                                 @if ($listing->developer_link)
@@ -176,7 +176,7 @@
                                                         class="hover:underline text-white">{{ $listing->developer_name }}</a>
                                                 @else
                                                     {{ $listing->developer_name }}
-                                                @endif.
+                                                @endif
                                             </span>
                                         </div>
                                     </div>

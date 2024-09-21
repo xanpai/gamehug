@@ -25,7 +25,8 @@
             <x-form.error class="mt-2" :messages="$errors->get('browse_title')" />
             <div class="mt-3 text-xs text-gray-400 dark:text-gray-300 flex items-center space-x-1">
                 <span>{{ __('Available variable') }}</span><span
-                    class="font-semibold text-primary-500">[sortable]</span></div>
+                    class="font-semibold text-primary-500">[sortable]</span>
+            </div>
         </div>
     </div>
     <div class="lg:col-span-6">
@@ -37,7 +38,8 @@
             <x-form.error class="mt-2" :messages="$errors->get('browse_description')" />
             <div class="mt-3 text-xs text-gray-400 dark:text-gray-300 flex items-center space-x-1">
                 <span>{{ __('Available variable') }}</span><span
-                    class="font-semibold text-primary-500">[sortable]</span></div>
+                    class="font-semibold text-primary-500">[sortable]</span>
+            </div>
         </div>
     </div>
 
@@ -50,7 +52,8 @@
             <x-form.error class="mt-2" :messages="$errors->get('games_title')" />
             <div class="mt-3 text-xs text-gray-400 dark:text-gray-300 flex items-center space-x-1">
                 <span>{{ __('Available variable') }}</span><span
-                    class="font-semibold text-primary-500">[sortable]</span></div>
+                    class="font-semibold text-primary-500">[sortable]</span>
+            </div>
         </div>
     </div>
     <div class="lg:col-span-6">
@@ -62,7 +65,8 @@
             <x-form.error class="mt-2" :messages="$errors->get('games_description')" />
             <div class="mt-3 text-xs text-gray-400 dark:text-gray-300 flex items-center space-x-1">
                 <span>{{ __('Available variable') }}</span><span
-                    class="font-semibold text-primary-500">[sortable]</span></div>
+                    class="font-semibold text-primary-500">[sortable]</span>
+            </div>
         </div>
     </div>
 
@@ -75,7 +79,8 @@
             <x-form.error class="mt-2" :messages="$errors->get('tvshows_title')" />
             <div class="mt-3 text-xs text-gray-400 dark:text-gray-300 flex items-center space-x-1">
                 <span>{{ __('Available variable') }}</span><span
-                    class="font-semibold text-primary-500">[sortable]</span></div>
+                    class="font-semibold text-primary-500">[sortable]</span>
+            </div>
         </div>
     </div>
     <div class="lg:col-span-6">
@@ -87,7 +92,8 @@
             <x-form.error class="mt-2" :messages="$errors->get('tvshows_description')" />
             <div class="mt-3 text-xs text-gray-400 dark:text-gray-300 flex items-center space-x-1">
                 <span>{{ __('Available variable') }}</span><span
-                    class="font-semibold text-primary-500">[sortable]</span></div>
+                    class="font-semibold text-primary-500">[sortable]</span>
+            </div>
         </div>
     </div>
 
@@ -101,7 +107,8 @@
             <div class="mt-3 text-xs text-gray-400 dark:text-gray-300 flex items-center space-x-1">
                 <span>{{ __('Available variable') }}</span><span
                     class="font-semibold text-primary-500">[genre]</span><span
-                    class="font-semibold text-primary-500">[sortable]</span></div>
+                    class="font-semibold text-primary-500">[sortable]</span>
+            </div>
         </div>
     </div>
     <div class="lg:col-span-6">
@@ -114,7 +121,8 @@
             <div class="mt-3 text-xs text-gray-400 dark:text-gray-300 flex items-center space-x-1">
                 <span>{{ __('Available variable') }}</span><span
                     class="font-semibold text-primary-500">[genre]</span><span
-                    class="font-semibold text-primary-500">[sortable]</span></div>
+                    class="font-semibold text-primary-500">[sortable]</span>
+            </div>
         </div>
     </div>
     <div class="lg:col-span-6">
@@ -126,7 +134,8 @@
             <x-form.error class="mt-2" :messages="$errors->get('scene_title')" />
             <div class="mt-3 text-xs text-gray-400 dark:text-gray-300 flex items-center space-x-1">
                 <span>{{ __('Available variable') }}</span><span class="font-semibold text-primary-500">[sortable]
-                    [scene]</span></div>
+                    [scene]</span>
+            </div>
         </div>
     </div>
     <div class="lg:col-span-6">
@@ -138,7 +147,8 @@
             <x-form.error class="mt-2" :messages="$errors->get('scene_description')" />
             <div class="mt-3 text-xs text-gray-400 dark:text-gray-300 flex items-center space-x-1">
                 <span>{{ __('Available variable') }}</span><span class="font-semibold text-primary-500">[sortable]
-                    [scene]</span></div>
+                    [scene]</span>
+            </div>
         </div>
     </div>
     <div class="lg:col-span-6">
@@ -150,7 +160,8 @@
             <x-form.error class="mt-2" :messages="$errors->get('game_title')" />
             <div class="mt-3 text-xs text-gray-400 dark:text-gray-300 flex items-center space-x-1">
                 <span>{{ __('Available variable') }}</span><span class="font-semibold text-primary-500">[title]
-                    [description] [release] [scene] [genre]</span></div>
+                    [description] [release] [scene] [genre]</span>
+            </div>
         </div>
     </div>
     <div class="lg:col-span-6">
@@ -162,7 +173,8 @@
             <x-form.error class="mt-2" :messages="$errors->get('game_description')" />
             <div class="mt-3 text-xs text-gray-400 dark:text-gray-300 flex items-center space-x-1">
                 <span>{{ __('Available variable') }}</span><span class="font-semibold text-primary-500">[title]
-                    [description] [release] [scene] [genre]</span></div>
+                    [description] [release] [scene] [genre]</span>
+            </div>
         </div>
     </div>
     <div class="lg:col-span-6">
@@ -174,7 +186,8 @@
             <x-form.error class="mt-2" :messages="$errors->get('tvshow_title')" />
             <div class="mt-3 text-xs text-gray-400 dark:text-gray-300 flex items-center space-x-1">
                 <span>{{ __('Available variable') }}</span><span class="font-semibold text-primary-500">[title]
-                    [description] [release] [scene] [genre]</span></div>
+                    [description] [release] [scene] [genre]</span>
+            </div>
         </div>
     </div>
     <div class="lg:col-span-6">
@@ -186,7 +199,8 @@
             <x-form.error class="mt-2" :messages="$errors->get('tvshow_description')" />
             <div class="mt-3 text-xs text-gray-400 dark:text-gray-300 flex items-center space-x-1">
                 <span>{{ __('Available variable') }}</span><span class="font-semibold text-primary-500">[title]
-                    [description] [release] [scene] [genre]</span></div>
+                    [description] [release] [scene] [genre]</span>
+            </div>
         </div>
     </div>
     <div class="lg:col-span-6">
@@ -198,7 +212,8 @@
             <x-form.error class="mt-2" :messages="$errors->get('episode_title')" />
             <div class="mt-3 text-xs text-gray-400 dark:text-gray-300 flex items-center space-x-1">
                 <span>{{ __('Available variable') }}</span><span class="font-semibold text-primary-500">[title]
-                    [description] [release] [scene] [genre]</span></div>
+                    [description] [release] [scene] [genre]</span>
+            </div>
         </div>
     </div>
     <div class="lg:col-span-6">
@@ -210,7 +225,8 @@
             <x-form.error class="mt-2" :messages="$errors->get('episode_description')" />
             <div class="mt-3 text-xs text-gray-400 dark:text-gray-300 flex items-center space-x-1">
                 <span>{{ __('Available variable') }}</span><span class="font-semibold text-primary-500">[title]
-                    [description] [release] [scene] [genre]</span></div>
+                    [description] [release] [scene] [genre]</span>
+            </div>
         </div>
     </div>
     <div class="lg:col-span-6">
@@ -246,7 +262,8 @@
             <x-form.error class="mt-2" :messages="$errors->get('search_title')" />
             <div class="mt-3 text-xs text-gray-400 dark:text-gray-300 flex items-center space-x-1">
                 <span>{{ __('Available variable') }}</span><span
-                    class="font-semibold text-primary-500">[search]</span></div>
+                    class="font-semibold text-primary-500">[search]</span>
+            </div>
         </div>
     </div>
     <div class="lg:col-span-6">
@@ -258,7 +275,8 @@
             <x-form.error class="mt-2" :messages="$errors->get('search_description')" />
             <div class="mt-3 text-xs text-gray-400 dark:text-gray-300 flex items-center space-x-1">
                 <span>{{ __('Available variable') }}</span><span
-                    class="font-semibold text-primary-500">[search]</span></div>
+                    class="font-semibold text-primary-500">[search]</span>
+            </div>
         </div>
     </div>
     <div class="lg:col-span-6">
@@ -270,7 +288,8 @@
             <x-form.error class="mt-2" :messages="$errors->get('trending_title')" />
             <div class="mt-3 text-xs text-gray-400 dark:text-gray-300 flex items-center space-x-1">
                 <span>{{ __('Available variable') }}</span><span
-                    class="font-semibold text-primary-500">[sortable]</span></div>
+                    class="font-semibold text-primary-500">[sortable]</span>
+            </div>
         </div>
     </div>
     <div class="lg:col-span-6">
@@ -283,7 +302,8 @@
             <x-form.error class="mt-2" :messages="$errors->get('trending_description')" />
             <div class="mt-3 text-xs text-gray-400 dark:text-gray-300 flex items-center space-x-1">
                 <span>{{ __('Available variable') }}</span><span
-                    class="font-semibold text-primary-500">[sortable]</span></div>
+                    class="font-semibold text-primary-500">[sortable]</span>
+            </div>
         </div>
     </div>
     <div class="lg:col-span-6">
@@ -295,7 +315,8 @@
             <x-form.error class="mt-2" :messages="$errors->get('topimdb_title')" />
             <div class="mt-3 text-xs text-gray-400 dark:text-gray-300 flex items-center space-x-1">
                 <span>{{ __('Available variable') }}</span><span
-                    class="font-semibold text-primary-500">[sortable]</span></div>
+                    class="font-semibold text-primary-500">[sortable]</span>
+            </div>
         </div>
     </div>
     <div class="lg:col-span-6">
@@ -308,7 +329,8 @@
             <x-form.error class="mt-2" :messages="$errors->get('topimdb_description')" />
             <div class="mt-3 text-xs text-gray-400 dark:text-gray-300 flex items-center space-x-1">
                 <span>{{ __('Available variable') }}</span><span
-                    class="font-semibold text-primary-500">[sortable]</span></div>
+                    class="font-semibold text-primary-500">[sortable]</span>
+            </div>
         </div>
     </div>
     <div class="lg:col-span-6">
@@ -426,7 +448,8 @@
             <x-form.error class="mt-2" :messages="$errors->get('collection_title')" />
             <div class="mt-3 text-xs text-gray-400 dark:text-gray-300 flex items-center space-x-1">
                 <span>{{ __('Available variable') }}</span><span
-                    class="font-semibold text-primary-500">[title]</span></div>
+                    class="font-semibold text-primary-500">[title]</span>
+            </div>
         </div>
     </div>
     <div class="lg:col-span-6">
@@ -439,7 +462,8 @@
             <x-form.error class="mt-2" :messages="$errors->get('collection_description')" />
             <div class="mt-3 text-xs text-gray-400 dark:text-gray-300 flex items-center space-x-1">
                 <span>{{ __('Available variable') }}</span><span
-                    class="font-semibold text-primary-500">[title]</span></div>
+                    class="font-semibold text-primary-500">[title]</span>
+            </div>
         </div>
     </div>
     <div class="lg:col-span-6">
@@ -469,7 +493,8 @@
             <x-form.error class="mt-2" :messages="$errors->get('article_title')" />
             <div class="mt-3 text-xs text-gray-400 dark:text-gray-300 flex items-center space-x-1">
                 <span>{{ __('Available variable') }}</span><span
-                    class="font-semibold text-primary-500">[title]</span></div>
+                    class="font-semibold text-primary-500">[title]</span>
+            </div>
         </div>
     </div>
     <div class="lg:col-span-6">
@@ -482,7 +507,8 @@
             <x-form.error class="mt-2" :messages="$errors->get('article_description')" />
             <div class="mt-3 text-xs text-gray-400 dark:text-gray-300 flex items-center space-x-1">
                 <span>{{ __('Available variable') }}</span><span
-                    class="font-semibold text-primary-500">[title]</span></div>
+                    class="font-semibold text-primary-500">[title]</span>
+            </div>
         </div>
     </div>
     <div class="lg:col-span-6">
@@ -494,7 +520,8 @@
             <x-form.error class="mt-2" :messages="$errors->get('profile_title')" />
             <div class="mt-3 text-xs text-gray-400 dark:text-gray-300 flex items-center space-x-1">
                 <span>{{ __('Available variable') }}</span><span
-                    class="font-semibold text-primary-500">[username]</span></div>
+                    class="font-semibold text-primary-500">[username]</span>
+            </div>
         </div>
     </div>
     <div class="lg:col-span-6">
@@ -507,7 +534,8 @@
             <x-form.error class="mt-2" :messages="$errors->get('profile_description')" />
             <div class="mt-3 text-xs text-gray-400 dark:text-gray-300 flex items-center space-x-1">
                 <span>{{ __('Available variable') }}</span><span
-                    class="font-semibold text-primary-500">[username]</span></div>
+                    class="font-semibold text-primary-500">[username]</span>
+            </div>
         </div>
     </div>
     <div class="lg:col-span-6">
@@ -519,7 +547,8 @@
             <x-form.error class="mt-2" :messages="$errors->get('page_title')" />
             <div class="mt-3 text-xs text-gray-400 dark:text-gray-300 flex items-center space-x-1">
                 <span>{{ __('Available variable') }}</span><span
-                    class="font-semibold text-primary-500">[title]</span></div>
+                    class="font-semibold text-primary-500">[title]</span>
+            </div>
         </div>
     </div>
     <div class="lg:col-span-6">
@@ -531,7 +560,84 @@
             <x-form.error class="mt-2" :messages="$errors->get('page_description')" />
             <div class="mt-3 text-xs text-gray-400 dark:text-gray-300 flex items-center space-x-1">
                 <span>{{ __('Available variable') }}</span><span
-                    class="font-semibold text-primary-500">[title]</span></div>
+                    class="font-semibold text-primary-500">[title]</span>
+            </div>
+        </div>
+    </div>
+    <div class="lg:col-span-6">
+        <div class="mb-5">
+            <x-form.label for="faqs_title" :value="__('FAQs title')" />
+            <x-form.input id="faqs_title" name="faqs_title" type="text" class="mt-1 block w-full"
+                value="{{ old('faqs_title', config('settings.faqs_title')) }}"
+                placeholder="{{ __('FAQs title') }}" />
+            <x-form.error class="mt-2" :messages="$errors->get('faqs_title')" />
+        </div>
+    </div>
+    <div class="lg:col-span-6">
+        <div class="mb-5">
+            <x-form.label for="faqs_description" :value="__('FAQs description')" />
+            <x-form.input id="faqs_description" name="faqs_description" type="text" class="mt-1 block w-full"
+                value="{{ old('faqs_description', config('settings.faqs_description')) }}"
+                placeholder="{{ __('FAQs description') }}" />
+            <x-form.error class="mt-2" :messages="$errors->get('faqs_description')" />
+        </div>
+    </div>
+    <div class="lg:col-span-6">
+        <div class="mb-5">
+            <x-form.label for="recent_title" :value="__('Recent updates title')" />
+            <x-form.input id="recent_title" name="recent_title" type="text" class="mt-1 block w-full"
+                value="{{ old('recent_title', config('settings.recent_title')) }}"
+                placeholder="{{ __('Recent updates title') }}" />
+            <x-form.error class="mt-2" :messages="$errors->get('recent_title')" />
+        </div>
+    </div>
+    <div class="lg:col-span-6">
+        <div class="mb-5">
+            <x-form.label for="recent_description" :value="__('Recent updates description')" />
+            <x-form.input id="recent_description" name="recent_description" type="text" class="mt-1 block w-full"
+                value="{{ old('recent_description', config('settings.recent_description')) }}"
+                placeholder="{{ __('Recent updates description') }}" />
+            <x-form.error class="mt-2" :messages="$errors->get('recent_description')" />
+        </div>
+    </div>
+
+    <div class="lg:col-span-6">
+        <div class="mb-5">
+            <x-form.label for="download_title" :value="__('Download page title')" />
+            <x-form.input id="download_title" name="download_title" type="text" class="mt-1 block w-full"
+                value="{{ old('download_title', config('settings.download_title')) }}"
+                placeholder="{{ __('Download page title') }}" />
+            <x-form.error class="mt-2" :messages="$errors->get('download_title')" />
+        </div>
+    </div>
+    <div class="lg:col-span-6">
+        <div class="mb-5">
+            <x-form.label for="download_description" :value="__('Download page description')" />
+            <x-form.input id="download_description" name="download_description" type="text"
+                class="mt-1 block w-full"
+                value="{{ old('download_description', config('settings.download_description')) }}"
+                placeholder="{{ __('Download page description') }}" />
+            <x-form.error class="mt-2" :messages="$errors->get('download_description')" />
+        </div>
+    </div>
+
+    <div class="lg:col-span-6">
+        <div class="mb-5">
+            <x-form.label for="nodownload_title" :value="__('Nodownload title')" />
+            <x-form.input id="nodownload_title" name="nodownload_title" type="text" class="mt-1 block w-full"
+                value="{{ old('nodownload_title', config('settings.nodownload_title')) }}"
+                placeholder="{{ __('Nodownload title') }}" />
+            <x-form.error class="mt-2" :messages="$errors->get('nodownload_title')" />
+        </div>
+    </div>
+    <div class="lg:col-span-6">
+        <div class="mb-5">
+            <x-form.label for="nodownload_description" :value="__('Nodownload description')" />
+            <x-form.input id="nodownload_description" name="nodownload_description" type="text"
+                class="mt-1 block w-full"
+                value="{{ old('nodownload_description', config('settings.nodownload_description')) }}"
+                placeholder="{{ __('Nodownload description') }}" />
+            <x-form.error class="mt-2" :messages="$errors->get('nodownload_description')" />
         </div>
     </div>
 </div>

@@ -23,22 +23,37 @@ class DownloadController extends Controller
         session()->forget('download_id');
 
         if (!$id) {
-            return view('watch.download-not-found');
+            return $this->handleNoDownload('Download ID not found');
         }
 
         $download = PostVideo::find($id);
 
         if (!$download) {
-            return view('watch.download-not-found');
+            return $this->handleNoDownload('Download not found');
         }
 
         // Fetch the associated Post (listing)
         $listing = Post::find($download->postable_id);
 
         if (!$listing) {
-            return view('watch.download-not-found');
+            return $this->handleNoDownload('Associated listing not found');
         }
 
-        return view('watch.download', compact('download', 'listing'));
+        $config = [
+            'title' => config('settings.download_title'),
+            'description' => config('settings.download_description'),
+        ];
+
+        return view('watch.download', compact('download', 'listing', 'config'));
+    }
+
+    private function handleNoDownload($reason)
+    {
+        $config = [
+            'title' => config('settings.nodownload_title'),
+            'description' => config('settings.nodownload_description'),
+        ];
+
+        return view('watch.download-not-found', compact('config', 'reason'));
     }
 }

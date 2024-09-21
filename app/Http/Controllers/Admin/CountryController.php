@@ -7,7 +7,7 @@ use App\Models\Scene;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 use Illuminate\Http\Request;
 
-class SceneController extends Controller
+class CountryController extends Controller
 {
     public function index(Request $request)
     {
@@ -42,7 +42,8 @@ class SceneController extends Controller
         return view('admin.scene.form', compact('config'));
     }
 
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
 
         $this->validate($request, [
             'name' => 'required|string|max:255',
@@ -55,8 +56,8 @@ class SceneController extends Controller
         $model->slug                = SlugService::createSlug(Scene::class, 'slug', $request->input('name'));
         $model->code                = $request->input('code');
         $model->flag                = $request->input('flag');
-        $model->subtitle            = $request->input('subtitle','disable');
-        $model->filter              = $request->input('filter','disable');
+        $model->subtitle            = $request->input('subtitle', 'disable');
+        $model->filter              = $request->input('filter', 'disable');
         $model->save();
 
         return redirect()->route('admin.category.index')->with('success', __(':title created', ['title' => __('Scene Group')]));
@@ -86,16 +87,16 @@ class SceneController extends Controller
 
         $model = Scene::findOrFail($id);
         $model->name               = $request->input('name');
-        if($model->slug != $request->slug) {
+        if ($model->slug != $request->slug) {
             $model->slug                = SlugService::createSlug(Scene::class, 'slug', $request->input('name'));
         }
         $model->code                = $request->input('code');
         $model->flag                = $request->input('flag');
-        $model->subtitle            = $request->input('subtitle','disable');
-        $model->filter              = $request->input('filter','disable');
+        $model->subtitle            = $request->input('subtitle', 'disable');
+        $model->filter              = $request->input('filter', 'disable');
         $model->save();
 
-        return redirect()->route('admin.scene.edit',$model->id)->with('success', __(':title updated', ['title' => __('Scene Group')]));
+        return redirect()->route('admin.scene.edit', $model->id)->with('success', __(':title updated', ['title' => __('Scene Group')]));
     }
 
     public function destroy($id)

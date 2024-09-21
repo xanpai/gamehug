@@ -131,6 +131,15 @@ class SettingsController extends Controller
                 'profile_description',
                 'page_title',
                 'page_description',
+                'faqs_title',
+                'faqs_description',
+                'recent_title',
+                'recent_description',
+                'download_title',
+                'download_description',
+                'nodownload_title',
+                'nodownload_description',
+
 
                 'promote_link',
                 'promote_text',
@@ -210,7 +219,7 @@ class SettingsController extends Controller
                 "start_url" => "/"
             ];
 
-            \File::put('site.webmanifest', json_encode($manifest,JSON_PRETTY_PRINT));
+            \File::put('site.webmanifest', json_encode($manifest, JSON_PRETTY_PRINT));
             foreach ($save_data as $item) {
                 update_settings($item, $request->$item);
             }
@@ -219,7 +228,6 @@ class SettingsController extends Controller
             if ($request->hasFile('GOOGLE_P12')) {
 
                 if ($request->file('GOOGLE_P12')->move(storage_path('app/analytics'), $request->file('GOOGLE_P12')->getClientOriginalName())) {
-
                 }
             }
             $laravel_config = [
@@ -241,7 +249,7 @@ class SettingsController extends Controller
             $file = DotenvEditor::autoBackup(false);
             foreach ($laravel_config as $key) {
                 if ($key == 'GOOGLE_P12') {
-                    if($request->has('GOOGLE_P12')) {
+                    if ($request->has('GOOGLE_P12')) {
                         $file = DotenvEditor::setKey($key, $request->file('GOOGLE_P12')->getClientOriginalName());
                     } else {
                         $file = DotenvEditor::setKey($key, env('GOOGLE_P12'));

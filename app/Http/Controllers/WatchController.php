@@ -127,23 +127,6 @@ class WatchController extends Controller
         return view('watch.game', compact('config', 'listing', 'recommends'));
     }
 
-    // Added function for recent updates
-    public function recentPosts()
-    {
-        $recentPosts = Post::where('status', 'publish')
-            ->orderBy('updated_at', 'desc')
-            ->take(10)
-            ->get();
-
-        $config = [
-            'title' => __('Recently Updated Posts'),
-            'route' => 'recent-posts',
-            'nav' => 'recent-posts',
-        ];
-
-        return view('watch.recent_posts', compact('config', 'recentPosts'));
-    }
-
     public function tv(Request $request, $slug)
     {
         $listing = Post::withCount(['seasons'])->where('slug', $slug)->where('status', 'publish')->where(

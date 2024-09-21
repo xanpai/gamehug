@@ -10,7 +10,7 @@ class FaqController extends Controller
     {
         $faqs = [
             ['question' => 'What is EpicRepacks?', 'answer' => 'EpicRepacks is a platform that offers free repack games, which are compressed to reduce size for easier downloading. We also provides uncompressed pre-installed (portable) games for those who prefer to skip the installation process, everything here is free.'],
-            ['question' => 'A Note about our repacks!', 'answer' => 'Our repacks might be a bit larger in size compared to other respected repackers because we prioritize faster installation over extreme compression. Heavy compression can significantly slow down the installation process, so we focus on maintaining ease of use and quick setup instead. This way, you get a smoother and faster installation experience.'],
+            ['question' => 'A Note about our repacks!', 'answer' => 'Our repacks might be larger in size compared to other respected Repackers, thats because we prioritize faster installation over extreme compression. Heavy compression can significantly slow down the installation process, so we focus on maintaining ease of use and quick setup instead. This way, you get a smoother and faster installation experience.'],
             ['question' => 'Should i choose repack or portable?', 'answer' => 'We offer both Repacks and Pre-installed games, it depends on your preference. Repacks are smaller in size but takes time to install, while pre-installed are larger in size but you just need to extract the archive and play.'],
             ['question' => 'How does EpicRepacks source its games?', 'answer' => 'EpicRepacks sources games from forums like CS.RIN and all our repacks are based on original ISO files released by scene groups.'],
             ['question' => 'Do I need an account to download games from EpicRepacks?', 'answer' => 'No, you do not need an account to access or download games from EpicRepacks.'],
@@ -31,6 +31,11 @@ class FaqController extends Controller
             // Add more FAQs as needed
         ];
 
-        return view('faq.index', compact('faqs'));
+        $config = [
+            'title' => config('settings.faqs_title'),
+            'description' => config('settings.faqs_description'),
+        ];
+
+        return view('faq.index', compact('faqs', 'config'));
     }
 }
