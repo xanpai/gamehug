@@ -141,7 +141,7 @@ class gameController extends Controller
         $model->release_date = $request->input('release_date');
         $model->runtime = $request->input('runtime');
         $model->vote_average = $request->input('vote_average');
-        $model->scene_id = $request->input('scene_id');
+        $model->scene_id = $request->input('scene_id') ?: null;
         $model->trailer = $request->input('trailer');
         $model->platform = $request->input('platform');
         $model->view = $request->input('view', '0');

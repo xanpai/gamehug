@@ -159,7 +159,6 @@ if (!function_exists('picture')) {
                 <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="' . $image . '" alt="' . $title . '" class="lazyload ' . $class . '" ' . $sizeHtml . '>
             </picture>';
         }
-
     }
 }
 
@@ -256,10 +255,7 @@ if (!function_exists('changeRate')) {
 
 if (!function_exists('checkout_total')) {
 
-    function checkout_total($amount, $currency, $separator = true, $translate = true)
-    {
-
-    }
+    function checkout_total($amount, $currency, $separator = true, $translate = true) {}
 }
 if (!function_exists('calculateDiscount')) {
     function calculateDiscount($amount, $discount)
@@ -340,8 +336,10 @@ if (!function_exists('generateTagName')) {
 }
 
 if (!function_exists('filesizer')) {
-    function filesizer($size, $precision = 2) {
-        for($i = 0; ($size / 1024) > 0.9; $i++, $size /= 1024) {}
-        return round($size, $precision).['B','kB','MB','GB','TB','PB','EB','ZB','YB'][$i];
+    function filesizer($size, $precision = 2)
+    {
+        for ($i = 0; ($size / 1024) > 0.9; $i++, $size /= 1024) {
+        }
+        return round($size, $precision) . ['B', 'kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'][$i];
     }
 }

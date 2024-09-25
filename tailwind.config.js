@@ -26,6 +26,12 @@ module.exports = {
                 'xl': '1280px',
                 '2xl': '1536px',
                 '3xl': '1930px',
+                '4xl': '2048px',
+                '5xl': '3840px', 
+            },
+            maxWidth: {
+                '100': '100rem',  // This adds a new max-width of 100rem
+                '9xl': '120rem',
             },
             letterSpacing: {
                 tighter: '-.015em',

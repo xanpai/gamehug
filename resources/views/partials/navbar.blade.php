@@ -47,8 +47,8 @@
                 </a>
             </div>
             @if (config('settings.layout') == 'vertical' or isset($landing) and $landing == 'active')
-                <nav class="hidden lg:block 2xl:mx-8 lg:mx-5">
-                    <ul class="flex grow justify-end flex-wrap items-center text-sm">
+                <nav class="hidden lg:block 2xl:mx-8 lg:mx-5 flex-shrink-0">
+                    <ul class="flex items-center text-sm space-x-1">
                         @foreach (config('menus') as $menu)
                             @if ($menu->layout == 'all' or $menu->layout == 'header')
                                 @if ($menu->route)

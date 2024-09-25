@@ -39,7 +39,7 @@
                 </div>
                 <!-- TinyMCE Text Area -->
                 <div class="mb-5">
-                    <x-form.label for="repack_features" :value="__('Repack Features')" />
+                    <x-form.label for="repack_features" :value="__('Game Features')" />
                     <x-form.textarea name="repack_features" id="editor">{!! old('repack_features', isset($listing) ? $listing->repack_features : '') !!}</x-form.textarea>
                     <x-form.error :messages="$errors->get('repack_features')" class="mt-2" />
                 </div>

@@ -2,9 +2,9 @@
 <script>
     tinymce.init({
         selector: '#editor',
-        content_css: "{{Vite::asset('resources/scss/app.scss')}}",
+        content_css: "{{ Vite::asset('resources/scss/app.scss') }}",
         branding: false,
-        height:'600px',
+        height: '600px',
         automatic_uploads: true,
         file_picker_types: 'image',
         file_picker_callback: function(cb, value, meta) {
@@ -16,26 +16,72 @@
 
                 var reader = new FileReader();
                 reader.readAsDataURL(file);
-                reader.onload = function () {
+                reader.onload = function() {
                     var id = 'blobid' + (new Date()).getTime();
-                    var blobCache =  tinymce.activeEditor.editorUpload.blobCache;
+                    var blobCache = tinymce.activeEditor.editorUpload.blobCache;
                     var base64 = reader.result.split(',')[1];
                     var blobInfo = blobCache.create(id, file, base64);
                     blobCache.add(blobInfo);
-                    cb(blobInfo.blobUri(), { title: file.name });
+                    cb(blobInfo.blobUri(), {
+                        title: file.name
+                    });
                 };
             };
             input.click();
         },
         plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
-        toolbar: 'undo redo | blocks fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
+        toolbar: 'inserttabs | undo redo | blocks fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
+        setup: function(editor) {
+            editor.ui.registry.addButton('inserttabs', {
+                text: 'Insert Tabs',
+                onAction: function() {
+                    editor.windowManager.open({
+                        title: 'Insert Tabs',
+                        body: {
+                            type: 'panel',
+                            items: [{
+                                type: 'input',
+                                name: 'tab_titles',
+                                label: 'Tab Titles (comma-separated)'
+                            }]
+                        },
+                        buttons: [{
+                                type: 'cancel',
+                                text: 'Close'
+                            },
+                            {
+                                type: 'submit',
+                                text: 'Insert',
+                                primary: true
+                            }
+                        ],
+                        onSubmit: function(api) {
+                            const data = api.getData();
+                            const titles = data.tab_titles.split(',').map(title =>
+                                title.trim());
+                            let content = '[tabs]\n\n';
+
+                            titles.forEach((title, index) => {
+                                content +=
+                                    `[tab title="${title}"]\n\nContent for ${title}\n\n[/tab]\n\n`;
+                            });
+
+                            content += '[/tabs]';
+
+                            editor.insertContent(content);
+                            api.close();
+                        }
+                    });
+                }
+            });
+        },
     });
 
     tinymce.init({
         selector: '.settings-editor',
-        content_css: "{{Vite::asset('resources/scss/app.scss')}}",
+        content_css: "{{ Vite::asset('resources/scss/app.scss') }}",
         branding: false,
-        height:'400px',
+        height: '400px',
         menubar: false,
         plugins: 'autolink charmap lists searchreplace visualblocks wordcount',
         toolbar: 'undo redo | blocks fontsize | bold italic underline strikethrough | align lineheight | numlist bullist indent outdent | removeformat',
