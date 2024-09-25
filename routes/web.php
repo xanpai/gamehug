@@ -107,8 +107,8 @@ Route::prefix('ajax')->name('ajax.')->middleware(['auth'])->group(function () {
 });
 
 // Download page controller
-Route::get('/download', [DownloadController::class, 'show'])->name('download.page');
-Route::get('/initiate-download/{id}', [DownloadController::class, 'initiate'])->name('download.initiate');
+Route::get('/generate-download-token/{id}', [DownloadController::class, 'generateToken'])->name('download.generateToken');
+Route::get('/download/{token}', [DownloadController::class, 'initiate'])->name('download.initiate');
 
 // Recent Updates Controller
 Route::get('/recent-updates', [RecentPostsController::class, 'index'])->name('recent.posts');

@@ -2,29 +2,33 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Broadcast;
 use App\Models\Post;
-use App\Models\PostEpisode;
 use App\Models\PostVideo;
 use Illuminate\Http\Request;
-use App\Models\Log;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Cache;
 
 class DownloadController extends Controller
 {
-    public function initiate($id)
+    public function generateToken($id)
     {
-        session(['download_id' => $id]);
-        return redirect()->route('download.page');
+        $token = Str::random(40);
+        $expiresAt = now()->addMinutes(15);
+
+        Cache::put("download_token:{$token}", $id, $expiresAt);
+
+        return response()->json(['token' => $token]);
     }
 
-    public function show(Request $request)
+    public function initiate($token)
     {
-        $id = session('download_id');
-        session()->forget('download_id');
+        $id = Cache::get("download_token:{$token}");
 
         if (!$id) {
-            return $this->handleNoDownload('Download ID not found');
+            return $this->handleNoDownload('Invalid or expired download token');
         }
+
+        Cache::forget("download_token:{$token}");
 
         $download = PostVideo::find($id);
 
@@ -32,7 +36,6 @@ class DownloadController extends Controller
             return $this->handleNoDownload('Download not found');
         }
 
-        // Fetch the associated Post (listing)
         $listing = Post::find($download->postable_id);
 
         if (!$listing) {

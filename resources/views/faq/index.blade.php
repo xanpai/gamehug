@@ -4,8 +4,8 @@
         <div class="my-6 flex-grow">
             <h1 class="text-3xl font-bold text-gray-700 dark:text-white mb-4">{{ __('Frequently Asked Questions') }}</h1>
             <p class="text-lg text-gray-600 dark:text-gray-400 mb-6">Find answers to the most common questions about our
-                repacks and portable gammes.</p>
-            <p class="text-center text-white mb-5">Greetings FitGirl - Dodi - KaOs - Razor12911</p>
+                AnkerGames.</p>
+            <p class="text-center text-white mb-5">Special thanks to CS.RIN.RU - FitGirl - Masquerade!</p>
             <div class="bg-gray-900 rounded-lg px-6 py-3 divide-y divide-gray-800/30">
                 @forelse ($faqs as $index => $faq)
                     <div x-data="{ open: false }" class="py-3">

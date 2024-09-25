@@ -212,7 +212,7 @@
                     <div class="mt-6">
                         <h2 class="text-xl font-semibold text-white mb-3">{{ $listing->title }}
                             {{ __('Free Download - Game Review') }} </h2>
-                        <div class="text-gray-300 prose prose-invert max-w-none">
+                        <div class="tinymce-content text-gray-300 prose prose-invert max-w-none">
                             @parseTabs($listing->body)
                         </div>
                     </div>
@@ -248,9 +248,9 @@
                     class="fixed inset-0 z-50 overflow-hidden flex items-start top-20 justify-center px-4 sm:px-6"
                     role="dialog" aria-modal="true" x-show="trailerOpen"
                     x-transition:enter="transition ease-in-out duration-200"
-                    x-transition:enter-start="opacity-0 trangray-y-4" x-transition:enter-end="opacity-100 trangray-y-0"
+                    x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0"
                     x-transition:leave="transition ease-in-out duration-200"
-                    x-transition:leave-start="opacity-100 trangray-y-0" x-transition:leave-end="opacity-0 trangray-y-4"
+                    x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 translate-y-4"
                     style="display: none;">
                     <div class="bg-white dark:bg-gray-900 overflow-auto max-w-6xl w-full rounded-xl"
                         @click.outside="trailerOpen = false" @keydown.escape.window="trailerOpen = false">
@@ -272,24 +272,27 @@
                     class="fixed inset-0 z-50 overflow-hidden flex items-center top-20 justify-center px-4 sm:px-6"
                     role="dialog" aria-modal="true" x-show="downloadOpen"
                     x-transition:enter="transition ease-in-out duration-200"
-                    x-transition:enter-start="opacity-0 trangray-y-4" x-transition:enter-end="opacity-100 trangray-y-0"
+                    x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0"
                     x-transition:leave="transition ease-in-out duration-200"
-                    x-transition:leave-start="opacity-100 trangray-y-0" x-transition:leave-end="opacity-0 trangray-y-4"
+                    x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 translate-y-4"
                     style="display: none;">
                     <div class="bg-white dark:bg-gray-900 max-w-xl w-full rounded-xl p-6 lg:p-10"
                         @click.outside="downloadOpen = false" @keydown.escape.window="downloadOpen = false">
 
                         <h3 class="text-lg xl:text-xl dark:text-white font-semibold mb-3 text-center capitalize flex-1">
                             {{ __('Download Link') }}</h3>
-                        <ul
+                        <ul x-data="downloadManager()"
                             class="flex flex-col divide-y divide-gray-200 dark:divide-gray-800 max-h-[60vh] overflow-auto scrollbar-thumb-gray-700 scrollbar-track-transparent -mr-4 pr-4 scrollbar-rounded-lg scrollbar-thin">
                             @foreach ($listing->downloads as $download)
                                 <li
                                     class="inline-flex items-center justify-between gap-x-2 py-4 font-medium text-gray-800 dark:text-white">
                                     <div>{{ $download->label }}</div>
-                                    <x-form.primary href="{{ route('download.initiate', ['id' => $download->id]) }}"
-                                        class="px-5 gap-2 !py-2.5 !rounded-full">
-                                        <span class="font-normal">{{ __('Download') }}</span>
+                                    <x-form.primary href="#"
+                                        class="px-5 gap-2 !py-2.5 !rounded-full download-button"
+                                        @click.prevent="generateDownloadToken({{ $download->id }})"
+                                        x-bind:disabled="isLoading">
+                                        <span class="font-normal"
+                                            x-text="isLoading ? 'Loading...' : '{{ __('Download') }}'"></span>
                                         <svg class="w-4 h-4 fill-current" xmlns="http://www.w3.org/2000/svg"
                                             viewBox="0 0 24 24" fill="currentColor">
                                             <path d="M0 0h24v24H0V0z" fill="none"></path>
@@ -303,6 +306,29 @@
                         </ul>
                     </div>
                 </div>
+
+
+                <script>
+                    function downloadManager() {
+                        return {
+                            isLoading: false,
+                            generateDownloadToken(downloadId) {
+                                this.isLoading = true;
+                                fetch(`/generate-download-token/${downloadId}`)
+                                    .then(response => response.json())
+                                    .then(data => {
+                                        if (data.token) {
+                                            window.location.href = `/download/${data.token}`;
+                                        }
+                                    })
+                                    .catch(error => console.error('Error:', error))
+                                    .finally(() => {
+                                        this.isLoading = false;
+                                    });
+                            }
+                        }
+                    }
+                </script>
 
                 @if ($listing->repack_features)
                     <!-- Repack Features Modal -->
@@ -328,7 +354,7 @@
 
                                 <h3
                                     class="text-lg xl:text-xl text-gray-900 dark:text-white font-semibold mb-3 text-center">
-                                    {{ __('Repack Features') }}
+                                    {{ __('Game Features & Info') }}
                                 </h3>
                                 <div
                                     class="prose dark:prose-invert max-w-none max-h-[60vh] overflow-auto scrollbar-thumb-gray-700 scrollbar-track-transparent pr-4 scrollbar-rounded-lg scrollbar-thin">
