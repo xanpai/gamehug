@@ -1,7 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-    <main class="container mx-auto px-4 py-8 min-h-screen flex flex-col">
+    <main
+        class="containerpx-4 py-8 min-h-screen flex flex-col max-w-screen-xl 2xl:max-w-screen-2xl 3xl:max-w-[100rem] 5xl:max-w-[120rem] mx-auto">
         <div class="my-6 flex-grow">
             <h1 class="text-2xl font-medium text-gray-700 dark:text-white mb-4">{{ __('Recently Updated Games') }}</h1>
             <p class="text-lg text-gray-600 dark:text-gray-400 mb-6">This page shows all the repacks and portable games

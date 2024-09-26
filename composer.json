@@ -10,7 +10,7 @@
         "cviebrock/eloquent-sluggable": "^10.0",
         "danharrin/livewire-rate-limiting": "^1.1",
         "guzzlehttp/guzzle": "^7.7",
-        "intervention/image": "^2.7",
+        "intervention/image": "^3.8",
         "jackiedo/dotenv-editor": "^2.1",
         "laravel/framework": "^10.8",
         "laravel/sanctum": "^3.2",

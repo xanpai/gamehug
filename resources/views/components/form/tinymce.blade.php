@@ -6,8 +6,7 @@
         branding: false,
         height: '600px',
         automatic_uploads: true,
-        file_picker_types: 'image',
-        plugins: 'anchor code autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount quickbars',
+        plugins: 'anchor code autolink charmap codesample emoticons image imagetools link lists media searchreplace table visualblocks wordcount quickbars',
         toolbar: 'inserttabs | code | undo redo | blocks fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
         image_advtab: true,
         image_dimensions: false,
@@ -15,7 +14,7 @@
         quickbars_selection_toolbar: 'alignleft aligncenter alignright | quicklink h2 h3 blockquote',
         quickbars_insert_toolbar: 'image media table',
         valid_elements: '*[*]',
-        extended_valid_elements: 'img[class|src|border=0|alt|title|hspace|vspace|width|height|align|onmouseover|onmouseout|name|style],a[href|target|rel]',
+        extended_valid_elements: 'img[class|src|alt|title|style|data-*],a[href|target|rel|style]',
         rel_list: [{
             title: 'No Follow',
             value: 'nofollow'
@@ -35,27 +34,68 @@
                 classes: 'float-right ml-4 mb-4'
             },
         },
-        file_picker_callback: function(cb, value, meta) {
-            var input = document.createElement('input');
-            input.setAttribute('type', 'file');
-            input.setAttribute('accept', 'image/*');
-            input.onchange = function() {
-                var file = this.files[0];
+        // Remove or comment out the existing images_upload_handler
+        // images_upload_handler: function (blobInfo) { ... },
 
-                var reader = new FileReader();
-                reader.readAsDataURL(file);
-                reader.onload = function() {
-                    var id = 'blobid' + (new Date()).getTime();
-                    var blobCache = tinymce.activeEditor.editorUpload.blobCache;
-                    var base64 = reader.result.split(',')[1];
-                    var blobInfo = blobCache.create(id, file, base64);
-                    blobCache.add(blobInfo);
-                    cb(blobInfo.blobUri(), {
-                        title: file.name
+        // Use file_picker_callback to handle multiple image uploads
+        file_picker_callback: function(callback, value, meta) {
+            if (meta.filetype === 'image') {
+                // Create an input element for file selection
+                var input = document.createElement('input');
+                input.setAttribute('type', 'file');
+                input.setAttribute('accept', 'image/*');
+                input.setAttribute('multiple', 'multiple'); // Allow multiple file selection
+
+                // Listen for file selection
+                input.onchange = function() {
+                    var files = input.files;
+
+                    // Process each selected file
+                    Array.from(files).forEach(function(file) {
+                        // Create a new FormData object
+                        var formData = new FormData();
+                        formData.append('file', file);
+                        formData.append('_token', '{{ csrf_token() }}'); // Include CSRF token
+
+                        // Make the AJAX request
+                        var xhr = new XMLHttpRequest();
+                        xhr.open('POST', '{{ route('image.upload') }}', true);
+                        xhr.setRequestHeader('X-CSRF-TOKEN', '{{ csrf_token() }}');
+
+                        // Include cookies in the request to maintain the session
+                        xhr.withCredentials = true;
+
+                        xhr.onload = function() {
+                            if (xhr.status !== 200) {
+                                alert('HTTP Error: ' + xhr.status);
+                                return;
+                            }
+
+                            var json = JSON.parse(xhr.responseText);
+                            if (!json || typeof json.location !== 'string') {
+                                alert('Invalid JSON: ' + xhr.responseText);
+                                return;
+                            }
+
+                            // Insert the uploaded image into the editor
+                            // Use tinymce.activeEditor.insertContent instead of callback
+                            tinymce.activeEditor.insertContent('<img src="' + json
+                                .location + '" />');
+                        };
+
+                        xhr.onerror = function() {
+                            alert('Image upload failed due to a XHR Transport error. Code: ' +
+                                xhr.status);
+                        };
+
+                        // Send the form data
+                        xhr.send(formData);
                     });
                 };
-            };
-            input.click();
+
+                // Trigger the file input click
+                input.click();
+            }
         },
         setup: function(editor) {
             editor.on('NodeChange', function(e) {

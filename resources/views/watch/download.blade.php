@@ -6,7 +6,7 @@
     <meta name="description" content="Download your favorite content securely and quickly. Your loot awaits!">
 @endsection
 @section('content')
-    <div class="relative overflow-hidden h-full">
+    <div class="relative overflow-hidden min-h-full">
         <div class="text-white max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-24 relative">
             <div class="absolute inset-0 z-0">
                 <img src="{{ $listing->coverurl }}" alt="{{ $listing->title }} cover"
@@ -28,14 +28,14 @@
                 </div>
                 <div id="download-button" class="hidden mt-10">
                     <a href="{{ $download->link }}"
-                        class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded" target="_blank">
+                        class="bg-primary-500 hover:bg-[#0881b6] text-white font-bold py-2 px-4 rounded" target="_blank">
                         Download Now
                     </a>
                 </div>
 
                 <iframe id="download-frame" class="hidden"></iframe>
             </div>
-            <p id="animated-text" class="mt-3 text-gray-300 text-center mt-10"></p>
+            <p id="animated-text" class="text-gray-300 text-center mt-10 mb-20"></p>
         </div>
     </div>
 

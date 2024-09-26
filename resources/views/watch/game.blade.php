@@ -238,6 +238,8 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Trailer Modal -->
                 <div class="fixed inset-0 bg-gray-800/40 backdrop-blur-md z-50 transition-opacity" x-show="trailerOpen"
                     x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0"
                     x-transition:enter-end="opacity-100" x-transition:leave="transition ease-out duration-100"
@@ -262,6 +264,8 @@
 
                     </div>
                 </div>
+
+                <!-- Download Modal -->
                 <div class="fixed inset-0 bg-gray-800/40 backdrop-blur-md z-50 transition-opacity" x-show="downloadOpen"
                     x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0"
                     x-transition:enter-end="opacity-100" x-transition:leave="transition ease-out duration-100"
@@ -307,7 +311,6 @@
                     </div>
                 </div>
 
-
                 <script>
                     function downloadManager() {
                         return {
@@ -330,36 +333,34 @@
                     }
                 </script>
 
+                <!-- Repack Features Modal -->
                 @if ($listing->repack_features)
-                    <!-- Repack Features Modal -->
-                    <div class="fixed inset-0 z-[60] overflow-hidden" x-show="repackFeaturesOpen"
-                        x-transition:enter="transition ease-out" x-transition:enter-start="opacity-0"
-                        x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in"
-                        x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" style="display: none;">
-                        <!-- Overlay -->
-                        <div class="absolute inset-0 bg-gray-800/40 backdrop-blur-md" @click="repackFeaturesOpen = false">
-                        </div>
+                    <!-- Overlay -->
+                    <div class="fixed inset-0 bg-gray-800/40 backdrop-blur-md z-50 transition-opacity"
+                        x-show="repackFeaturesOpen" x-transition:enter="transition ease-out duration-200"
+                        x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
+                        x-transition:leave="transition ease-out duration-100" x-transition:leave-start="opacity-100"
+                        x-transition:leave-end="opacity-0" aria-hidden="true" style="display: none;"
+                        @click="repackFeaturesOpen = false"></div>
 
-                        <!-- Modal content -->
-                        <div class="flex items-center justify-center min-h-screen p-4">
-                            <div class="relative bg-white dark:bg-gray-900 max-w-xl w-full rounded-xl shadow-lg p-6 lg:p-10 overflow-hidden"
-                                x-show="repackFeaturesOpen" x-transition:enter="transition ease-out duration-300"
-                                x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-                                x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
-                                x-transition:leave="transition ease-in duration-200"
-                                x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
-                                x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-                                @click.away="repackFeaturesOpen = false"
-                                @keydown.escape.window="repackFeaturesOpen = false">
-
-                                <h3
-                                    class="text-lg xl:text-xl text-gray-900 dark:text-white font-semibold mb-3 text-center">
-                                    {{ __('Game Features & Info') }}
-                                </h3>
-                                <div
-                                    class="prose dark:prose-invert max-w-none max-h-[60vh] overflow-auto scrollbar-thumb-gray-700 scrollbar-track-transparent pr-4 scrollbar-rounded-lg scrollbar-thin">
-                                    {!! $listing->repack_features !!}
-                                </div>
+                    <!-- Modal dialog -->
+                    <div class="fixed inset-0 z-50 overflow-hidden flex items-center justify-center px-4 sm:px-6"
+                        role="dialog" aria-modal="true" x-show="repackFeaturesOpen"
+                        x-transition:enter="transition ease-in-out duration-200"
+                        x-transition:enter-start="opacity-0 translate-y-4"
+                        x-transition:enter-end="opacity-100 translate-y-0"
+                        x-transition:leave="transition ease-in-out duration-200"
+                        x-transition:leave-start="opacity-100 translate-y-0"
+                        x-transition:leave-end="opacity-0 translate-y-4" style="display: none;"
+                        @keydown.escape.window="repackFeaturesOpen = false">
+                        <div class="bg-white dark:bg-gray-900 max-w-xl w-full rounded-xl p-6 lg:p-10 overflow-hidden"
+                            @click.away="repackFeaturesOpen = false">
+                            <h3 class="text-lg xl:text-xl text-gray-900 dark:text-white font-semibold mb-3 text-center">
+                                {{ __('Game Features & Info') }}
+                            </h3>
+                            <div
+                                class="prose dark:prose-invert max-w-none max-h-[60vh] overflow-auto scrollbar-thumb-gray-700 scrollbar-track-transparent pr-4 scrollbar-rounded-lg scrollbar-thin">
+                                {!! $listing->repack_features !!}
                             </div>
                         </div>
                     </div>

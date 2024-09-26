@@ -15,6 +15,7 @@ class RecentPostsController extends Controller
 
         $recentPosts = Post::where('status', 'publish')
             ->whereBetween('updated_at', [$startDate, $endDate])
+            ->whereColumn('updated_at', '>', 'created_at') // Add this line
             ->orderBy('updated_at', 'desc')
             ->get()
             ->groupBy(function ($date) {

@@ -118,6 +118,12 @@ Route::post('/game-request', [GameRequestController::class, 'store'])->name('gam
 Route::get('lang/{lang}', ['as' => 'lang.switch', 'uses' => 'App\Http\Controllers\AjaxController@switchLang']);
 // Faq
 Route::get('/faqs', [FaqController::class, 'index'])->name('faq.index');
+//ImageUpload
+Route::post('/upload-image', [\App\Http\Controllers\ImageUploadController::class, 'store'])
+    ->middleware('auth')
+    ->name('image.upload');
+
+
 
 // Sitemap
 Route::get('sitemap.xml', [App\Http\Controllers\SitemapController::class, 'index'])->name('sitemap');
