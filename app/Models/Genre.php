@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Genre extends Model
 {
-    use HasFactory,Sluggable;
+    use HasFactory, Sluggable;
 
     public $timestamps = false;
 
@@ -26,14 +26,14 @@ class Genre extends Model
         $post = $this->posts()->latest()->first();
 
         if ($post) {
-            return $post->storyurl;
+            return $post->imageurl;
         }
 
         return null;
     }
     public function scopeSearchUrl(Builder $query, $value)
     {
-        return $query->where('title', 'like', '%'.$value.'%');
+        return $query->where('title', 'like', '%' . $value . '%');
     }
     public function sluggable(): array
     {

@@ -34,77 +34,23 @@
                 classes: 'float-right ml-4 mb-4'
             },
         },
-        // Remove or comment out the existing images_upload_handler
-        // images_upload_handler: function (blobInfo) { ... },
-
-        // Use file_picker_callback to handle multiple image uploads
-        file_picker_callback: function(callback, value, meta) {
-            if (meta.filetype === 'image') {
-                // Create an input element for file selection
-                var input = document.createElement('input');
-                input.setAttribute('type', 'file');
-                input.setAttribute('accept', 'image/*');
-                input.setAttribute('multiple', 'multiple'); // Allow multiple file selection
-
-                // Listen for file selection
-                input.onchange = function() {
-                    var files = input.files;
-
-                    // Process each selected file
-                    Array.from(files).forEach(function(file) {
-                        // Create a new FormData object
-                        var formData = new FormData();
-                        formData.append('file', file);
-                        formData.append('_token', '{{ csrf_token() }}'); // Include CSRF token
-
-                        // Make the AJAX request
-                        var xhr = new XMLHttpRequest();
-                        xhr.open('POST', '{{ route('image.upload') }}', true);
-                        xhr.setRequestHeader('X-CSRF-TOKEN', '{{ csrf_token() }}');
-
-                        // Include cookies in the request to maintain the session
-                        xhr.withCredentials = true;
-
-                        xhr.onload = function() {
-                            if (xhr.status !== 200) {
-                                alert('HTTP Error: ' + xhr.status);
-                                return;
-                            }
-
-                            var json = JSON.parse(xhr.responseText);
-                            if (!json || typeof json.location !== 'string') {
-                                alert('Invalid JSON: ' + xhr.responseText);
-                                return;
-                            }
-
-                            // Insert the uploaded image into the editor
-                            // Use tinymce.activeEditor.insertContent instead of callback
-                            tinymce.activeEditor.insertContent('<img src="' + json
-                                .location + '" />');
-                        };
-
-                        xhr.onerror = function() {
-                            alert('Image upload failed due to a XHR Transport error. Code: ' +
-                                xhr.status);
-                        };
-
-                        // Send the form data
-                        xhr.send(formData);
-                    });
-                };
-
-                // Trigger the file input click
-                input.click();
-            }
-        },
         setup: function(editor) {
+            // Apply Tailwind CSS classes to images
             editor.on('NodeChange', function(e) {
                 if (e.element.nodeName === 'IMG') {
-                    editor.dom.addClass(e.element,
-                        'max-w-full h-auto inline-block align-top mx-4 my-4');
+                    // Add responsive classes to the image
+                    editor.dom.setAttrib(e.element, 'class', 'max-w-full h-auto inline-block align-top mx-4 my-4');
                 }
             });
 
+            // Remove <p> tags wrapping images
+            editor.on('BeforeSetContent', function(e) {
+                if (e.content) {
+                    e.content = e.content.replace(/<p>\s*(<img[^>]+>)\s*<\/p>/g, '$1');
+                }
+            });
+
+            // Your existing inserttabs button code...
             editor.ui.registry.addButton('inserttabs', {
                 text: 'Insert Tabs',
                 onAction: function() {
@@ -148,8 +94,67 @@
                 }
             });
         },
+        file_picker_callback: function(callback, value, meta) {
+            if (meta.filetype === 'image') {
+                // Create an input element for file selection
+                var input = document.createElement('input');
+                input.setAttribute('type', 'file');
+                input.setAttribute('accept', 'image/*');
+                input.setAttribute('multiple', 'multiple'); // Allow multiple file selection
+
+                // Listen for file selection
+                input.onchange = function() {
+                    var files = input.files;
+
+                    // Process each selected file
+                    Array.from(files).forEach(function(file) {
+                        // Create a new FormData object
+                        var formData = new FormData();
+                        formData.append('file', file);
+                        formData.append('_token', '{{ csrf_token() }}'); // Include CSRF token
+
+                        // Make the AJAX request
+                        var xhr = new XMLHttpRequest();
+                        xhr.open('POST', '{{ route('image.upload') }}', true);
+                        xhr.setRequestHeader('X-CSRF-TOKEN', '{{ csrf_token() }}');
+
+                        // Include cookies in the request to maintain the session
+                        xhr.withCredentials = true;
+
+                        xhr.onload = function() {
+                            if (xhr.status !== 200) {
+                                alert('HTTP Error: ' + xhr.status);
+                                return;
+                            }
+
+                            var json = JSON.parse(xhr.responseText);
+                            if (!json || typeof json.location !== 'string') {
+                                alert('Invalid JSON: ' + xhr.responseText);
+                                return;
+                            }
+
+                            // Insert the uploaded image into the editor
+                            tinymce.activeEditor.insertContent('<img src="' + json
+                                .location + '" />');
+                        };
+
+                        xhr.onerror = function() {
+                            alert('Image upload failed due to a XHR Transport error. Code: ' +
+                                xhr.status);
+                        };
+
+                        // Send the form data
+                        xhr.send(formData);
+                    });
+                };
+
+                // Trigger the file input click
+                input.click();
+            }
+        },
     });
 
+    // Your existing settings-editor initialization...
     tinymce.init({
         selector: '.settings-editor',
         content_css: "{{ Vite::asset('resources/scss/app.scss') }}",
