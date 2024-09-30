@@ -4,7 +4,7 @@
             @foreach ($listings['slider'] as $slide)
                 <a href="{{ route($slide->type, $slide->slug) }}" class="swiper-slide bg-gray-950">
                     <div
-                        class="lg:aspect-slide aspect-square relative before:absolute before:inset-0 before:bg-gradient-to-b before:from-gray-950 before:to-transparent before:z-10 after:absolute after:inset-0 after:bg-gradient-to-t after:from-gray-950 after:to-transparent after:via-gray-950/60 after:z-10 rounded-lg">
+                        class="lg:aspect-slide aspect-square relative before:absolute before:inset-0 before:bg-gradient-to-b before:from-gray-950 before:to-transparent before:z-10 after:absolute after:inset-0 after:bg-gradient-to-t after:from-gray-950 after:to-transparent after:via-gray-950/30 after:z-10 rounded-lg">
                         <div
                             class="absolute inset-0 before:absolute before:right-0 rtl:before:left-0 before:top-0 before:bottom-0 before:w-1/5 before:bg-gradient-to-l before:from-gray-950 before:to-transparent after:absolute after:left-0 after:top-0 after:bottom-0 after:w-1/2 after:bg-gradient-to-r after:from-gray-950 after:to-transparent z-10">
                         </div>
