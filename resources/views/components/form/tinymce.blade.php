@@ -6,8 +6,8 @@
         branding: false,
         height: '600px',
         automatic_uploads: true,
-        plugins: 'anchor code autolink charmap codesample emoticons image imagetools link lists media searchreplace table visualblocks wordcount quickbars',
-        toolbar: 'inserttabs | code | undo redo | blocks fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
+        plugins: 'anchor code visualchars autolink advlist charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount quickbars',
+        toolbar: 'inserttabs | code | visualchars | undo redo | blocks fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
         image_advtab: true,
         image_dimensions: false,
         object_resizing: true,
@@ -39,7 +39,8 @@
             editor.on('NodeChange', function(e) {
                 if (e.element.nodeName === 'IMG') {
                     // Add responsive classes to the image
-                    editor.dom.setAttrib(e.element, 'class', 'max-w-full h-auto inline-block align-top mx-4 my-4');
+                    editor.dom.setAttrib(e.element, 'class',
+                        'max-w-full h-auto inline-block align-top mx-4 my-4');
                 }
             });
 

@@ -28,27 +28,89 @@ body {
     @apply hidden;
 }
 
-.tox-tinymce {
-    @apply font-sans w-full px-4 py-3 border border-gray-200 rounded-md text-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 placeholder-gray-400/70 shadow-sm #{!important};
+/* SCSS File: resources/scss/app.scss */
 
+/* Styling TinyMCE container */
+.tox-tinymce {
+    @apply font-sans w-full px-4 py-3 border border-gray-200 rounded-md text-sm focus:border-primary-500 focus:ring-primary-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 placeholder-gray-400/70 shadow-sm;
 }
 
+/* Styling TinyMCE editor header */
 .tox:not(.tox-tinymce-inline) .tox-editor-header {
     box-shadow: none !important;
-    @apply border-solid border-b border-gray-200 #{!important};
+    @apply border-solid border-b border-gray-200;
     padding: 0 0 10px !important;
 }
 
+/* Styling the editing area */
 .tox .tox-edit-area {
     @apply py-3 dark:bg-gray-800;
 }
 
+/* Custom button style */
 .tox .tox-tbtn--bespoke {
     background-color: transparent !important;
 }
+
+/* Styling the content body inside TinyMCE editor */
 .mce-content-body {
     @apply dark:bg-gray-800;
+
+    /* List styling */
+    ul {
+        list-style-type: disc !important;
+        margin-left: 20px !important;
+    }
+
+    ol {
+        list-style-type: decimal !important;
+        margin-left: 20px !important;
+    }
+
+    li {
+        margin-bottom: 5px !important;
+    }
+
+    /* Table styling */
+    table {
+        @apply table-auto border-collapse border border-gray-300 dark:border-gray-700;
+        width: 100%;
+    }
+
+    th, td {
+        @apply border border-gray-300 dark:border-gray-700 p-2 text-left;
+    }
+
+    /* Link styling */
+    a {
+        @apply text-[#2aa9e0] underline hover:text-primary-500;
+    }
+
+    /* Image styling */
+    img {
+        @apply rounded-lg shadow-md;
+    }
+
+    /* Blockquote styling */
+    blockquote {
+        @apply border-l-4 border-primary-500 pl-4 italic;
+    }
+
+    /* Code block styling */
+    code {
+        @apply bg-gray-200 dark:bg-gray-700 p-1 rounded;
+    }
+
+    /* Inline text styling */
+    strong, b {
+        @apply font-bold;
+    }
+
+    em, i {
+        @apply italic;
+    }
 }
+
 
 
 .hamburger svg > *:nth-child(1),
