@@ -14,7 +14,8 @@
         quickbars_selection_toolbar: 'alignleft aligncenter alignright | quicklink h2 h3 blockquote',
         quickbars_insert_toolbar: 'image media table',
         valid_elements: '*[*]',
-        extended_valid_elements: 'img[class|src|alt|title|style|data-*],a[href|target|rel|style]',
+        extended_valid_elements: 'img[class|src|alt|title|loading|style|data-*],a[href|target|rel|style],picture[*],source[*]',
+        valid_children: '+body[picture],+picture[source|img]',
         rel_list: [{
             title: 'No Follow',
             value: 'nofollow'
@@ -31,7 +32,7 @@
             },
             alignright: {
                 selector: 'img',
-                classes: 'float-right ml-4 mb-4'
+                classes: 'float-right mr-4 mb-4'
             },
         },
         setup: function(editor) {
@@ -51,7 +52,7 @@
                 }
             });
 
-            // Your existing inserttabs button code...
+            // Existing inserttabs button code...
             editor.ui.registry.addButton('inserttabs', {
                 text: 'Insert Tabs',
                 onAction: function() {
@@ -129,14 +130,28 @@
                             }
 
                             var json = JSON.parse(xhr.responseText);
-                            if (!json || typeof json.location !== 'string') {
+                            if (!json || typeof json.webp_location !== 'string' ||
+                                typeof json.original_location !== 'string' || typeof json
+                                .filename !== 'string') {
                                 alert('Invalid JSON: ' + xhr.responseText);
                                 return;
                             }
 
-                            // Insert the uploaded image into the editor
-                            tinymce.activeEditor.insertContent('<img src="' + json
-                                .location + '" />');
+                            // Generate alt text by replacing underscores with spaces
+                            var altText = json.filename.replace(/_/g, ' ');
+
+                            // Create the picture element with WebP and original format sources
+                            var pictureHtml =
+                                '<picture class="inline-block align-top m-0">' +
+                                '<source srcset="' + json.webp_location +
+                                '" type="image/webp">' +
+                                '<img src="' + json.original_location + '" alt="' +
+                                altText +
+                                '" loading="lazy" class="max-w-full h-auto mx-4 my-4">' +
+                                '</picture>';
+
+                            // Insert the picture element into the editor directly
+                            tinymce.activeEditor.insertContent(pictureHtml);
                         };
 
                         xhr.onerror = function() {
@@ -155,7 +170,7 @@
         },
     });
 
-    // Your existing settings-editor initialization...
+    // Existing settings-editor initialization...
     tinymce.init({
         selector: '.settings-editor',
         content_css: "{{ Vite::asset('resources/scss/app.scss') }}",

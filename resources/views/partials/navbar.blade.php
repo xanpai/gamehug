@@ -39,8 +39,13 @@
                 <!-- Logo -->
                 <a class="" href="{{ route('index') }}">
                     @if (config('settings.logo'))
-                        <img src="{{ asset('static/img/' . config('settings.logo')) }}" class="w-full h-7"
-                            alt="{{ config('settings.site_name') }}">
+                        {!! picture(
+                            asset('static/img/' . config('settings.logo')),
+                            null,
+                            'w-full h-7',
+                            config('settings.site_name'),
+                            'post',
+                        ) !!}
                     @else
                         <x-ui.logo height="24" class="text-gray-700 dark:text-white" />
                     @endif

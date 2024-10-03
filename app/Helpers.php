@@ -35,7 +35,7 @@ function update_settings($key, $value)
 
 // File upload
 if (!function_exists('fileUpload')) {
-    function fileUpload($img, $path, $width = null, $height = null, $imgName = null, $webp = null)
+    function fileUpload($img, $path, $width = null, $height = null, $imgName = null, $format = null)
     {
         if (isset($img)) {
             try {
@@ -43,26 +43,34 @@ if (!function_exists('fileUpload')) {
                     mkdir(public_path($path), 0777, true);
                 }
 
-                // making image
+                // Making image
                 $makeImg = Image::make($img)->orientate();
-                $makeImg->encode($webp, 100);
-                $allowed = ['image/jpeg' => 'jpg', 'image/png' => 'png', 'image/gif' => 'gif', 'image/webp' => 'webp'];
-                $mime = $makeImg->mime();
 
-                // saving image in the target path
-                $imgName = $imgName . '.' . $allowed[$mime];
-                $imgPath = public_path($path . $imgName);
+                // Determine the format and extension
+                if ($format == 'webp') {
+                    $makeImg->encode('webp', 80);
+                    $extension = 'webp';
+                } else {
+                    $makeImg->encode(null, 80); // Use original format
+                    $mime = $makeImg->mime();
+                    $allowed = [
+                        'image/jpeg' => 'jpg',
+                        'image/png' => 'png',
+                        'image/gif' => 'gif',
+                        'image/webp' => 'webp'
+                    ];
+                    $extension = isset($allowed[$mime]) ? $allowed[$mime] : 'jpg';
+                }
 
+                // Saving image in the target path
+                $imgNameWithExt = $imgName . '.' . $extension;
+                $imgPath = public_path($path . $imgNameWithExt);
+
+                // Resize or fit the image
                 if (isset($width) && isset($height)) {
-                    if ($width == $height) {
-                        $makeImg->fit($width, $height, function ($constraint) {
-                            $constraint->aspectRatio();
-                        });
-                    } else {
-                        $makeImg->fit($width, $height, function ($constraint) {
-                            $constraint->aspectRatio();
-                        });
-                    }
+                    $makeImg->fit($width, $height, function ($constraint) {
+                        $constraint->aspectRatio();
+                    });
                 } elseif (isset($width)) {
                     $makeImg->resize($width, null, function ($constraint) {
                         $constraint->aspectRatio();
@@ -70,10 +78,11 @@ if (!function_exists('fileUpload')) {
                 }
 
                 if ($makeImg->save($imgPath)) {
-                    return $imgName;
+                    return $imgNameWithExt;
                 }
             } catch (\Exception $e) {
-                // Handle the exception here if needed (optional)
+                // Log the exception for debugging
+                \Log::error('Image upload error: ' . $e->getMessage());
             }
         }
         return false;

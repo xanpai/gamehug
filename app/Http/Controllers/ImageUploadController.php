@@ -11,39 +11,51 @@ class ImageUploadController extends Controller
     {
         // Validate the uploaded file
         $request->validate([
-            'file' => 'required|image|max:2048', // Adjust max size as needed
+            'file' => 'required|image|max:5120', // Adjust max size as needed
         ]);
 
         // Generate a unique folder name based on the current date
         $folderDate = date('m-Y');
 
-        // Define the upload path
-        $uploadPath = public_path('uploads/screenshots/' . $folderDate);
-
-        // Ensure the directory exists
-        if (!file_exists($uploadPath)) {
-            mkdir($uploadPath, 0755, true);
-        }
-
+        // Get the uploaded file
         $file = $request->file('file');
 
         // Get the original filename with extension
         $originalFilename = $file->getClientOriginalName();
 
         // Sanitize the filename to prevent any security issues
-        $filename = $this->sanitizeFilename($originalFilename);
+        $sanitizedFilename = $this->sanitizeFilename($originalFilename);
 
         // Ensure the filename is unique to prevent overwriting existing files
-        $filename = $this->makeFilenameUnique($uploadPath, $filename);
+        $uniqueFilename = $this->makeFilenameUnique(public_path('uploads/screenshots/' . $folderDate), $sanitizedFilename);
 
-        // Move the file to the uploads/screenshots/{folderDate} directory
-        $file->move($uploadPath, $filename);
+        // Get the filename without extension (for use in fileUpload)
+        $filenameWithoutExtension = pathinfo($uniqueFilename, PATHINFO_FILENAME);
 
-        // Generate the URL to the uploaded image
-        $imageUrl = asset('uploads/screenshots/' . $folderDate . '/' . $filename);
+        // Generate the upload path
+        $uploadPath = 'uploads/screenshots/' . $folderDate . '/';
 
-        // Return a JSON response with the image URL
-        return response()->json(['location' => $imageUrl]);
+        // Use the fileUpload helper function to process and save the image
+        // Save as WebP
+        $webpImage = fileUpload($file, $uploadPath, null, null, $filenameWithoutExtension, 'webp');
+        // Save as original format
+        $originalImage = fileUpload($file, $uploadPath, null, null, $filenameWithoutExtension);
+
+        if ($webpImage && $originalImage) {
+            // Generate the URLs to the uploaded images
+            $webpUrl = url($uploadPath . $webpImage);
+            $originalUrl = url($uploadPath . $originalImage);
+
+            // Return a JSON response with the image URLs and filename
+            return response()->json([
+                'webp_location' => $webpUrl,
+                'original_location' => $originalUrl,
+                'filename' => $filenameWithoutExtension,
+            ]);
+        } else {
+            // Handle upload failure
+            return response()->json(['error' => 'Image upload failed'], 500);
+        }
     }
 
     /**

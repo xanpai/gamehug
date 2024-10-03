@@ -23,8 +23,7 @@
 
             <a class="mx-auto inline-flex mb-5" href="{{ route('index') }}">
                 @if (config('settings.logo'))
-                    <img src="{{ asset('static/img/logo.png') }}" class="w-auto h-48"
-                        alt="{{ config('settings.site_name') }}">
+                    {!! picture(asset('static/img/logo.webp'), null, 'w-auto h-48', config('settings.site_name'), 'post') !!}
                 @else
                     <x-ui.logo height="24" class="text-gray-700 dark:text-white" />
                 @endif

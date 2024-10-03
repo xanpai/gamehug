@@ -9,7 +9,7 @@
 
                     <div class="max-w-[6rem] w-full mx-auto">
                         <div class="aspect-[2/3] relative rounded-md transition overflow-hidden cursor-pointer ">
-                            <img src="{{ $listing->imageurl }}" class="absolute  h-full w-full object-cover">
+                            {!! picture($listing->imageurl, null, 'absolute h-full w-full object-cover', $listing->title, 'post') !!}
                         </div>
                     </div>
                     <div class="flex-1">
@@ -54,8 +54,7 @@
                             <div
                                 class="absolute inset-0 before:absolute before:inset-0 before:bg-gradient-to-b before:from-gray-950 before:to-transparent before:z-10 after:absolute after:inset-0 after:bg-gradient-to-t after:from-gray-950 after:to-transparent after:via-gray-950/60 after:z-10">
                             </div>
-                            <img src="{{ $listing->coverurl }}" class="absolute h-full w-full object-cover"
-                                alt="{{ $listing->title }} cover">
+                            {!! picture($listing->coverurl, null, 'absolute h-full w-full object-cover', $listing->title . ' cover', 'post') !!}
                         </div>
                     </div>
 
@@ -64,8 +63,13 @@
                         <!-- Left column (poster image) -->
                         <div class="max-w-[16rem] w-full mx-auto hidden lg:block">
                             <div class="aspect-[2/3] relative rounded-md transition overflow-hidden cursor-pointer">
-                                <img src="{{ $listing->imageurl }}" class="absolute h-full w-full object-cover"
-                                    alt="{{ $listing->title }} poster">
+                                {!! picture(
+                                    $listing->imageurl,
+                                    null,
+                                    'absolute h-full w-full object-cover',
+                                    $listing->title . ' poster',
+                                    'post',
+                                ) !!}
                             </div>
                             @if ($listing->trailer)
                                 <x-form.secondary @click="trailerOpen = true;iframeSrc = '{{ $listing->trailer }}'"

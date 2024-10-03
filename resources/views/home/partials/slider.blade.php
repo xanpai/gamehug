@@ -9,7 +9,7 @@
                             class="absolute inset-0 before:absolute before:right-0 rtl:before:left-0 before:top-0 before:bottom-0 before:w-1/5 before:bg-gradient-to-l before:from-gray-950 before:to-transparent after:absolute after:left-0 after:top-0 after:bottom-0 after:w-1/2 after:bg-gradient-to-r after:from-gray-950 after:to-transparent z-10">
                         </div>
 
-                        <img src="{{ $slide->slideurl }}" class="absolute h-full w-full object-cover">
+                        {!! picture($slide->slideurl, null, 'absolute h-full w-full object-cover', null, 'post') !!}
                         <div
                             class="absolute left-0 rtl:right-0 rtl:left-auto rtl:text-right lg:top-0 bottom-0 flex flex-col justify-center items-center text-center lg:text-left lg:items-start lg:max-w-3xl w-full z-20">
 
