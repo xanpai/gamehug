@@ -37,14 +37,21 @@
     <meta name="twitter:card" content="summary_large_image">
 
     <link rel="canonical" href="{{ url()->current() }}" />
+    <script>
+        if (localStorage.getItem('dark-mode') == 'true' || !('dark-mode' in localStorage)) {
+            document.querySelector('html').classList.add('dark');
+        } else {
+            document.querySelector('html').classList.remove('dark');
+        }
+    </script>
 
     @include('partials.head')
     @livewireStyles
     @livewireScriptConfig
 </head>
 
-<body class="min-h-screen dark:bg-gray-950 flex flex-col relative" x-cloak="" x-data="{ searchOpen: false, loading: false, 'sidebarToggle': false, compactToggle: localStorage.getItem('compactToggle') === 'true', cookiePolicy: localStorage.getItem('cookiePolicy'), promote: localStorage.getItem('promote') }"
-    x-init="$watch('cookiePolicy', val => {
+<body class="min-h-screen bg-gradient-to-r from-blue-50 to-blue-50 dark:bg-none dark:bg-gray-950 flex flex-col relative"
+    x-cloak="" x-data="{ searchOpen: false, loading: false, 'sidebarToggle': false, compactToggle: localStorage.getItem('compactToggle') === 'true', cookiePolicy: localStorage.getItem('cookiePolicy'), promote: localStorage.getItem('promote') }" x-init="$watch('cookiePolicy', val => {
         localStorage.setItem('cookiePolicy', val);
     });
     $watch('promote', val => {

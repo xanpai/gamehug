@@ -19,6 +19,10 @@ module.exports = {
                     DEFAULT: '1.5rem',
                 },
             },
+            fontFamily: {
+                sans: ['Inter', 'sans-serif'],
+                moontank: ['MOONTANK', 'sans-serif'],
+            },
             screens: {
                 'sm': '640px',
                 'md': '768px',
@@ -39,9 +43,6 @@ module.exports = {
                 normal: '0',
                 wide: '.025em',
                 wider: '.05em',
-            },
-            fontFamily: {
-                sans: ['Inter', 'sans-serif'],
             },
             fontSize: {
                 xxs: '10px'

@@ -2,24 +2,37 @@
     <div class="swiper swiper-hero">
         <div class="swiper-wrapper">
             @foreach ($listings['slider'] as $slide)
-                <a href="{{ route($slide->type, $slide->slug) }}" class="swiper-slide bg-gray-950">
+                <a href="{{ route($slide->type, $slide->slug) }}" class="swiper-slide bg-white dark:bg-gray-950">
                     <div
-                        class="lg:aspect-slide aspect-square relative before:absolute before:inset-0 before:bg-gradient-to-b before:from-gray-950 before:to-transparent before:z-10 after:absolute after:inset-0 after:bg-gradient-to-t after:from-gray-950 after:to-transparent after:via-gray-950/30 after:z-10 rounded-lg">
+                        class="lg:aspect-slide aspect-square relative before:absolute before:inset-0 before:bg-gradient-to-b before:from-blue-50 dark:before:from-gray-950 before:to-transparent before:z-10 after:absolute after:inset-0 after:bg-gradient-to-t after:from-blue-50 dark:after:from-gray-950 after:to-transparent after:via-blue/30 dark:after:via-gray-950/30 after:z-10 rounded-lg">
                         <div
-                            class="absolute inset-0 before:absolute before:right-0 rtl:before:left-0 before:top-0 before:bottom-0 before:w-1/5 before:bg-gradient-to-l before:from-gray-950 before:to-transparent after:absolute after:left-0 after:top-0 after:bottom-0 after:w-1/2 after:bg-gradient-to-r after:from-gray-950 after:to-transparent z-10">
+                            class="absolute inset-0 before:absolute before:right-0 rtl:before:left-0 before:top-0 before:bottom-0 before:w-1/5 before:bg-gradient-to-l before:from-blue-50 dark:before:from-gray-950 before:to-transparent after:absolute after:left-0 after:top-0 after:bottom-0 after:w-1/2 after:bg-gradient-to-r after:from-blue-50 dark:after:from-gray-950 after:to-transparent z-10">
                         </div>
 
-                        {!! picture($slide->slideurl, null, 'absolute h-full w-full object-cover', null, 'post') !!}
+                        {{-- Update the picture element to conditionally apply classes --}}
+                        {!! picture(
+                            $slide->slideurl,
+                            null,
+                            'absolute h-full w-full object-cover dark:filter dark:brightness-75',
+                            $slide->title,
+                            'post',
+                            true,
+                        ) !!}
+
                         <div
                             class="absolute left-0 rtl:right-0 rtl:left-auto rtl:text-right lg:top-0 bottom-0 flex flex-col justify-center items-center text-center lg:text-left lg:items-start lg:max-w-3xl w-full z-20">
 
-                            <h3 class="text-3xl 2xl:text-6xl font-bold text-white mb-4 texture-text">{{ $slide->title }}
+                            <!-- Updated text color to black for light mode -->
+                            <h3
+                                class="text-3xl 2xl:text-6xl font-bold font-moontank text-gray-900 dark:text-white mb-4 texture-text">
+                                {{ $slide->title }}
                             </h3>
 
-                            <div class="flex items-center text-sm text-gray-800 dark:text-gray-400 gap-6 mb-4">
 
+
+
+                            <div class="flex items-center text-sm text-gray-600 dark:text-gray-400 gap-6 mb-4">
                                 <div class="relative inline-flex items-center justify-center overflow-hidden ">
-
                                     <span
                                         class="inline-flex whitespace-nowrap items-center justify-center px-2 py-2 text-sm rounded-base font-[450] border border-transparent text-white bg-green-500">
                                         {{ $slide->vote_average }}
@@ -27,23 +40,24 @@
                                 </div>
                                 @if ($slide->platform)
                                     <span
-                                        class="bg-gray-500/50 backdrop-blur-lg text-gray-200 text-xxs font-semibold tracking-wide py-0.5 px-1.5 rounded">{{ $slide->platform }}</span>
+                                        class="bg-gray-900/50 dark:bg-gray-500/50 backdrop-blur-lg text-white dark:text-gray-200 text-xxs font-semibold tracking-wide py-0.5 px-1.5 rounded">{{ $slide->platform }}</span>
                                 @endif
                                 @if ($slide->runtime)
                                     <span>{{ $slide->runtime }}</span>
                                 @endif
                                 @if ($slide->scene_id)
-                                    <div class="font-medium text-gray-800 dark:text-gray-400">
+                                    <div class="font-medium text-gray-600 dark:text-gray-400">
                                         {{ $slide->scene->name }}
                                     </div>
                                 @endif
                                 @if ($slide->release_date)
-                                    <div class="font-medium text-gray-800 dark:text-gray-400">
+                                    <div class="font-medium text-gray-600 dark:text-gray-400">
                                         {{ $slide->release_date->translatedFormat('Y') }}
                                     </div>
                                 @endif
                             </div>
-                            <p class="text-base text-white/60 line-clamp-2 leading-loose">{{ $slide->overview }}</p>
+                            <p class="text-base text-gray-800/80 dark:text-white/60 line-clamp-2 leading-loose">
+                                {{ $slide->overview }}</p>
                             <div class="mt-8 space-x-4 lg:block hidden">
                                 <x-form.primary class="!rounded-full px-6 lg:px-10 py-4"
                                     size="md">{{ __('Download now') }}
@@ -63,6 +77,8 @@
         <div class="swiper-pagination"></div>
     </div>
 </div>
+
+
 @push('javascript')
     <script>
         var swiper = new Swiper('.swiper-hero', {

@@ -1,6 +1,6 @@
 <!-- End Announcement Banner -->
 <header
-    class="w-full z-40 bg-white dark:bg-gray-950 xl:dark:bg-gray-950/80 backdrop-blur-lg sticky top-0 @if (config('settings.layout') == 'vertical') {{ 'mb-4 custom-container' }} @endif @if (isset($class)) {{ $class }} @endif">
+    class="w-full z-40 bg-blue-50 dark:bg-gray-950 xl:dark:bg-gray-950/80 backdrop-blur-lg sticky top-0 @if (config('settings.layout') == 'vertical') {{ 'mb-4 custom-container' }} @endif @if (isset($class)) {{ $class }} @endif">
     <div class="@if (config('settings.layout') != 'vertical') {{ 'px-6 lg:px-8' }} @endif">
         <div class="flex items-center relative h-16">
 
@@ -37,15 +37,22 @@
                     @endif
                 @endif
                 <!-- Logo -->
+                <!-- Logo -->
                 <a class="" href="{{ route('index') }}">
                     @if (config('settings.logo'))
-                        {!! picture(
-                            asset('static/img/' . config('settings.logo')),
-                            null,
-                            'w-full h-7',
-                            config('settings.site_name'),
-                            'post',
-                        ) !!}
+                        <div class="hidden dark:block">
+                            {!! picture(
+                                asset('static/img/' . config('settings.logo')),
+                                null,
+                                'w-full h-7',
+                                config('settings.site_name') . ' (Dark Mode)',
+                                'post',
+                            ) !!}
+                        </div>
+                        <div class="dark:hidden">
+                            <img src="{{ asset('static/img/light-logo.webp') }}"
+                                alt="{{ config('settings.site_name') }} (Light Mode)" class="w-full h-7">
+                        </div>
                     @else
                         <x-ui.logo height="24" class="text-gray-700 dark:text-white" />
                     @endif
@@ -83,7 +90,7 @@
 
                 <div class="hidden lg:block max-w-sm xl:max-w-xl w-full absolute left-1/2 -translate-x-1/2">
                     <button type="button"
-                        class="hidden sm:flex items-center w-full text-left space-x-5 px-6 py-3.5 bg-gray-100 hover:bg-gray-200/50 rounded-full text-gray-400 dark:bg-gray-800/70 dark:hover:bg-gray-900 transition-all duration-300 text-sm  dark:text-gray-300/40 text-gray-400"
+                        class="hidden sm:flex items-center w-full text-left space-x-5 px-6 py-3.5 bg-gray-100 hover:bg-gray-200/50 rounded-full text-gray-400 dark:bg-gray-800/70 dark:hover:bg-gray-900 transition-all duration-300 text-sm dark:text-gray-300/40 text-gray-400"
                         @click.prevent="searchOpen = true;if (searchOpen) $nextTick(()=>{$refs.searchInput.focus()});"
                         aria-controls="search-modal"
                         @keydown.window.ctrl.q="searchOpen = true;if (searchOpen) $nextTick(()=>{$refs.searchInput.focus()});">
@@ -119,6 +126,23 @@
                             <x-ui.icon name="search" class="w-5 h-5" />
                         </button>
                     </li>
+                    <li x-data="{ darkMode: localStorage.getItem('dark-mode') === 'true' || !('dark-mode' in localStorage) }" x-init="$watch('darkMode', value => {
+                        document.querySelector('html').classList.toggle('dark', value);
+                        localStorage.setItem('dark-mode', value);
+                    })">
+
+                        <input type="checkbox" name="light-switch" id="light-switch" class="light-switch sr-only"
+                            :checked="darkMode" @change="darkMode = $event.target.checked" />
+
+                        <label
+                            class="inline-flex flex-shrink-0 justify-center items-center h-10 w-10 font-medium rounded-full dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer"
+                            for="light-switch">
+                            <x-ui.icon name="moon-2" class="w-5 h-5 dark:hidden" stroke="currentColor" />
+                            <x-ui.icon name="sun-2" class="w-5 h-5 dark:block hidden" stroke="currentColor" />
+                        </label>
+                    </li>
+
+
                     @guest
                         <li class="hidden lg:block">
                             <a href="{{ route('login') }}"

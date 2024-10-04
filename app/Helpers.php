@@ -149,24 +149,46 @@ if (!function_exists('webper')) {
 
 // Image view
 if (!function_exists('picture')) {
-    function picture($image = null, $size = null, $class = null, $title = null, $type = null)
+    function picture($image = null, $size = null, $class = null, $title = null, $type = null, $isCritical = false)
     {
         $allowType = ['post', 'people', 'episode'];
         $sizeHtml = null;
+
+        // Set image dimensions if specified
         if (isset($size)) {
             $sizeExp = explode(',', $size);
             $sizeHtml = 'width="' . $sizeExp[0] . '" height="' . $sizeExp[1] . '"';
         }
 
-        if (isset($type) and in_array($type, $allowType) and config('settings.tmdb_image') == 'active') {
-            return '<picture>
-                <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="' . $image . '" alt="' . $title . '" class="lazyload ' . $class . '" ' . $sizeHtml . '>
-            </picture>';
+        // Add preload links if the image is critical
+        $preloadHtml = '';
+        if ($isCritical && isset($image)) {
+            $webpImage = webper($image);
+            $preloadHtml = '<link rel="preload" href="' . $webpImage . '" as="image" type="image/webp">';
+            $preloadHtml .= '<link rel="preload" href="' . $image . '" as="image" type="image/jpeg">';
+        }
+
+        // Determine the CSS classes for the image
+        $imageClass = $class;
+        if (!$isCritical) {
+            $imageClass = 'lazyload ' . $class;
+        }
+        $imageClass .= ' ls-is-cached';
+
+        // Generate the picture HTML based on $isCritical (whether the image is critical or not)
+        if (isset($type) && in_array($type, $allowType) && config('settings.tmdb_image') == 'active') {
+            return $preloadHtml . '
+                <picture>
+                    <img src="' . ($isCritical ? $image : 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==') . '" ' .
+                ($isCritical ? '' : 'data-src="' . $image . '"') . ' alt="' . $title . '" class="' . $imageClass . '" ' . $sizeHtml . '>
+                </picture>';
         } elseif (isset($image)) {
-            return '<picture>
-                <source data-srcset="' . webper($image) . '" type="image/webp" class="' . $class . '">
-                <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="' . $image . '" alt="' . $title . '" class="lazyload ' . $class . '" ' . $sizeHtml . '>
-            </picture>';
+            return $preloadHtml . '
+                <picture>
+                    <source ' . ($isCritical ? 'srcset="' . webper($image) . '"' : 'data-srcset="' . webper($image) . '"') . ' type="image/webp" class="' . $class . '">
+                    <img src="' . ($isCritical ? $image : 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==') . '" ' .
+                ($isCritical ? '' : 'data-src="' . $image . '"') . ' alt="' . $title . '" class="' . $imageClass . '" ' . $sizeHtml . '>
+                </picture>';
         }
     }
 }

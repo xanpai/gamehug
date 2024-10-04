@@ -3,23 +3,21 @@
     <div x-data="{ selectedStream: '0', trailerOpen: false, iframeSrc: '', downloadOpen: false, repackFeaturesOpen: false }">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="max-w-screen-xl 2xl:max-w-screen-2xl 3xl:max-w-[100rem] 5xl:max-w-[120rem] mx-auto">
-                <!--Removed Player By commenting out below line -->
-                {{-- <livewire:watch-component :listing="$listing" /> --}}
                 <div class="flex lg:hidden gap-x-8">
-
                     <div class="max-w-[6rem] w-full mx-auto">
                         <div class="aspect-[2/3] relative rounded-md transition overflow-hidden cursor-pointer ">
                             {!! picture($listing->imageurl, null, 'absolute h-full w-full object-cover', $listing->title, 'post') !!}
                         </div>
                     </div>
                     <div class="flex-1">
-                        <h3 class="text-xl tracking-tighter font-semibold text-gray-100 line-clamp-1">{{ $listing->title }}
+                        <h3 class="text-xl tracking-tighter font-semibold text-gray-900 dark:text-gray-100 line-clamp-1">
+                            {{ $listing->title }}
                         </h3>
 
-                        <div class="flex items-center text-gray-400 dark:text-gray-400 text-xs mt-3 space-x-4">
+                        <div class="flex items-center text-gray-600 dark:text-gray-400 text-xs mt-3 space-x-4">
                             @if ($listing->platform)
                                 <span
-                                    class="bg-gray-500/50 backdrop-blur-lg text-gray-200 text-xxs font-semibold tracking-wide py-0.5 px-1.5 rounded">{{ $listing->platform }}</span>
+                                    class="bg-gray-200/50 dark:bg-gray-500/50 backdrop-blur-lg text-gray-800 dark:text-gray-200 text-xxs font-semibold tracking-wide py-0.5 px-1.5 rounded">{{ $listing->platform }}</span>
                             @endif
                             @if ($listing->runtime)
                                 <span>{{ $listing->runtime }}</span>
@@ -49,12 +47,19 @@
                     <div class="absolute inset-0 z-0">
                         <div class="relative w-full h-full">
                             <div
-                                class="absolute inset-0 before:absolute before:right-0 before:top-0 before:bottom-0 before:w-1/5 before:bg-gradient-to-l before:from-gray-950 before:to-transparent after:absolute after:left-0 after:top-0 after:bottom-0 after:w-1/2 after:bg-gradient-to-r after:from-gray-950 after:to-transparent z-10">
+                                class="absolute inset-0 before:absolute before:right-0 before:top-0 before:bottom-0 before:w-1/5 before:bg-gradient-to-l before:from-blue-50 before:to-transparent dark:before:from-gray-950 dark:before:to-transparent after:absolute after:left-0 after:top-0 after:bottom-0 after:w-1/2 after:bg-gradient-to-r after:from-blue-50 after:to-transparent dark:after:from-gray-950 dark:after:to-transparent z-10">
                             </div>
                             <div
-                                class="absolute inset-0 before:absolute before:inset-0 before:bg-gradient-to-b before:from-gray-950 before:to-transparent before:z-10 after:absolute after:inset-0 after:bg-gradient-to-t after:from-gray-950 after:to-transparent after:via-gray-950/60 after:z-10">
+                                class="absolute inset-0 before:absolute before:inset-0 before:bg-gradient-to-b before:from-blue-50 before:to-transparent dark:before:from-gray-950 dark:before:to-transparent before:z-10 after:absolute after:inset-0 after:bg-gradient-to-t after:from-blue-50 after:to-transparent dark:after:from-gray-950 dark:after:to-transparent dark:after:via-gray-950/60 after:z-10">
                             </div>
-                            {!! picture($listing->coverurl, null, 'absolute h-full w-full object-cover', $listing->title . ' cover', 'post') !!}
+                            {!! picture(
+                                $listing->coverurl,
+                                null,
+                                'absolute h-full w-full object-cover',
+                                $listing->title . ' cover',
+                                'post',
+                                true,
+                            ) !!}
                         </div>
                     </div>
 
@@ -78,18 +83,20 @@
                         </div>
 
                         <!-- Right column (details) -->
-                        <div class="flex-1 text-white">
+                        <div class="flex-1 text-gray-900 dark:text-white">
                             @if (config('settings.show_titlesub') == 'active')
-                                <h2 class="text-lg tracking-tighter font-medium text-gray-400 line-clamp-1 hidden lg:block">
+                                <h2
+                                    class="text-lg tracking-tighter font-medium text-gray-600 dark:text-gray-400 line-clamp-1 hidden lg:block">
                                     {{ $listing->title_sub }}</h2>
                             @endif
                             <h1 class="text-3xl tracking-tighter font-semibold line-clamp-1 hidden lg:block">
                                 {{ $listing->title }}</h1>
 
-                            <div class="hidden lg:flex items-center text-gray-400 text-xs mt-3 space-x-4">
+                            <div
+                                class="hidden lg:flex items-center text-gray-600 dark:text-gray-400 text-xs mt-3 space-x-4">
                                 @if ($listing->platform)
                                     <span
-                                        class="bg-gray-500/50 backdrop-blur-lg text-gray-200 text-xs font-semibold tracking-wide py-0.5 px-1.5 rounded">{{ $listing->platform }}</span>
+                                        class="bg-gray-200/50 dark:bg-gray-500/50 backdrop-blur-lg text-gray-800 dark:text-gray-200 text-xs font-semibold tracking-wide py-0.5 px-1.5 rounded">{{ $listing->platform }}</span>
                                 @endif
                                 @if ($listing->runtime)
                                     <span>{{ $listing->runtime }}</span>
@@ -121,14 +128,14 @@
                                 </div>
                             </div>
 
-                            <p class="text-gray-400 mt-3">{{ $listing->overview }}</p>
+                            <p class="text-gray-600 dark:text-gray-400 mt-3">{{ $listing->overview }}</p>
                             <div class="my-6 space-y-2 text-sm tracking-tighter">
                                 @if ($listing->scene_id)
                                     <div class="grid sm:flex gap-x-3">
-                                        <div class="min-w-[150px] max-w-[200px] text-gray-500">
+                                        <div class="min-w-[150px] max-w-[200px] text-gray-600 dark:text-gray-500">
                                             {{ __('Release Group') }}
                                         </div>
-                                        <div class="font-medium text-gray-800 dark:text-gray-300">
+                                        <div class="font-medium text-gray-900 dark:text-gray-300">
                                             <a href="{{ route('scene', ['scene' => $listing->scene->slug]) }}"
                                                 class="hover:underline">{{ $listing->scene->name }}</a>
                                         </div>
@@ -136,10 +143,10 @@
                                 @endif
                                 @if (count($listing->genres) > 0)
                                     <div class="grid sm:flex gap-x-3">
-                                        <div class="min-w-[150px] max-w-[200px] text-gray-500">
+                                        <div class="min-w-[150px] max-w-[200px] text-gray-600 dark:text-gray-500">
                                             {{ __('Genre') }}
                                         </div>
-                                        <div class="font-medium text-gray-800 dark:text-gray-300">
+                                        <div class="font-medium text-gray-900 dark:text-gray-300">
                                             @foreach ($listing->genres as $genre)
                                                 <a href="{{ route('genre', ['genre' => $genre->slug]) }}"
                                                     class="not-last-child-after inline-block mr-1 after:content-[','] last:mr-0 last:after:hidden hover:underline">{{ $genre->title }}</a>
@@ -149,20 +156,20 @@
                                 @endif
                                 @if ($listing->release_date)
                                     <div class="grid sm:flex gap-x-3">
-                                        <div class="min-w-[150px] max-w-[200px] text-gray-500">
+                                        <div class="min-w-[150px] max-w-[200px] text-gray-600 dark:text-gray-500">
                                             {{ __('Released') }}
                                         </div>
-                                        <div class="font-medium text-gray-800 dark:text-gray-400">
+                                        <div class="font-medium text-gray-900 dark:text-gray-400">
                                             {{ $listing->release_date->translatedFormat('d M, Y') }}
                                         </div>
                                     </div>
                                 @endif
                                 @if (count($listing->peoples) > 0)
                                     <div class="grid sm:flex gap-x-3">
-                                        <div class="min-w-[150px] max-w-[200px] text-gray-500">
+                                        <div class="min-w-[150px] max-w-[200px] text-gray-600 dark:text-gray-500">
                                             {{ __('Cast') }}
                                         </div>
-                                        <div class="font-medium text-gray-800 dark:text-gray-300">
+                                        <div class="font-medium text-gray-900 dark:text-gray-300">
                                             @foreach ($listing->peoples as $people)
                                                 <a href="{{ route('people', ['slug' => $people->slug]) }}"
                                                     class="not-last-child-after inline-block mr-1 after:content-[','] last:mr-0 last:after:hidden hover:underline">{{ $people->name }}</a>
@@ -173,13 +180,13 @@
 
                                 @if ($listing->developer_name)
                                     <div class="grid sm:flex gap-x-3 mt-2">
-                                        <div class="min-w-[300px] max-w-[600px] text-gray-500">
-                                            <div class="font-medium text-gray-800 dark:text-gray-300">
+                                        <div class="min-w-[300px] max-w-[600px] text-gray-600 dark:text-gray-500">
+                                            <div class="font-medium text-gray-900 dark:text-gray-300">
                                                 <span>Please support the developers - publishers by purchasing the game at
                                                     @if ($listing->developer_link)
                                                         <a href="{{ $listing->developer_link }}" target="_blank"
                                                             rel="noopener noreferrer"
-                                                            class="hover:underline text-white">{{ $listing->developer_name }}</a>
+                                                            class="hover:underline text-gray-900 dark:text-white">{{ $listing->developer_name }}</a>
                                                     @else
                                                         {{ $listing->developer_name }}
                                                     @endif
@@ -213,10 +220,10 @@
                     @include('partials.ads', ['id' => 1])
                 </div>
                 @if ($listing->body)
-                    <div class="mt-6">
-                        <h2 class="text-xl font-semibold text-white mb-3">{{ $listing->title }}
+                    <div class="mt-6 bg-slate-300 bg-gray-100 p-6 dark:bg-transparent dark:p-0 rounded-lg">
+                        <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">{{ $listing->title }}
                             {{ __('Free Download - Game Review') }} </h2>
-                        <div class="tinymce-content text-gray-300 prose prose-invert max-w-none">
+                        <div class="tinymce-content text-gray-700 dark:text-gray-300 prose dark:prose-invert max-w-none">
                             @parseTabs($listing->body)
                         </div>
                     </div>
@@ -232,7 +239,7 @@
                     <div class="py-6 lg:py-14">
                         <div class="flex flex-col lg:flex-row lg:items-center mb-6">
                             <h3
-                                class="text-lg xl:text-xl dark:text-white font-semibold lg:text-left rtl:text-right capitalize flex-1">
+                                class="text-lg xl:text-xl text-gray-900 dark:text-white font-semibold lg:text-left rtl:text-right capitalize flex-1">
                                 {{ __('Recommended For You') }}</h3>
                         </div>
                         <div class="grid grid-cols-2 xl:grid-cols-6 2xl:grid-cols-8 gap-6">
@@ -244,11 +251,11 @@
                 </div>
 
                 <!-- Trailer Modal -->
-                <div class="fixed inset-0 bg-gray-800/40 backdrop-blur-md z-50 transition-opacity" x-show="trailerOpen"
-                    x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0"
-                    x-transition:enter-end="opacity-100" x-transition:leave="transition ease-out duration-100"
-                    x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" aria-hidden="true"
-                    style="display: none;"></div>
+                <div class="fixed inset-0 bg-gray-500/40 dark:bg-gray-800/40 backdrop-blur-md z-50 transition-opacity"
+                    x-show="trailerOpen" x-transition:enter="transition ease-out duration-200"
+                    x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
+                    x-transition:leave="transition ease-out duration-100" x-transition:leave-start="opacity-100"
+                    x-transition:leave-end="opacity-0" aria-hidden="true" style="display: none;"></div>
                 <!-- Modal dialog -->
                 <div id="search-modal"
                     class="fixed inset-0 z-50 overflow-hidden flex items-start top-20 justify-center px-4 sm:px-6"
@@ -270,11 +277,11 @@
                 </div>
 
                 <!-- Download Modal -->
-                <div class="fixed inset-0 bg-gray-800/40 backdrop-blur-md z-50 transition-opacity" x-show="downloadOpen"
-                    x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0"
-                    x-transition:enter-end="opacity-100" x-transition:leave="transition ease-out duration-100"
-                    x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" aria-hidden="true"
-                    style="display: none;"></div>
+                <div class="fixed inset-0 bg-gray-500/40 dark:bg-gray-800/40 backdrop-blur-md z-50 transition-opacity"
+                    x-show="downloadOpen" x-transition:enter="transition ease-out duration-200"
+                    x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
+                    x-transition:leave="transition ease-out duration-100" x-transition:leave-start="opacity-100"
+                    x-transition:leave-end="opacity-0" aria-hidden="true" style="display: none;"></div>
                 <!-- Modal dialog -->
                 <div id="download-modal"
                     class="fixed inset-0 z-50 overflow-hidden flex items-center top-20 justify-center px-4 sm:px-6"
@@ -287,13 +294,14 @@
                     <div class="bg-white dark:bg-gray-900 max-w-xl w-full rounded-xl p-6 lg:p-10"
                         @click.outside="downloadOpen = false" @keydown.escape.window="downloadOpen = false">
 
-                        <h3 class="text-lg xl:text-xl dark:text-white font-semibold mb-3 text-center capitalize flex-1">
+                        <h3
+                            class="text-lg xl:text-xl text-gray-900 dark:text-white font-semibold mb-3 text-center capitalize flex-1">
                             {{ __('Download Link') }}</h3>
                         <ul x-data="downloadManager()"
                             class="flex flex-col divide-y divide-gray-200 dark:divide-gray-800 max-h-[60vh] overflow-auto scrollbar-thumb-gray-700 scrollbar-track-transparent -mr-4 pr-4 scrollbar-rounded-lg scrollbar-thin">
                             @foreach ($listing->downloads as $download)
                                 <li
-                                    class="inline-flex items-center justify-between gap-x-2 py-4 font-medium text-gray-800 dark:text-white">
+                                    class="inline-flex items-center justify-between gap-x-2 py-4 font-medium text-gray-900 dark:text-white">
                                     <div>{{ $download->label }}</div>
                                     <x-form.primary href="#"
                                         class="px-5 gap-2 !py-2.5 !rounded-full download-button"
@@ -340,7 +348,7 @@
                 <!-- Repack Features Modal -->
                 @if ($listing->repack_features)
                     <!-- Overlay -->
-                    <div class="fixed inset-0 bg-gray-800/40 backdrop-blur-md z-50 transition-opacity"
+                    <div class="fixed inset-0 bg-gray-500/40 dark:bg-gray-800/40 backdrop-blur-md z-50 transition-opacity"
                         x-show="repackFeaturesOpen" x-transition:enter="transition ease-out duration-200"
                         x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
                         x-transition:leave="transition ease-out duration-100" x-transition:leave-start="opacity-100"

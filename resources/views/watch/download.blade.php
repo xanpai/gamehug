@@ -5,25 +5,26 @@
 @endsection
 
 @section('content')
-    <div x-data="downloadPage" class="relative overflow-hidden min-h-full">
-        <div class="text-white max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-24 relative">
+    <div x-data="downloadPage" class="relative overflow-hidden min-h-full .bg-blue-50 dark:bg-gray-950">
+        <div class="text-gray-800 dark:text-white max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-24 relative">
             <div class="absolute inset-0 z-0">
                 <img src="{{ $listing->coverurl }}" alt="{{ $listing->title }} cover"
                     class="absolute h-full w-full object-cover">
                 <div
-                    class="absolute inset-0 before:absolute before:right-0 before:top-0 before:bottom-0 before:w-1/4 before:bg-gradient-to-l before:from-gray-950 before:via-gray-950/70 before:to-transparent after:absolute after:left-0 after:top-0 after:bottom-0 after:w-1/4 after:bg-gradient-to-r after:from-gray-950 before:via-gray-950/70 after:to-transparent z-10">
+                    class="absolute inset-0 before:absolute before:right-0 before:top-0 before:bottom-0 before:w-1/4 before:bg-gradient-to-l before:from-blue-50 dark:before:from-gray-950 before:via-blue-50/70 dark:before:via-gray-950/70 before:to-transparent after:absolute after:left-0 after:top-0 after:bottom-0 after:w-1/4 after:bg-gradient-to-r after:from-blue-50 dark:after:from-gray-950 before:via-blue-50/70 dark:before:via-gray-950/70 after:to-transparent z-10">
                 </div>
                 <div
-                    class="absolute inset-0 before:absolute before:inset-0 before:bg-gradient-to-b before:from-gray-950 before:via-gray-950/30 before:to-transparent before:z-10 after:absolute after:inset-0 after:bg-gradient-to-t after:from-gray-950 after:via-gray-950/30 after:to-transparent after:z-10">
+                    class="absolute inset-0 before:absolute before:inset-0 before:bg-gradient-to-b before:from-blue-50 dark:before:from-gray-950 before:via-blue-50/30 dark:before:via-gray-950/30 before:to-transparent before:z-10 after:absolute after:inset-0 after:bg-gradient-to-t after:from-blue-50 dark:after:from-gray-950 after:via-blue-50/30 dark:after:via-gray-950/30 after:to-transparent after:z-10">
                 </div>
-                <div class="absolute inset-0 bg-gray-950/40 z-10"></div>
+                <div class="absolute inset-0 .bg-blue-50/40 dark:bg-gray-950/40 z-10"></div>
             </div>
             <div class="relative z-20 text-center">
                 <h1 class="text-3xl tracking-tighter font-semibold line-clamp-1 hidden lg:block">Downloading:
                     {{ $listing->title }}</h1>
-                <p class="mt-3 text-gray-300">Your loot will start downloading in <span x-text="countdown"></span> seconds —
+                <p class="mt-3 text-gray-900 dark:text-gray-300">Your loot will start downloading in <span
+                        x-text="countdown"></span> seconds —
                     brace yourself!</p>
-                <div x-show="showStatus" x-cloak class="mt-4 text-green-400 font-semibold">
+                <div x-show="showStatus" x-cloak class="mt-4 text-green-600 dark:text-green-400 font-semibold">
                     Your loot is downloading! If it doesn't start automatically, hit the button below.
                 </div>
                 <div x-show="showButton" x-cloak class="mt-10">
@@ -35,7 +36,7 @@
 
                 <iframe x-ref="downloadFrame" class="hidden"></iframe>
             </div>
-            <p x-ref="animatedText" class="text-gray-300 text-center mt-10 mb-20"></p>
+            <p x-ref="animatedText" class="text-gray-900 dark:text-gray-300 text-center mt-10 mb-20"></p>
         </div>
     </div>
 

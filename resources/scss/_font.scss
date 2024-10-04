@@ -44,3 +44,12 @@ $fonts-base: "../fonts" !default;
   src: url("#{$fonts-base}/Inter-ExtraBold.woff2?v=3.19") format("woff2"),
   url("#{$fonts-base}/Inter-ExtraBold.woff?v=3.19") format("woff");
 }
+
+@font-face {
+  font-family: 'MOONTANK';
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+  src: url("#{$fonts-base}/MOONTANK.woff2?v=3.19") format('woff2'),
+  url("#{$fonts-base}/MOONTANK.woff2?v=3.19") format("woff");
+}
