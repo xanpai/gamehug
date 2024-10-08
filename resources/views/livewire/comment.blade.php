@@ -20,9 +20,9 @@
                         <a href=""
                             class="hover:underline text-gray-900 dark:text-white">{{ $comment->user->username }}</a>
                         @if ($comment->user->account_type == 'admin')
-                            <span class="text-amber-400 cursor-pointer tooltip"
-                                data-tippy-content="{{ __('Moderator') }}">
-                                <x-ui.icon name="mod" class="w-5 h-5" fill="currentColor" />
+                            <span
+                                class="bg-gray-700/50 dark:bg-gray-500/50 backdrop-blur-lg text-gray-800 dark:text-gray-200 text-xs font-semibold tracking-wide py-0.5 px-1.5 rounded">
+                                Mod
                             </span>
                         @endif
                         <time class="text-xs " pubdate datetime="{{ $comment->presenter()->relativeCreatedAt() }}"

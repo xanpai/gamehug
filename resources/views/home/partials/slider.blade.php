@@ -1,6 +1,6 @@
 <div class="pb-6 lg:pb-16">
-    <div class="swiper swiper-hero">
-        <div class="swiper-wrapper">
+    <div class="swiper swiper-hero relative">
+        <div class="swiper-wrapper ">
             @foreach ($listings['slider'] as $slide)
                 <a href="{{ route($slide->type, $slide->slug) }}" class="swiper-slide bg-white dark:bg-gray-950">
                     <div
@@ -27,10 +27,6 @@
                                 class="text-3xl 2xl:text-6xl font-bold font-moontank text-gray-900 dark:text-white mb-4 texture-text">
                                 {{ $slide->title }}
                             </h3>
-
-
-
-
                             <div class="flex items-center text-sm text-gray-600 dark:text-gray-400 gap-6 mb-4">
                                 <div class="relative inline-flex items-center justify-center overflow-hidden ">
                                     <span
@@ -75,6 +71,26 @@
         </div>
         <!-- Add Pagination -->
         <div class="swiper-pagination"></div>
+        <!-- Discord Button -->
+        <a href="https://discord.gg/XJFKvrNS" target="_blank" rel="noopener noreferrer nofollow"
+            class="hidden lg:flex absolute bottom-4 right-4 z-30 
+               items-center gap-2 
+               px-3 py-2 
+               rounded-md 
+               bg-[#7289da] hover:bg-[#6a7fc9] 
+               transition-all duration-300 ease-in-out
+               focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#7289da]
+               group">
+            <svg class="w-5 h-5 text-white transition-transform duration-300 ease-in-out group-hover:scale-110"
+                viewBox="0 0 24 24" fill="currentColor">
+                <path
+                    d="M20.3 4.3c-1.6-.7-3.3-1.2-5.1-1.5-.2.4-.5.9-.7 1.3-1.9-.3-3.8-.3-5.7 0-.2-.5-.5-1-.7-1.3-1.8.3-3.5.8-5.1 1.5C.4 8.5-.3 12.6.1 16.7c1.6 1.2 3.2 2.2 4.8 2.9.4-.5.7-1.1 1-1.7-.5-.2-1.1-.5-1.6-.7.1-.1.3-.2.4-.3 3.2 1.5 6.7 1.5 9.9 0 .1.1.3.2.4.3-.5.3-1 .5-1.6.7.3.6.6 1.2 1 1.7 1.6-.7 3.2-1.7 4.8-2.9.4-4.1-.3-8.1-3-11.4zM8 14.5c-.9 0-1.7-.9-1.7-1.9 0-1.1.7-1.9 1.7-1.9.9 0 1.7.9 1.7 1.9 0 1-.8 1.9-1.7 1.9zm8 0c-.9 0-1.7-.9-1.7-1.9 0-1.1.7-1.9 1.7-1.9.9 0 1.7.9 1.7 1.9 0 1-.8 1.9-1.7 1.9z" />
+            </svg>
+            <span
+                class="text-white font-bold text-sm whitespace-nowrap transition-transform duration-300 ease-in-out group-hover:translate-x-0.5">
+                Join Discord
+            </span>
+        </a>
     </div>
 </div>
 

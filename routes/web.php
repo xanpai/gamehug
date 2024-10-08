@@ -107,7 +107,7 @@ Route::prefix('ajax')->name('ajax.')->middleware(['auth'])->group(function () {
 });
 
 // Download page controller
-Route::get('/generate-download-token/{id}', [DownloadController::class, 'generateToken'])->name('download.generateToken');
+Route::post('/generate-download-token/{id}', [DownloadController::class, 'generateToken'])->name('download.generateToken');
 Route::get('/download/{token}', [DownloadController::class, 'initiate'])->name('download.initiate');
 
 // Recent Updates Controller

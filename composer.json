@@ -12,6 +12,7 @@
         "guzzlehttp/guzzle": "^7.7",
         "intervention/image": "^2.7",
         "jackiedo/dotenv-editor": "^2.1",
+        "josiasmontag/laravel-recaptchav3": "^1.0",
         "laravel/framework": "^10.8",
         "laravel/sanctum": "^3.2",
         "laravel/tinker": "^2.8",
@@ -19,7 +20,7 @@
         "livewire/livewire": "^3.3.0",
         "socialiteproviders/google": "^4.1",
         "socialiteproviders/zoho": "^4.1",
-        "spatie/laravel-analytics": "^5.0",
+        "spatie/laravel-analytics": "^5.4",
         "spatie/schema-org": "^3.14",
         "stripe/stripe-php": "^10.17",
         "tinymce/tinymce": "^6.4"

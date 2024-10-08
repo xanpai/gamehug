@@ -21,13 +21,10 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        // Update posts table to add nullable scene_id foreign key
+        // Update posts table
         Schema::table('posts', function (Blueprint $table) {
             if (!Schema::hasColumn('posts', 'scene_id')) {
-                // Add scene_id column as nullable
                 $table->unsignedBigInteger('scene_id')->nullable();
-
-                // Define foreign key constraint for scene_id
                 $table->foreign('scene_id')
                       ->references('id')
                       ->on('scenes')
@@ -35,13 +32,13 @@ return new class extends Migration
             }
         });
 
-        // Update existing scenes records if necessary
+        // Update existing scenes records (if any)
         DB::table('scenes')->where('subtitle', 'disable')->update(['subtitle' => 'active']);
     }
 
     public function down()
     {
-        // Remove foreign key and scene_id column from posts table
+        // Remove foreign key from posts table
         Schema::table('posts', function (Blueprint $table) {
             $table->dropForeign(['scene_id']);
             $table->dropColumn('scene_id');

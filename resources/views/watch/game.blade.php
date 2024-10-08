@@ -131,14 +131,34 @@
                             <p class="text-gray-600 dark:text-gray-400 mt-3">{{ $listing->overview }}</p>
                             <div class="my-6 space-y-2 text-sm tracking-tighter">
                                 @if ($listing->scene_id)
-                                    <div class="grid sm:flex gap-x-3">
-                                        <div class="min-w-[150px] max-w-[200px] text-gray-600 dark:text-gray-500">
-                                            {{ __('Release Group') }}
+                                    <div class="flex items-center gap-x-3 justify-between">
+                                        <div class="flex items-center gap-x-3">
+                                            <div class="min-w-[150px] max-w-[200px] text-gray-600 dark:text-gray-500">
+                                                {{ __('Release Group') }}
+                                            </div>
+                                            <div class="font-medium text-gray-900 dark:text-gray-300">
+                                                <a href="{{ route('scene', ['scene' => $listing->scene->slug]) }}"
+                                                    class="hover:underline">{{ $listing->scene->name }}</a>
+                                            </div>
                                         </div>
-                                        <div class="font-medium text-gray-900 dark:text-gray-300">
-                                            <a href="{{ route('scene', ['scene' => $listing->scene->slug]) }}"
-                                                class="hover:underline">{{ $listing->scene->name }}</a>
-                                        </div>
+                                        <!-- Discord Button -->
+                                        <a href="https://discord.gg/XJFKvrNS" target="_blank"
+                                            rel="noopener noreferrer nofollow"
+                                            class="flex items-center gap-2 px-4 py-2 rounded-md 
+                bg-[#7289da] hover:bg-[#6a7fc9] 
+                transition-all duration-300 ease-in-out
+                focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#7289da]
+                group h-11">
+                                            <svg class="w-5 h-5 text-white transition-transform duration-300 ease-in-out group-hover:scale-110"
+                                                viewBox="0 0 24 24" fill="currentColor">
+                                                <path
+                                                    d="M20.3 4.3c-1.6-.7-3.3-1.2-5.1-1.5-.2.4-.5.9-.7 1.3-1.9-.3-3.8-.3-5.7 0-.2-.5-.5-1-.7-1.3-1.8.3-3.5.8-5.1 1.5C.4 8.5-.3 12.6.1 16.7c1.6 1.2 3.2 2.2 4.8 2.9.4-.5.7-1.1 1-1.7-.5-.2-1.1-.5-1.6-.7.1-.1.3-.2.4-.3 3.2 1.5 6.7 1.5 9.9 0 .1.1.3.2.4.3-.5.3-1 .5-1.6.7.3.6.6 1.2 1 1.7 1.6-.7 3.2-1.7 4.8-2.9.4-4.1-.3-8.1-3-11.4zM8 14.5c-.9 0-1.7-.9-1.7-1.9 0-1.1.7-1.9 1.7-1.9.9 0 1.7.9 1.7 1.9 0 1-.8 1.9-1.7 1.9zm8 0c-.9 0-1.7-.9-1.7-1.9 0-1.1.7-1.9 1.7-1.9.9 0 1.7.9 1.7 1.9 0 1-.8 1.9-1.7 1.9z" />
+                                            </svg>
+                                            <span
+                                                class="text-white font-bold text-sm whitespace-nowrap transition-transform duration-300 ease-in-out group-hover:translate-x-0.5">
+                                                Join Discord
+                                            </span>
+                                        </a>
                                     </div>
                                 @endif
                                 @if (count($listing->genres) > 0)
@@ -299,6 +319,9 @@
                             {{ __('Download Link') }}</h3>
                         <ul x-data="downloadManager()"
                             class="flex flex-col divide-y divide-gray-200 dark:divide-gray-800 max-h-[60vh] overflow-auto scrollbar-thumb-gray-700 scrollbar-track-transparent -mr-4 pr-4 scrollbar-rounded-lg scrollbar-thin">
+
+                            {!! RecaptchaV3::field('download') !!}
+
                             @foreach ($listing->downloads as $download)
                                 <li
                                     class="inline-flex items-center justify-between gap-x-2 py-4 font-medium text-gray-900 dark:text-white">
@@ -329,8 +352,19 @@
                             isLoading: false,
                             generateDownloadToken(downloadId) {
                                 this.isLoading = true;
-                                fetch(`/generate-download-token/${downloadId}`)
-                                    .then(response => response.json())
+                                // recaptcha value
+                                const token = document.querySelector('input[name="g-recaptcha-response"]').value
+
+                                fetch(`/generate-download-token/${downloadId}`, {
+                                        method: 'POST',
+                                        headers: {
+                                            'Content-Type': 'application/json',
+                                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                                        },
+                                        body: JSON.stringify({
+                                            'g-recaptcha-response': token
+                                        })
+                                    }).then(response => response.json())
                                     .then(data => {
                                         if (data.token) {
                                             window.location.href = `/download/${data.token}`;
@@ -422,3 +456,5 @@
         </script>
     @endpush
 @endsection
+
+{!! RecaptchaV3::initJs() !!}
