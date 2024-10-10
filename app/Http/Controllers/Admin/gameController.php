@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Http;
 use App\Traits\PostTrait;
 use App\Traits\PeopleTrait;
 use OneSignal;
+use Illuminate\Support\Facades\DB;
 
 class gameController extends Controller
 {
@@ -156,6 +157,9 @@ class gameController extends Controller
         $model->member = $request->input('member', 'disable');
         $model->comment = $request->input('comment', 'disable');
         $model->status = $request->input('status', 'publish');
+        if ($model->status == 'publish') {
+            $model->published_at = now();
+        }
         // Added body
         $model->body = $request->input('body');
         // Added develiper support
@@ -271,7 +275,7 @@ class gameController extends Controller
         ]);
 
         $model = Post::findOrFail($id);
-
+        $oldStatus = $model->status;
         $folderDate = $model->created_at->translatedFormat('m-Y');
 
         if ($request->hasFile('image') || $request->filled('image_url')) {
@@ -331,6 +335,9 @@ class gameController extends Controller
         $model->member = $request->input('member', 'disable');
         $model->comment = $request->input('comment', 'disable');
         $model->status = $request->input('status', 'publish');
+        if ($oldStatus != 'publish' && $model->status == 'publish') {
+            $model->published_at = now();
+        }
         // Added Body
         $model->body = $request->input('body');
         // Added developer support

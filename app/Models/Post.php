@@ -20,6 +20,7 @@ class Post extends Model
         'developer_name',  // New field
         'developer_link',  // New field
         'repack_features',
+        'published_at',
     ];
 
     protected $casts = [
