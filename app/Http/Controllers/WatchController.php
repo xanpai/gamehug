@@ -121,8 +121,7 @@ class WatchController extends Controller
             $data->user_id = $request->user()->id;
             $listing->logs()->save($data);
 
-            $listing->view = (int) $listing->view + 1;
-            $listing->save();
+            $listing->updateQuietly(['view' => $listing->view + 1]);
         }
         return view('watch.game', compact('config', 'listing', 'recommends'));
     }

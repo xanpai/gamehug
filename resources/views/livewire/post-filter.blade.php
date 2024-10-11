@@ -26,7 +26,8 @@
                 </div>
             @endfor
         </div>
-        <div class="grid grid-cols-2 xl:grid-cols-6 2xl:grid-cols-8 gap-6" wire:loading.remove wire:target="filter">
+        <div class="grid grid-cols-2 xl:grid-cols-6 2xl:grid-cols-8 gap-6" wire:loading.remove.class="hidden"
+            wire:target="filter">
 
             @foreach ($listings as $listing)
                 <x-ui.post :listing="$listing" :title="$listing->title" :image="$listing->imageurl" :vote="$listing->vote_average" :genres="$listing->genres" />
@@ -39,9 +40,9 @@
                 @if ($loop->index == 7 and (empty($page) or $page == 1) and config('settings.top_week') == 'active')
                     <div class="col-span-full">
                         <div class="xl:py-5">
-                            <div class="rounded-xl h-full p-6 xl:p-8 bg-gray-900">
+                            <div class="rounded-xl h-full p-6 xl:p-8 bg-white dark:bg-gray-900">
                                 <h3
-                                    class="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-5 flex items-center space-x-3">
+                                    class="text-xl font-semibold text-gray-900 dark:text-gray-300 mb-5 flex items-center space-x-3">
                                     <span class="text-2xl">🔥</span>
                                     <span>{{ __('Top this week') }}</span>
                                 </h3>
@@ -59,23 +60,29 @@
                                                 </div>
                                                 <div class="flex-1">
 
-                                                    <div class="text-xs text-white/50 space-x-3 mb-0.5">
+                                                    <div
+                                                        class="text-xs text-gray-900 dark:text-white/50 space-x-3 mb-0.5">
                                                         @if ($recommend->runtime)
-                                                            <span>{{ $recommend->runtime }}</span>
+                                                            <span>{{ __(':time min', ['time' => $recommend->runtime]) }}</span>
                                                         @endif
                                                         @if ($recommend->release_date)
                                                             <span>{{ $recommend->release_date->translatedFormat('Y') }}</span>
                                                         @endif
                                                     </div>
                                                     <h3
-                                                        class="text-sm tracking-tighter group-hover:underline font-medium text-gray-300 line-clamp-1">
+                                                        class="text-sm tracking-tighter group-hover:underline font-medium text-gray-900 dark:text-gray-300 line-clamp-1">
                                                         {{ $recommend->title }}</h3>
-                                                    <div class="text-xs text-white/50 space-x-3 mt-2 flex items-center">
+                                                    <div
+                                                        class="text-xs text-gray-900 dark:text-white/50 space-x-3 mt-2 flex items-center">
                                                         @foreach ($recommend->genres->slice(0, 1) as $genre)
                                                             <span>{{ $genre->title }}</span>
                                                         @endforeach
-                                                        <span
-                                                            class="text-xxs bg-gray-800 rounded py-0.5 px-1.5 text-gray-300">{{ $recommend->type == 'game' ? __('Game') : __('TV Show') }}</span>
+                                                        @if ($recommend->type == 'game')
+                                                            <span
+                                                                class="text-xxs bg-gray-800 rounded py-0.5 px-1.5 text-gray-300">
+                                                                {{ __('Game') }}
+                                                            </span>
+                                                        @endif
                                                     </div>
                                                 </div>
 
@@ -99,7 +106,7 @@
                 @endif
             @endforeach
         </div>
-        {{ $listings->links() }}
+        {{ $listings->links('partials.pagination') }}
     </div>
 
 </div>

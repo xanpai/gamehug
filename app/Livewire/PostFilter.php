@@ -53,11 +53,11 @@ class PostFilter extends Component
             $this->scene = array_filter(explode(',', $request->scene));
         }
 
-        if ($request->route()->getName() == 'scene' && $request->route('scene')) {
-            $sceneSelect = Scene::where('slug', $request->route('scene'))->first();
-            if ($sceneSelect) {
-                $this->scene = [$sceneSelect->id];
-            }
+        if ($request->route()->getName() == __('Scene') and $request->route()->scene) {
+
+            $sceneSelect = Scene::where('slug', $request->scene)->first();
+
+            $this->scene[] = $sceneSelect->id;
         }
         if ($request->filled('platform')) {
             $this->platform = $request->platform;
