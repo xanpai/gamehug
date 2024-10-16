@@ -70,5 +70,7 @@ class Kernel extends HttpKernel
         'demo' => \App\Http\Middleware\DemoAdmin::class,
         'hotlink' => \App\Http\Middleware\HotlinkProtectionMiddleware::class,
         'noindex' => \App\Http\Middleware\AddNoIndexTag::class, // No index
+        'moderator' => \App\Http\Middleware\ModeratorMiddleware::class,
+        'admin_or_moderator' => \App\Http\Middleware\AdminOrModeratorMiddleware::class,
     ];
 }

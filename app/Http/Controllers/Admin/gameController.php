@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use App\Traits\PostTrait;
 use App\Traits\PeopleTrait;
@@ -35,7 +36,7 @@ class gameController extends Controller
             'create' => true,
         ];
 
-        // Filter
+        // Filter inputs
         $search = $request->input('q');
         $status = $request->input('status');
         $genre_id = $request->input('genre_id');
@@ -47,23 +48,34 @@ class gameController extends Controller
         $perPage = config('attr.page_limit');
 
         // Query
-        $listings = Post::where('type', 'game')->when($search, function ($query) use ($search) {
-            return $query->searchUrl($search);
-        })->when($status, function ($query) use ($status) {
-            return $query->where('status', $status);
-        })->when($member, function ($query) use ($member) {
-            return $query->where('member', $member);
-        })->when($featured, function ($query) use ($featured) {
-            return $query->where('featured', $featured);
-        })->when($slider, function ($query) use ($slider) {
-            return $query->where('slider', $slider);
-        })->when($genre_id, function ($query) use ($genre_id) {
-            return $query->whereHas('genres', function ($query) use ($genre_id) {
-                return $query->where('genres.id', $genre_id);
-            });
-        })->orderBy('id', $sort)->paginate($perPage)->appends(['q' => $search, 'sort' => $sort, 'status' => $status, 'genre_id' => $genre_id]);
-
-
+        $listings = Post::where('type', 'game')
+            ->when(!Auth::user()->isAdmin(), function ($query) {
+                // For moderators, only show their own posts
+                $query->where('user_id', Auth::id());
+            })
+            ->when($search, function ($query) use ($search) {
+                return $query->searchUrl($search);
+            })
+            ->when($status, function ($query) use ($status) {
+                return $query->where('status', $status);
+            })
+            ->when($member, function ($query) use ($member) {
+                return $query->where('member', $member);
+            })
+            ->when($featured, function ($query) use ($featured) {
+                return $query->where('featured', $featured);
+            })
+            ->when($slider, function ($query) use ($slider) {
+                return $query->where('slider', $slider);
+            })
+            ->when($genre_id, function ($query) use ($genre_id) {
+                return $query->whereHas('genres', function ($query) use ($genre_id) {
+                    return $query->where('genres.id', $genre_id);
+                });
+            })
+            ->orderBy('id', $sort)
+            ->paginate($perPage)
+            ->appends($request->all());
 
         return view('admin.post.index', compact('config', 'listings', 'request'));
     }
@@ -81,7 +93,7 @@ class gameController extends Controller
             'video' => __('Video'),
             'people' => __('People'),
             'subtitle' => __('Subtitle'),
-            'advanced' => __('Advanced')
+            'advanced' => __('Advanced'),
         ];
         $genres = Genre::get();
         $scenes = Scene::where('subtitle', 'disable')->get();
@@ -90,13 +102,13 @@ class gameController extends Controller
 
     public function store(Request $request)
     {
+        $this->authorize('create', Post::class);
 
         $this->validate($request, [
             'title' => 'required|string|max:255',
             'developer_name' => 'nullable|string|max:255',
             'developer_link' => 'nullable|url|max:255',
         ]);
-
 
         $model = new Post();
 
@@ -149,20 +161,29 @@ class gameController extends Controller
         $model->imdb_id = $request->input('imdb_id');
         $model->tmdb_id = $request->input('tmdb_id');
         $model->tmdb_image = $request->input('tmdb_image');
-        $model->arguments       = $request->arguments;
+        $model->arguments = $request->arguments;
         $model->meta_title = $request->input('meta_title');
         $model->meta_description = $request->input('meta_description');
         $model->featured = $request->input('featured', 'disable');
         $model->slider = $request->input('slider', 'disable');
         $model->member = $request->input('member', 'disable');
         $model->comment = $request->input('comment', 'disable');
-        $model->status = $request->input('status', 'publish');
+        $model->user_id = Auth::id();
+
+        // Set status based on user role
+        if (Auth::user()->isAdmin()) {
+            $model->status = $request->input('status', 'publish');
+        } else {
+            // Force 'draft' status for moderators
+            $model->status = 'draft';
+        }
+
         if ($model->status == 'publish') {
             $model->published_at = now();
         }
         // Added body
         $model->body = $request->input('body');
-        // Added develiper support
+        // Added developer support
         $model->developer_name = $request->input('developer_name');
         $model->developer_link = $request->input('developer_link');
         // Added Repack Features
@@ -173,10 +194,10 @@ class gameController extends Controller
         $model->genres()->sync($request->genre);
 
         // Tag
-        $tagArray = array();
+        $tagArray = [];
         foreach (explode(',', $request->input('tag')) as $tag) {
             if ($tag) {
-                $tagComponent = Tag::where('type', 'post')->firstorcreate(array('tag' => $tag, 'type' => 'post'));
+                $tagComponent = Tag::where('type', 'post')->firstOrCreate(['tag' => $tag, 'type' => 'post']);
                 $tagArray[$tagComponent->id] = ['post_id' => $model->id, 'tagged_id' => $tagComponent->id];
             }
         }
@@ -220,33 +241,35 @@ class gameController extends Controller
             }
         }
 
-
         return redirect()->route('admin.game.index')->with('success', __(':title created', ['title' => $request->input('title')]));
     }
 
     public function edit($id)
     {
+        $model = Post::findOrFail($id);
+
+        $this->authorize('update', $model);
+
         $config = [
             'title' => __('Game'),
             'route' => 'game',
             'nav' => 'game',
         ];
 
-
-        $listing = Post::where('id', $id)->firstOrFail() ?? abort(404);
+        $listing = $model;
 
         $tabs = [
             'overview' => __('Overview'),
             'video' => __('Video'),
             'people' => __('People'),
             'subtitle' => __('Subtitle'),
-            'advanced' => __('Advanced')
+            'advanced' => __('Advanced'),
         ];
 
         $genres = Genre::get();
         $scenes = Scene::all();
 
-        $fetch = array();
+        $fetch = [];
 
         $fetch['data'] = $this->postFetch($listing);
         foreach ($listing->peoples as $people) {
@@ -267,6 +290,9 @@ class gameController extends Controller
 
     public function update(Request $request, $id)
     {
+        $model = Post::findOrFail($id);
+
+        $this->authorize('update', $model);
 
         $this->validate($request, [
             'title' => 'required|string|max:255',
@@ -274,9 +300,8 @@ class gameController extends Controller
             'developer_link' => 'nullable|url|max:255',
         ]);
 
-        $model = Post::findOrFail($id);
         $oldStatus = $model->status;
-        $folderDate = $model->created_at->translatedFormat('m-Y');
+        $folderDate = $model->created_at->format('m-Y');
 
         if ($request->hasFile('image') || $request->filled('image_url')) {
             $imagename = Str::random(10);
@@ -329,15 +354,24 @@ class gameController extends Controller
         $model->tmdb_image = $request->input('tmdb_image');
         $model->meta_title = $request->input('meta_title');
         $model->meta_description = $request->input('meta_description');
-        $model->arguments       = $request->arguments;
+        $model->arguments = $request->arguments;
         $model->featured = $request->input('featured', 'disable');
         $model->slider = $request->input('slider', 'disable');
         $model->member = $request->input('member', 'disable');
         $model->comment = $request->input('comment', 'disable');
-        $model->status = $request->input('status', 'publish');
+
+        // Set status based on user role
+        if (Auth::user()->isAdmin()) {
+            $model->status = $request->input('status', 'publish');
+        } else {
+            // Force 'draft' status for moderators
+            $model->status = 'draft';
+        }
+
         if ($oldStatus != 'publish' && $model->status == 'publish') {
             $model->published_at = now();
         }
+
         // Added Body
         $model->body = $request->input('body');
         // Added developer support
@@ -345,18 +379,21 @@ class gameController extends Controller
         $model->developer_link = $request->input('developer_link');
         // Added Repack Features
         $model->repack_features = $request->input('repack_features');
-        $model->update();
+        $model->save();
 
-        PostJob::dispatch($model, $request->send_notification)->afterResponse();
+        // Dispatch PostJob if needed
+        if (Auth::user()->isAdmin()) {
+            PostJob::dispatch($model, $request->send_notification)->afterResponse();
+        }
 
         // Category
         $model->genres()->sync($request->genre);
 
         // Tag
-        $tagArray = array();
+        $tagArray = [];
         foreach (explode(',', $request->input('tag')) as $tag) {
             if ($tag) {
-                $tagComponent = Tag::where('type', 'post')->firstorcreate(array('tag' => $tag, 'type' => 'post'));
+                $tagComponent = Tag::where('type', 'post')->firstOrCreate(['tag' => $tag, 'type' => 'post']);
                 $tagArray[$tagComponent->id] = ['post_id' => $model->id, 'tagged_id' => $tagComponent->id];
             }
         }
@@ -365,14 +402,14 @@ class gameController extends Controller
         // Video
         if ($request->has('video')) {
             foreach ($request->input('video') as $key) {
-                if ($key['id'] and $key['link']) {
+                if (isset($key['id']) && $key['id'] && $key['link']) {
                     $getVideo = PostVideo::findOrFail($key['id']);
                     $getVideo->label = $key['label'];
                     $getVideo->type = $key['type'];
                     $getVideo->link = $key['link'];
                     $getVideo->save();
                 } elseif ($key['link']) {
-                    $model->videos()->create(array('type' => $key['type'], 'link' => $key['link'], 'label' => $key['label']));
+                    $model->videos()->create(['type' => $key['type'], 'link' => $key['link'], 'label' => $key['label']]);
                 }
             }
         }
@@ -380,7 +417,7 @@ class gameController extends Controller
         // Subtitle
         if ($request->has('subtitle')) {
             foreach ($request->subtitle as $key) {
-                if ($key['id'] and !empty($key['link'])) {
+                if (isset($key['id']) && $key['id'] && !empty($key['link'])) {
 
                     $file = $key['link'];
                     $fileName = time() . '_' . $file->getClientOriginalName();
@@ -396,12 +433,13 @@ class gameController extends Controller
                     $fileName = time() . '_' . $file->getClientOriginalName();
                     $file->move(public_path(config('attr.poster.subtitle_path') . $folderDate . '/'), $fileName);
 
-                    $model->subtitles()->create(array('scene_id' => $key['scene_id'], 'link' => $fileName));
+                    $model->subtitles()->create(['scene_id' => $key['scene_id'], 'link' => $fileName]);
                 }
             }
         }
         // People
         if ($request->has('people')) {
+            $syncPeople = [];
             foreach ($request->input('people') as $key) {
                 $traitPeople = $this->PeopleTmdb($key);
                 if (!empty($traitPeople->id)) {
@@ -417,27 +455,46 @@ class gameController extends Controller
 
     public function destroy($id)
     {
-        $post = Post::find($id);
-        $post->comments()->delete();
-        $post->tags()->delete();
-        $post->videos()->delete();
-        $post->subtitles()->delete();
-        $post->peoples()->delete();
-        $post->watchlist()->delete();
-        $post->report()->delete();
-        $post->logs()->delete();
-        $post->reactions()->delete();
-        $post->delete();
+        $model = Post::findOrFail($id);
+
+        $this->authorize('delete', $model);
+
+        // Delete hasMany and morphMany relationships
+        $model->comments()->delete();
+        $model->videos()->delete();
+        $model->subtitles()->delete();
+        $model->report()->delete();
+        $model->logs()->delete();
+        $model->reactions()->delete();
+
+        // Detach many-to-many and polymorphic many-to-many relationships
+        $model->tags()->detach();
+        $model->peoples()->detach();
+        $model->watchlist()->detach();
+
+        // Finally, delete the post itself
+        $model->delete();
+
         return redirect()->back()->with('success', __('Deleted'));
     }
 
     public function videoDestroy(Request $request)
     {
-        PostVideo::find($request->id)->delete();
+        $video = PostVideo::find($request->id);
+        if ($video) {
+            $post = $video->post;
+            $this->authorize('update', $post);
+            $video->delete();
+        }
     }
 
     public function subtitleDestroy(Request $request)
     {
-        PostSubtitle::find($request->id)->delete();
+        $subtitle = PostSubtitle::find($request->id);
+        if ($subtitle) {
+            $post = $subtitle->post;
+            $this->authorize('update', $post);
+            $subtitle->delete();
+        }
     }
 }

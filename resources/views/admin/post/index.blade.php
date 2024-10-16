@@ -48,6 +48,7 @@
                                             route="{{ route('admin.' . $config['nav'] . '.destroy', $listing->id) }}" />
                                     </div>
                                 </td>
+
                             </tr>
                         @endforeach
                     </tbody>

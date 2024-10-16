@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+// use App\Models\Log;
 use App\Models\Post;
 use App\Models\PostVideo;
 use Illuminate\Http\Request;
@@ -20,8 +21,8 @@ class DownloadController extends Controller
         $expiresAt = now()->addMinutes(15);
 
         $score = RecaptchaV3::verify($request->get('g-recaptcha-response'), 'download');
-        if ($score < 0.5) {
-            return response()->json(['error' => 'Something went wrong. Please try again.']);
+        if ($score < 0.3) {
+            return response()->json(['error' => 'Something went wrong. Please try again - ' . $score]);
         }
 
         // Store the token and associated download ID in the cache
@@ -50,6 +51,7 @@ class DownloadController extends Controller
         // Retrieve the associated listing
         $listing = Post::find($download->postable_id);
 
+
         if (!$listing) {
             return $this->handleNoDownload('Associated listing not found');
         }
@@ -60,7 +62,6 @@ class DownloadController extends Controller
         if (!$fileCode) {
             return $this->handleNoDownload('Invalid download link format');
         }
-
 
         // Get the API key from the environment
         $apiKey = env('DATANODES_API_KEY');
@@ -79,15 +80,15 @@ class DownloadController extends Controller
         $secretKey = "2024_DL_GuessWhat_" . $fileCode;
         $md5 = md5($secretKey);
 
+        $headers = $this->getHeaders();
         if (!$directLink) {
             // Make the API request to get the direct download link
-            $headers = $this->getHeaders();
             $apiUrl = "http://datanodes.to";
 
             $response = Http::withHeaders([
                 'user-agent' => $headers['user-agent'],
                 'x-forwarded-for' => $headers['x-forwarded-for'],
-                'x-real-ip' => request()->ip(),
+                'x-real-ip' => $headers['x-real-ip'],
                 'x-forwarded-proto' => $headers['x-forwarded-proto']
             ])->get($apiUrl, [
                 'op' => 'game_download',
@@ -115,10 +116,12 @@ class DownloadController extends Controller
         $download->link = $directLink;
 
         // Log the download initiation (optional but recommended)
-        Log::info('Download initiated', [
+        Log::channel('download')->info('Download initiated', [
             'download_id' => $download->id,
             'ip' => $userIp,
+            'otherIP' => request()->ip(),
             'timestamp' => now(),
+            'forwarded_for' => $headers['x-forwarded-for']
         ]);
 
         $config = [
@@ -127,7 +130,7 @@ class DownloadController extends Controller
         ];
 
         // Remove the token from the cache to prevent reuse
-        Cache::forget("download_token:{$token}");
+         Cache::forget("download_token:{$token}");
 
         // Return the download view, passing the download object with the updated link
         return view('watch.download', compact('download', 'listing', 'config'));
@@ -172,9 +175,11 @@ class DownloadController extends Controller
         return request()->header('CF-Connecting-IP') ?? request()->ip();
     }
 
-    private function getHeaders() {
+    private function getHeaders()
+    {
         return array_merge(request()->headers->all(), [
             'user-agent' => ['AnkerGames/1.0'],
+            'x-real-ip' => [request()->ip()],
         ]);
     }
 }

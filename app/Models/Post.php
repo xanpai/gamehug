@@ -21,6 +21,7 @@ class Post extends Model
         'developer_link',  // New field
         'repack_features',
         'published_at',
+        'user_id',
     ];
 
     protected $casts = [
@@ -30,6 +31,10 @@ class Post extends Model
     public static function boot()
     {
         parent::boot();
+    }
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 
     public function getImageUrlAttribute()

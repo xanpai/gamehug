@@ -53,20 +53,6 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'auth.admin'])->grou
         Route::delete('menu-destroy', 'destroy')->name('destroy')->middleware('demo');
     });
 
-
-    // game
-    Route::controller(\App\Http\Controllers\Admin\gameController::class)->name('game.')->group(function () {
-        Route::get('games', 'index')->name('index');
-        Route::get('game', 'create')->name('create');
-        Route::get('game/{id}', 'edit')->name('edit');
-        Route::post('games/{id}/destroy', 'destroy')->name('destroy')->middleware('demo');
-        Route::post('game', 'store')->name('store')->middleware('demo');
-        Route::post('game-tmdb', 'tmdb')->name('tmdb')->middleware('demo');
-        Route::post('game/{id}', 'update')->name('update')->middleware('demo');
-        Route::delete('game/video-destroy', 'videoDestroy')->name('video.destroy')->middleware('demo');
-        Route::delete('game/subtitle-destroy', 'subtitleDestroy')->name('subtitle.destroy')->middleware('demo');
-    });
-
     // TV Show
     Route::controller(\App\Http\Controllers\Admin\TvController::class)->name('tv.')->group(function () {
         Route::get('tv-shows', 'index')->name('index');
@@ -101,28 +87,6 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'auth.admin'])->grou
         Route::post('broadcast', 'store')->name('store')->middleware('demo');
         Route::post('broadcast/{id}', 'update')->name('update')->middleware('demo');
         Route::delete('broadcast/video-destroy', 'videoDestroy')->name('video.destroy');
-    });
-
-    // Genre
-    Route::controller(\App\Http\Controllers\Admin\GenreController::class)->name('genre.')->group(function () {
-        Route::get('genres', 'index')->name('index');
-        Route::get('genre', 'create')->name('create');
-        Route::get('genre/{id}', 'edit')->name('edit');
-        Route::post('genres/{id}/destroy', 'destroy')->name('destroy')->middleware('demo');
-        Route::post('genre', 'store')->name('store')->middleware('demo');
-        Route::post('genre/{id}', 'update')->name('update')->middleware('demo');
-    });
-
-    // People
-    Route::controller(\App\Http\Controllers\Admin\PeopleController::class)->name('people.')->group(function () {
-        Route::get('peoples', 'index')->name('index');
-        Route::get('people', 'create')->name('create');
-        Route::get('people/{id}', 'edit')->name('edit');
-        Route::post('peoples/{id}/destroy', 'destroy')->name('destroy')->middleware('demo');
-        Route::post('people', 'store')->name('store')->middleware('demo');
-        Route::post('people/{id}', 'update')->name('update')->middleware('demo');
-        Route::get('people-json', 'search')->name('search');
-        Route::get('people-first', 'first')->name('first');
     });
 
     // Page
@@ -219,39 +183,6 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'auth.admin'])->grou
         Route::post('onesignal-settings', 'update')->middleware('demo');
     });
 
-    // Report
-    Route::controller(\App\Http\Controllers\Admin\ReportController::class)->name('report.')->group(function () {
-        Route::get('reports', 'index')->name('index');
-        Route::get('report/{id}', 'edit')->name('edit');
-        Route::post('reports/{id}/destroy', 'destroy')->name('destroy')->middleware('demo');
-        Route::post('report/{id}', 'update')->name('update')->middleware('demo');
-    });
-
-    // RequestPost
-    Route::controller(\App\Http\Controllers\Admin\RequestPostController::class)->name('request.')->group(function () {
-        Route::get('requests', 'index')->name('index');
-        Route::get('request/{id}', 'edit')->name('edit');
-        Route::post('requests/{id}/destroy', 'destroy')->name('destroy')->middleware('demo');
-    });
-
-    // Comment
-    Route::controller(\App\Http\Controllers\Admin\CommentController::class)->name('comment.')->group(function () {
-        Route::get('comments', 'index')->name('index');
-        Route::get('comment/{id}', 'edit')->name('edit');
-        Route::post('comments/{id}/destroy', 'destroy')->name('destroy')->middleware('demo');
-        Route::post('comment/{id}', 'update')->name('update')->middleware('demo');
-    });
-
-    // Collection
-    Route::controller(\App\Http\Controllers\Admin\CollectionController::class)->name('collection.')->group(function () {
-        Route::get('collections', 'index')->name('index');
-        Route::get('collection', 'create')->name('create');
-        Route::get('collection/{id}', 'edit')->name('edit');
-        Route::post('collection', 'store')->name('store')->middleware('demo');
-        Route::post('collection/{id}', 'update')->name('update')->middleware('demo');
-        Route::post('collections/{id}/destroy', 'destroy')->name('destroy')->middleware('demo');
-    });
-
     // Country
     Route::controller(\App\Http\Controllers\Admin\CountryController::class)->name('country.')->group(function () {
         Route::get('countries', 'index')->name('index');
@@ -260,16 +191,6 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'auth.admin'])->grou
         Route::post('country', 'store')->name('store')->middleware('demo');
         Route::post('country/{id}', 'update')->name('update')->middleware('demo');
         Route::post('countries/{id}/destroy', 'destroy')->name('destroy')->middleware('demo');
-    });
-
-    // Scene
-    Route::controller(\App\Http\Controllers\Admin\SceneController::class)->name('scene.')->group(function () {
-        Route::get('scenes', 'index')->name('index');
-        Route::get('scene', 'create')->name('create');
-        Route::get('scene/{id}', 'edit')->name('edit');
-        Route::post('scene', 'store')->name('store')->middleware('demo');
-        Route::post('scene/{id}', 'update')->name('update')->middleware('demo');
-        Route::post('scenes/{id}/destroy', 'destroy')->name('destroy')->middleware('demo');
     });
 
     // Community
@@ -297,5 +218,85 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'auth.admin'])->grou
         Route::get('payment/{id}', 'edit')->name('edit');
         Route::post('payments/{id}/destroy', 'destroy')->name('destroy');
         Route::post('payment/{id}', 'update')->name('update');
+    });
+});
+
+// Shared routes (Admins and Moderators)
+Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin_or_moderator'])->group(function () {
+    // GameController routes
+    Route::controller(\App\Http\Controllers\Admin\gameController::class)->name('game.')->group(function () {
+        Route::get('games', 'index')->name('index');
+        Route::get('game', 'create')->name('create');
+        Route::get('game/{id}', 'edit')->name('edit');
+        Route::post('games/{id}/destroy', 'destroy')->name('destroy')->middleware('demo');
+        Route::post('game', 'store')->name('store')->middleware('demo');
+        Route::post('game-tmdb', 'tmdb')->name('tmdb')->middleware('demo');
+        Route::post('game/{id}', 'update')->name('update')->middleware('demo');
+        Route::delete('game/video-destroy', 'videoDestroy')->name('video.destroy')->middleware('demo');
+        Route::delete('game/subtitle-destroy', 'subtitleDestroy')->name('subtitle.destroy')->middleware('demo');
+    });
+    // People
+    Route::controller(\App\Http\Controllers\Admin\PeopleController::class)->name('people.')->group(function () {
+        Route::get('peoples', 'index')->name('index');
+        Route::get('people', 'create')->name('create');
+        Route::get('people/{id}', 'edit')->name('edit');
+        Route::post('peoples/{id}/destroy', 'destroy')->name('destroy')->middleware('demo');
+        Route::post('people', 'store')->name('store')->middleware('demo');
+        Route::post('people/{id}', 'update')->name('update')->middleware('demo');
+        Route::get('people-json', 'search')->name('search');
+        Route::get('people-first', 'first')->name('first');
+    });
+
+    // Genre
+    Route::controller(\App\Http\Controllers\Admin\GenreController::class)->name('genre.')->group(function () {
+        Route::get('genres', 'index')->name('index');
+        Route::get('genre', 'create')->name('create');
+        Route::get('genre/{id}', 'edit')->name('edit');
+        Route::post('genres/{id}/destroy', 'destroy')->name('destroy')->middleware('demo', 'auth.admin');
+        Route::post('genre', 'store')->name('store')->middleware('demo');
+        Route::post('genre/{id}', 'update')->name('update')->middleware('demo');
+    });
+
+    // Collection
+    Route::controller(\App\Http\Controllers\Admin\CollectionController::class)->name('collection.')->group(function () {
+        Route::get('collections', 'index')->name('index');
+        Route::get('collection', 'create')->name('create');
+        Route::get('collection/{id}', 'edit')->name('edit');
+        Route::post('collection', 'store')->name('store')->middleware('demo');
+        Route::post('collection/{id}', 'update')->name('update')->middleware('demo');
+        Route::post('collections/{id}/destroy', 'destroy')->name('destroy')->middleware('demo', 'auth.admin');
+    });
+
+    // Report
+    Route::controller(\App\Http\Controllers\Admin\ReportController::class)->name('report.')->group(function () {
+        Route::get('reports', 'index')->name('index');
+        Route::get('report/{id}', 'edit')->name('edit');
+        Route::post('reports/{id}/destroy', 'destroy')->name('destroy')->middleware('demo', 'auth.admin');
+        Route::post('report/{id}', 'update')->name('update')->middleware('demo');
+    });
+
+    // RequestPost
+    Route::controller(\App\Http\Controllers\Admin\RequestPostController::class)->name('request.')->group(function () {
+        Route::get('requests', 'index')->name('index');
+        Route::get('request/{id}', 'edit')->name('edit');
+        Route::post('requests/{id}/destroy', 'destroy')->name('destroy')->middleware('demo', 'auth.admin');
+    });
+
+    // Scene
+    Route::controller(\App\Http\Controllers\Admin\SceneController::class)->name('scene.')->group(function () {
+        Route::get('scenes', 'index')->name('index');
+        Route::get('scene', 'create')->name('create');
+        Route::get('scene/{id}', 'edit')->name('edit');
+        Route::post('scene', 'store')->name('store')->middleware('demo');
+        Route::post('scene/{id}', 'update')->name('update')->middleware('demo');
+        Route::post('scenes/{id}/destroy', 'destroy')->name('destroy')->middleware('demo', 'auth.admin');
+    });
+
+    // Comment
+    Route::controller(\App\Http\Controllers\Admin\CommentController::class)->name('comment.')->group(function () {
+        Route::get('comments', 'index')->name('index');
+        Route::get('comment/{id}', 'edit')->name('edit');
+        Route::post('comments/{id}/destroy', 'destroy')->name('destroy')->middleware('demo', 'auth.admin');
+        Route::post('comment/{id}', 'update')->name('update')->middleware('demo');
     });
 });

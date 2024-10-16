@@ -74,16 +74,22 @@
                     <input type="hidden" name="image_url" :value="importerData.image">
                 </div>
                 <input type="hidden" name="tmdb_image" :value="importerData.tmdb_image">
-                <div class="mb-5">
-                    <x-form.label for="status" :value="__('Status')" />
-                    <x-form.select name="status" id="status">
-                        <option value="publish" @if (isset($listing->status) and $listing->status == 'publish') {{ 'selected' }} @endif>
-                            {{ __('Publish') }}</option>
-                        <option value="draft" @if (isset($listing->status) and $listing->status == 'draft') {{ 'selected' }} @endif>
-                            {{ __('Draft') }}</option>
-                    </x-form.select>
-                    <x-form.error :messages="$errors->get('status')" class="mt-2" />
-                </div>
+                @if (auth()->user()->can('publish', \App\Models\Post::class))
+                    <div class="mb-5">
+                        <x-form.label for="status" :value="__('Status')" />
+                        <x-form.select name="status" id="status">
+                            <option value="publish" @if (isset($listing->status) && $listing->status == 'publish') selected @endif>{{ __('Publish') }}
+                            </option>
+                            <option value="draft" @if (isset($listing->status) && $listing->status == 'draft') selected @endif>{{ __('Draft') }}
+                            </option>
+                        </x-form.select>
+                        <x-form.error :messages="$errors->get('status')" class="mt-2" />
+                    </div>
+                @else
+                    <input type="hidden" name="status" value="draft">
+                @endif
+
+
                 <div class="mb-5">
                     <x-form.label for="advanced" :value="__('Advanced')" />
                     <div class="flex items-center space-x-4 mt-2">

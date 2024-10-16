@@ -70,7 +70,7 @@ class User extends Authenticatable
 
     public function scopeSearchUrl(Builder $query, $value)
     {
-        return $query->where('name', 'like', '%'.$value.'%')->orWhere('email', 'like', '%'.$value.'%');
+        return $query->where('name', 'like', '%' . $value . '%')->orWhere('email', 'like', '%' . $value . '%');
     }
     public function likes(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
@@ -96,33 +96,57 @@ class User extends Authenticatable
 
     public function like()
     {
-        return $this->hasMany(Reaction::class)->where('reaction','like')->whereNotNull('user_id')->latest();
+        return $this->hasMany(Reaction::class)->where('reaction', 'like')->whereNotNull('user_id')->latest();
     }
 
     public function log()
     {
-        return $this->hasMany(Log::class,'user_id')->whereNotNull('user_id')->latest();
+        return $this->hasMany(Log::class, 'user_id')->whereNotNull('user_id')->latest();
     }
     public function watchlist()
     {
-        return $this->hasMany(Watchlist::class,'user_id')->whereNotNull('user_id')->latest();
+        return $this->hasMany(Watchlist::class, 'user_id')
+            ->whereNotNull('watchlists.user_id') // Specify the table
+            ->latest();
     }
 
     public function watchlister()
     {
-        return $this->morphedByMany(Post::class, 'postable','watchlists')->whereNotNull('user_id');
+        return $this->morphedByMany(Post::class, 'postable', 'watchlists')
+            ->whereNotNull('watchlists.user_id'); // Specify the table
     }
+
+
+    //Added User Methods
+    public function isAdmin()
+    {
+        return $this->account_type === 'admin';
+    }
+
+    public function isModerator()
+    {
+        return $this->account_type === 'moderator';
+    }
+
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
+
 
     public function planSubscriptionCancel()
     {
         if ($this->plan_payment_method == 'paypal') {
             $httpClient = new HttpClient();
 
-            $httpBaseUrl = 'https://'.(config('settings.paypal_mode') == 'sandbox' ? 'api-m.sandbox' : 'api-m').'.paypal.com/';
+            $httpBaseUrl = 'https://' . (config('settings.paypal_mode') == 'sandbox' ? 'api-m.sandbox' : 'api-m') . '.paypal.com/';
 
             // Attempt to retrieve the auth token
             try {
-                $payPalAuthRequest = $httpClient->request('POST', $httpBaseUrl . 'v1/oauth2/token', [
+                $payPalAuthRequest = $httpClient->request(
+                    'POST',
+                    $httpBaseUrl . 'v1/oauth2/token',
+                    [
                         'auth' => [config('settings.paypal_client_id'), config('settings.paypal_secret')],
                         'form_params' => [
                             'grant_type' => 'client_credentials'
@@ -131,11 +155,15 @@ class User extends Authenticatable
                 );
 
                 $payPalAuth = json_decode($payPalAuthRequest->getBody()->getContents());
-            } catch (BadResponseException $e) {}
+            } catch (BadResponseException $e) {
+            }
 
             // Attempt to cancel the subscription
             try {
-                $payPalSubscriptionCancelRequest = $httpClient->request('POST', $httpBaseUrl . 'v1/billing/subscriptions/' . $this->plan_subscription_id . '/cancel', [
+                $payPalSubscriptionCancelRequest = $httpClient->request(
+                    'POST',
+                    $httpBaseUrl . 'v1/billing/subscriptions/' . $this->plan_subscription_id . '/cancel',
+                    [
                         'headers' => [
                             'Authorization' => 'Bearer ' . $payPalAuth->access_token,
                             'Content-Type' => 'application/json'
@@ -145,8 +173,9 @@ class User extends Authenticatable
                         ])
                     ]
                 );
-            } catch (BadResponseException $e) {}
-        }  elseif ($this->plan_payment_method == 'stripe') {
+            } catch (BadResponseException $e) {
+            }
+        } elseif ($this->plan_payment_method == 'stripe') {
             // Attempt to cancel the current subscription
             try {
                 $stripe = new \Stripe\StripeClient(
@@ -157,20 +186,25 @@ class User extends Authenticatable
                     $this->plan_subscription_id,
                     ['cancel_at_period_end' => true]
                 );
-            } catch (\Exception $e) {}
+            } catch (\Exception $e) {
+            }
         } elseif ($this->plan_payment_method == 'razorpay') {
             // Attempt to cancel the current subscription
             try {
                 $razorpay = new \Razorpay\Api\Api(config('settings.razorpay_key'), config('settings.razorpay_secret'));
 
                 $razorpay->subscription->fetch($this->plan_subscription_id)->cancel();
-            } catch (\Exception $e) {}
+            } catch (\Exception $e) {
+            }
         } elseif ($this->plan_payment_method == 'paystack') {
             $httpClient = new HttpClient();
 
             // Attempt to cancel the current subscription
             try {
-                $paystackSubscriptionRequest = $httpClient->request('GET', 'https://api.paystack.co/subscription/' . $this->plan_subscription_id, [
+                $paystackSubscriptionRequest = $httpClient->request(
+                    'GET',
+                    'https://api.paystack.co/subscription/' . $this->plan_subscription_id,
+                    [
                         'headers' => [
                             'Authorization' => 'Bearer ' . config('settings.paystack_secret'),
                             'Content-Type' => 'application/json',
@@ -180,11 +214,15 @@ class User extends Authenticatable
                 );
 
                 $paystackSubscription = json_decode($paystackSubscriptionRequest->getBody()->getContents());
-            } catch (\Exception $e) {}
+            } catch (\Exception $e) {
+            }
 
             if (isset($paystackSubscription->data->email_token)) {
                 try {
-                    $httpClient->request('POST', 'https://api.paystack.co/subscription/disable', [
+                    $httpClient->request(
+                        'POST',
+                        'https://api.paystack.co/subscription/disable',
+                        [
                             'headers' => [
                                 'Authorization' => 'Bearer ' . config('settings.paystack_secret'),
                                 'Content-Type' => 'application/json',
@@ -196,7 +234,8 @@ class User extends Authenticatable
                             ])
                         ]
                     );
-                } catch (\Exception $e) {}
+                } catch (\Exception $e) {
+                }
             }
         }
 
@@ -207,5 +246,4 @@ class User extends Authenticatable
         }
         $this->save();
     }
-
 }

@@ -34,8 +34,8 @@ return new class extends Migration
             $table->timestamp('plan_created_at')->nullable();
             $table->timestamp('plan_recurring_at')->nullable();
             $table->timestamp('plan_ends_at')->nullable();
-            $table->string('socialite_type',64)->nullable();
-            $table->string('socialite_id',191)->nullable();
+            $table->string('socialite_type', 64)->nullable();
+            $table->string('socialite_id', 191)->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
